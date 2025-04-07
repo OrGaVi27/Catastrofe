@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class MageBehaviour : BaseEnemyStats
 {
-    
+
     public EnemyVisionArea visionRange;
     public EnemyVisionArea defenseRange;
     public EnemyVisionArea safeSpaceRange;
@@ -14,17 +14,17 @@ public class MageBehaviour : BaseEnemyStats
     public float healCooldown = 5f;
     public float healAmount = 15f;
     private bool healReady = true;
-    
+
     public GameObject[] teamMembers = new GameObject[5];
 
     public NavMeshAgent nmAgent;
-    
+
     void Start()
     {
         currentHealth = maxHealth;
 
         nmAgent = GetComponent<NavMeshAgent>();
-        
+
         nmAgent.speed = movementSpeed;
 
         //PROVISIONAL
@@ -63,12 +63,12 @@ public class MageBehaviour : BaseEnemyStats
             }
             else
             {
-                 Debug.Log("FearMode: activated");
+                Debug.Log("FearMode: activated");
             }
         }
         else
         {
-             Debug.Log("Patrolling");
+            Debug.Log("Patrolling");
         }
     }
 
@@ -93,9 +93,9 @@ public class MageBehaviour : BaseEnemyStats
         {
             return false;
         }
-        
+
         return true;
-        
+
     }
 
     public void HealTeam(float healAmount)
@@ -124,29 +124,46 @@ public class MageBehaviour : BaseEnemyStats
         healReady = true;
     }
 
-    
+
     private void PositionSelf()
     {
 
         Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
-        
-        if(safeSpaceRange.playerInRange)
-        { 
+
+        if (safeSpaceRange.playerInRange)
+        {
             Vector3 direction = (transform.position - playerPosition).normalized;
             Vector3 newPosition = transform.position + direction * 2f;
             nmAgent.SetDestination(newPosition);
         }
-        
+
         if (defenseRange.playerInRange && !safeSpaceRange.playerInRange)
         {
             nmAgent.SetDestination(gameObject.transform.position);
         }
-        
-        if (visionRange.playerInRange &&!defenseRange.playerInRange && !safeSpaceRange.playerInRange)
+
+        if (visionRange.playerInRange && !defenseRange.playerInRange && !safeSpaceRange.playerInRange)
         {
-            nmAgent.SetDestination(playerPosition);
+            if (PlayerInLOS(playerPosition))
+            {
+                nmAgent.SetDestination(playerPosition);
+            }
+
         }
+    }
+
+    private bool PlayerInLOS(Vector3 playerPosition)
+    {
+        RaycastHit LOS;
+        Vector3 direction = playerPosition - transform.position;
+        Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, (int)QueryTriggerInteraction.Ignore);
+        if (LOS.collider.gameObject.CompareTag("Player"))
+        {
+            return true;
+        }
+        
+        return false;
     }
     #endregion
 }
