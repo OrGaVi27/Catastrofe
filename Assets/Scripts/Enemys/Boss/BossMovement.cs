@@ -13,8 +13,7 @@ public class BossMovement : MonoBehaviour
 
     [Header("Movement")]
     public float movementSpeed;
-
-
+    
     void Start()
     {
         nmAgent = GetComponent<NavMeshAgent>();
