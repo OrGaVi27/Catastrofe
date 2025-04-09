@@ -5,25 +5,49 @@ using UnityEngine.UI;
 
 public class BossBehaviour : MonoBehaviour
 {
+    [Header("Elements")]
     public bool fire;
     public bool water;
     public bool electricity;
     public bool rock;
 
     public List<string> activeElements = new List<string>();
+    public List<string> allElements = new List<string>();
+    [Space]
 
-    public Slider fireSlider;
-    public Slider waterSlider;
-    public Slider electricitySlider;
-    public Slider rockSlider;
+    [Header("Life")]
+    public Slider lifeSlider;
 
-    // Objeto padre donde se moverán los sliders
-    public Transform slidersParent;
+    public float maxLiife;
+    public float currentLiife;
+    [Header("Pelea")]
+    public bool pelea;
 
-    void Update()
+    /*void Update()
     {
-        
-    }
+        if(currentLiife <= 0)
+        {
+            if (*//*si queda otro elemento en allElements a parte del current*//*)
+            {
+                //añadir element 0 de allElements a activeEmelemnts
+                //quitar element 0 del allElemnts
+
+                //animacion de cabio de elemento
+                currentLiife = maxLiife;
+            }
+            else 
+            { 
+                //Morir
+            }
+        }
+        else
+        {
+            if (*//*Distancia del Player <= a *//*)
+            {
+
+            }
+        }
+    }*/
 
     void UpdateActiveElements()
     {
@@ -46,37 +70,9 @@ public class BossBehaviour : MonoBehaviour
             Debug.Log(element);
         }
     }
-
-    void UpdateHierarchyOrder()
-    {
-        // Primero, aseguramos que la lista activeElements está ordenada
-        int index = 0;
-
-        // Reorganizamos los sliders en la jerarquía del objeto padre según el orden de activeElements
-        foreach (string element in activeElements)
-        {
-            switch (element)
-            {
-                case "Fire":
-                    fireSlider.transform.SetSiblingIndex(index++);
-                    break;
-                case "Water":
-                    waterSlider.transform.SetSiblingIndex(index++);
-                    break;
-                case "Electricity":
-                    electricitySlider.transform.SetSiblingIndex(index++);
-                    break;
-                case "Rock":
-                    rockSlider.transform.SetSiblingIndex(index++);
-                    break;
-            }
-        }
-    }
     
     void OnEnable()
     {
         UpdateActiveElements();
-
-        UpdateHierarchyOrder();
     }
 }
