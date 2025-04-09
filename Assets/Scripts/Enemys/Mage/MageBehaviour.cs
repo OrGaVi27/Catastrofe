@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,6 +11,7 @@ public class MageBehaviour : BaseEnemyStats
     public EnemyVisionArea safeSpaceRange;
 
     public float healCooldown = 5f;
+    public float currentHealCooldown = 0;
     public float healAmount = 15f;
     private bool healReady = true;
 
@@ -50,7 +50,11 @@ public class MageBehaviour : BaseEnemyStats
                         {
                             // Heals the mage and all its team members
                             HealTeam(healAmount);
-                            StartCoroutine(HealCooldown());
+                            healReady = false;
+                        }
+                        else
+                        {
+                            HealCooldown();
                         }
                     }
                 }
@@ -98,6 +102,10 @@ public class MageBehaviour : BaseEnemyStats
 
     }
 
+    /// <summary>
+    /// Heals the mage and all its team members. It uses the Heal method from the BaseEnemyStats class to heal the mage and the Heal method from the BaseEnemyStats class to heal each team member.
+    /// </summary>
+    /// <param name="healAmount"></param>
     public void HealTeam(float healAmount)
     {
         Heal(healAmount);
@@ -114,17 +122,22 @@ public class MageBehaviour : BaseEnemyStats
         }
     }
 
-    IEnumerator HealCooldown()
+    void HealCooldown()
     {
-
-        healReady = false;
-
-        yield return new WaitForSeconds(healCooldown);
-
-        healReady = true;
+        if (healCooldown >= currentHealCooldown)
+        {
+            currentHealCooldown =- Time.deltaTime;
+        }
+        else
+        {
+            currentHealCooldown = 0;
+            healReady = true;
+        }
     }
 
-
+    /// <summary>
+    /// Repositions the mage to a safe distance from the player. It uses the NavMeshAgent component to move the mage to a new position.
+    /// </summary>
     private void PositionSelf()
     {
 
@@ -149,10 +162,15 @@ public class MageBehaviour : BaseEnemyStats
             {
                 nmAgent.SetDestination(playerPosition);
             }
-
         }
     }
-
+    
+    /// <summary>
+    /// Checks if the player is in line of sight of the mage. It uses a raycast to check if there are any obstacles between the mage and the player.
+    /// If there are no obstacles, it returns true. If there are obstacles, it returns false.
+    /// </summary>
+    /// <param name="playerPosition"></param>
+    /// <returns></returns>
     private bool PlayerInLOS(Vector3 playerPosition)
     {
         RaycastHit LOS;
@@ -162,7 +180,7 @@ public class MageBehaviour : BaseEnemyStats
         {
             return true;
         }
-        
+
         return false;
     }
     #endregion
