@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,63 +17,95 @@ public class BossBehaviour : MonoBehaviour
     [Space]
 
     [Header("Life")]
+    public int lifesCount;
     public Slider lifeSlider;
+
+    public Image lifeColor;
 
     public float maxLiife;
     public float currentLiife;
-    [Header("Pelea")]
-    public bool pelea;
+    [Space]
 
-    /*void Update()
+    [Header("Pelea")]
+    public float distanceCaC;
+    public float distanciaMaxAttack;
+
+    public Transform player;
+    private float distancePlayer;
+
+    void Update()
     {
-        if(currentLiife <= 0)
+        if (currentLiife <= 0)
         {
-            if (*//*si queda otro elemento en allElements a parte del current*//*)
+            if (lifesCount <= 4)
             {
-                //añadir element 0 de allElements a activeEmelemnts
-                //quitar element 0 del allElemnts
+                ChangeElement();
 
                 //animacion de cabio de elemento
+                lifesCount += 1;
                 currentLiife = maxLiife;
             }
-            else 
-            { 
-                //Morir
+            else
+            {
+                //animacion morir Morir
+
+                //eliminarme
             }
         }
         else
         {
-            if (*//*Distancia del Player <= a *//*)
+            if (distancePlayer <= distanceCaC)
             {
-
+                //ataque CaC
+            }
+            else if (distancePlayer >= distanceCaC && distancePlayer <= distanciaMaxAttack)
+            {
+                //Ataque a Distancia
             }
         }
-    }*/
+    }
+
+    void ChangeElement()
+    {
+        //pasar al siguiente elemnento de la lista de activeElements
+    }
 
     void UpdateActiveElements()
     {
-        // Comprobar y agregar los elementos activos a la lista solo si no están ya en ella
-        if (fire && !activeElements.Contains("Fire"))
-            activeElements.Add("Fire");
-
-        if (water && !activeElements.Contains("Water"))
-            activeElements.Add("Water");
-
-        if (electricity && !activeElements.Contains("Electricity"))
-            activeElements.Add("Electricity");
-
-        if (rock && !activeElements.Contains("Rock"))
-            activeElements.Add("Rock");
-
-        // Mostrar los elementos en la lista (solo los activos)
-        foreach (var element in activeElements)
+        if(fire /* && no esta en activeElements el fuego*/)
         {
-            Debug.Log(element);
+            //añadir al ultimo puesto de activeElemets el fuego
+
+            //eliminar el fuego de allElements
         }
+
+        if (water /* && no esta en activeElements el water*/)
+        {
+            //añadir al ultimo puesto de activeElemets el water
+
+            //eliminar el water de allElements
+        }
+
+        if (electricity /* && no esta en activeElements el electricity*/)
+        {
+            //añadir al ultimo puesto de activeElemets el electricity
+
+            //eliminar el electricity de allElements
+        }
+
+        if (rock /* && no esta en activeElements el rock*/)
+        {
+            //añadir al ultimo puesto de activeElemets el rock
+
+            //eliminar el rock de allElements
+        }
+
     }
     
     void OnEnable()
     {
         UpdateActiveElements();
+
+        currentLiife = maxLiife;
     }
 }
