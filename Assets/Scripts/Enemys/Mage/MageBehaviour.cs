@@ -1,5 +1,4 @@
-using System.Collections;
-using Unity.VisualScripting;
+using System.Transactions;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,6 +13,7 @@ public class MageBehaviour : BaseEnemyStats
     public float currentHealCooldown = 0;
     public float healAmount = 15f;
     private bool healReady = true;
+    private GameObject player;
 
     public GameObject[] teamMembers = new GameObject[5];
 
@@ -27,14 +27,18 @@ public class MageBehaviour : BaseEnemyStats
 
         nmAgent.speed = movementSpeed;
 
+        player = GameObject.FindGameObjectWithTag("Player");
+
         //PROVISIONAL
         teamMembers[0] = gameObject;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (visionRange.playerInRange)
+        if (visionRange.playerInRange && PlayerInLOS())
         {
             if (CheckTeam())
             {
@@ -72,6 +76,7 @@ public class MageBehaviour : BaseEnemyStats
         }
         else
         {
+            nmAgent.stoppingDistance = 0;
             Debug.Log("Patrolling");
         }
     }
@@ -140,28 +145,26 @@ public class MageBehaviour : BaseEnemyStats
     /// </summary>
     private void PositionSelf()
     {
-
-        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-
-
         if (safeSpaceRange.playerInRange)
         {
-            Vector3 direction = (transform.position - playerPosition).normalized;
-            Vector3 newPosition = transform.position + direction * 2f;
+            nmAgent.stoppingDistance = 0;
+
+            Vector3 direction = (transform.position - player.transform.position).normalized;
+            Vector3 newPosition = transform.position + direction * 10f;
             nmAgent.SetDestination(newPosition);
         }
-
-        if (defenseRange.playerInRange && !safeSpaceRange.playerInRange)
+        if(defenseRange.playerInRange && !safeSpaceRange.playerInRange)
         {
-            nmAgent.SetDestination(gameObject.transform.position);
+            Quaternion targetRotation = Quaternion.LookRotation(player.transform.position - transform.position);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * movementSpeed);
+            nmAgent.stoppingDistance = defenseRange.gameObject.transform.localScale.x / 2.1f;
+            nmAgent.SetDestination(player.transform.position);
         }
 
         if (visionRange.playerInRange && !defenseRange.playerInRange && !safeSpaceRange.playerInRange)
         {
-            if (PlayerInLOS(playerPosition))
-            {
-                nmAgent.SetDestination(playerPosition);
-            }
+                nmAgent.stoppingDistance = defenseRange.gameObject.transform.localScale.x / 2.1f;
+                nmAgent.SetDestination(player.transform.position);
         }
     }
     
@@ -171,10 +174,10 @@ public class MageBehaviour : BaseEnemyStats
     /// </summary>
     /// <param name="playerPosition"></param>
     /// <returns></returns>
-    private bool PlayerInLOS(Vector3 playerPosition)
+    private bool PlayerInLOS()
     {
         RaycastHit LOS;
-        Vector3 direction = playerPosition - transform.position;
+        Vector3 direction = player.transform.position - transform.position;
         Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, (int)QueryTriggerInteraction.Ignore);
         if (LOS.collider.gameObject.CompareTag("Player"))
         {
