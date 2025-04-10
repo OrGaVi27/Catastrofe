@@ -1,23 +1,34 @@
+using System.Collections.Generic;
 using System.Transactions;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class MageBehaviour : BaseEnemyStats
 {
+    [Header("Patroll")]
+    public Transform[] patrollPoints;
+    Vector3 patrollTarget;
+    int patrollIndex;
 
+    [Space]
+    [Header("Team")]
+    public GameObject[] teamMembers = new GameObject[5];
+
+    [Space]
+    [Header("Vision Areas")]
     public EnemyVisionArea visionRange;
     public EnemyVisionArea defenseRange;
     public EnemyVisionArea safeSpaceRange;
 
+    [Space]
+    [Header("Healing")]
     public float healCooldown = 5f;
     public float currentHealCooldown = 0;
     public float healAmount = 15f;
     private bool healReady = true;
     private GameObject player;
+    private NavMeshAgent nmAgent;
 
-    public GameObject[] teamMembers = new GameObject[5];
-
-    public NavMeshAgent nmAgent;
 
     void Start()
     {
@@ -28,6 +39,8 @@ public class MageBehaviour : BaseEnemyStats
         nmAgent.speed = movementSpeed;
 
         player = GameObject.FindGameObjectWithTag("Player");
+
+        UpdateDestination();
 
         //PROVISIONAL
         teamMembers[0] = gameObject;
@@ -131,7 +144,7 @@ public class MageBehaviour : BaseEnemyStats
     {
         if (healCooldown >= currentHealCooldown)
         {
-            currentHealCooldown =- Time.deltaTime;
+            currentHealCooldown = -Time.deltaTime;
         }
         else
         {
@@ -153,7 +166,7 @@ public class MageBehaviour : BaseEnemyStats
             Vector3 newPosition = transform.position + direction * 10f;
             nmAgent.SetDestination(newPosition);
         }
-        if(defenseRange.playerInRange && !safeSpaceRange.playerInRange)
+        if (defenseRange.playerInRange && !safeSpaceRange.playerInRange)
         {
             Quaternion targetRotation = Quaternion.LookRotation(player.transform.position - transform.position);
             transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * movementSpeed);
@@ -163,11 +176,11 @@ public class MageBehaviour : BaseEnemyStats
 
         if (visionRange.playerInRange && !defenseRange.playerInRange && !safeSpaceRange.playerInRange)
         {
-                nmAgent.stoppingDistance = defenseRange.gameObject.transform.localScale.x / 2.1f;
-                nmAgent.SetDestination(player.transform.position);
+            nmAgent.stoppingDistance = defenseRange.gameObject.transform.localScale.x / 2.1f;
+            nmAgent.SetDestination(player.transform.position);
         }
     }
-    
+
     /// <summary>
     /// Checks if the player is in line of sight of the mage. It uses a raycast to check if there are any obstacles between the mage and the player.
     /// If there are no obstacles, it returns true. If there are obstacles, it returns false.
@@ -185,6 +198,30 @@ public class MageBehaviour : BaseEnemyStats
         }
 
         return false;
+    }
+
+    void Patroll()
+    {
+        if (Vector3.Distance(transform.position, patrollTarget) < 0.75f)
+        {
+            IteratePatrollPointIndex();
+            UpdateDestination();
+        }
+    }
+
+    void UpdateDestination()
+    {
+        patrollTarget = patrollPoints[patrollIndex].position;
+        nmAgent.SetDestination(patrollTarget);
+    }
+
+    void IteratePatrollPointIndex()
+    {
+        patrollIndex++;
+        if (patrollIndex == patrollPoints.Length)
+        {
+            patrollIndex = 0;
+        }
     }
     #endregion
 }
