@@ -3,42 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Prueba : MonoBehaviour
+public class Barradevida : MonoBehaviour
 {
+    [Header("Sliders")]
     public Slider healthSlider;
     public Slider easeHealthSlider;
 
-    public float maxHealth = 100f;
-    public float health;
+    [Header("Stats")]
+    public BasePlayerStats playerStats;
     public float lerpSpeed = 0.05f;
     void Start()
     {
-        health = maxHealth;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        playerStats = player.GetComponent<BasePlayerStats>();
+        
+        playerStats.currentHealth = playerStats.maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (healthSlider.value != health)
+        if (healthSlider.value != playerStats.currentHealth)
         {
-            healthSlider.value = health;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(10);
+            healthSlider.value = playerStats.currentHealth;
         }
 
         if (healthSlider.value != easeHealthSlider.value)
         {
-            easeHealthSlider.value = Mathf.Lerp(easeHealthSlider.value, health, lerpSpeed);
+            easeHealthSlider.value = Mathf.Lerp(easeHealthSlider.value, playerStats.currentHealth, lerpSpeed);
         }
 
     }
-
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-    }
-
 }
