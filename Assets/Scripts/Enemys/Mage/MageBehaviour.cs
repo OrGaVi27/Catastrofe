@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Transactions;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,7 +22,6 @@ public class MageBehaviour : BaseEnemyStats
     [Space]
     [Header("Healing")]
     public float healCooldown = 5f;
-    public float currentHealCooldown = 0;
     public float healAmount = 15f;
     private bool healReady = true;
     private GameObject player;
@@ -32,7 +30,7 @@ public class MageBehaviour : BaseEnemyStats
 
     void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = maxHealth - 50f;
 
         nmAgent = GetComponent<NavMeshAgent>();
 
@@ -59,7 +57,8 @@ public class MageBehaviour : BaseEnemyStats
                 {
                     if (defenseRange.playerInRange)
                     {
-                        Debug.Log("Fleeing");
+                        //Debug.Log("Fleeing");
+                        Fleeing();
                     }
                     else
                     {
@@ -67,17 +66,13 @@ public class MageBehaviour : BaseEnemyStats
                         {
                             // Heals the mage and all its team members
                             HealTeam(healAmount);
-                            healReady = false;
-                        }
-                        else
-                        {
-                            HealCooldown();
+                            StartCoroutine(AbilityCooldown(healCooldown, healReady));
                         }
                     }
                 }
                 else
                 {
-                    Debug.Log("Repositioning");
+                    //Debug.Log("Repositioning");
                     // Reposition the mage to a safe distance from the player
                     PositionSelf();
                 }
@@ -89,8 +84,15 @@ public class MageBehaviour : BaseEnemyStats
         }
         else
         {
+            //Debug.Log("Patrolling");
             nmAgent.stoppingDistance = 0;
-            Debug.Log("Patrolling");
+            if (Vector3.Distance(nmAgent.pathEndPosition, transform.position) < 5f)
+            {
+                UpdateDestination();
+            }
+
+            Patroll();
+
         }
     }
 
@@ -140,19 +142,6 @@ public class MageBehaviour : BaseEnemyStats
         }
     }
 
-    void HealCooldown()
-    {
-        if (healCooldown >= currentHealCooldown)
-        {
-            currentHealCooldown = -Time.deltaTime;
-        }
-        else
-        {
-            currentHealCooldown = 0;
-            healReady = true;
-        }
-    }
-
     /// <summary>
     /// Repositions the mage to a safe distance from the player. It uses the NavMeshAgent component to move the mage to a new position.
     /// </summary>
@@ -160,12 +149,9 @@ public class MageBehaviour : BaseEnemyStats
     {
         if (safeSpaceRange.playerInRange)
         {
-            nmAgent.stoppingDistance = 0;
-
-            Vector3 direction = (transform.position - player.transform.position).normalized;
-            Vector3 newPosition = transform.position + direction * 10f;
-            nmAgent.SetDestination(newPosition);
+            Fleeing();
         }
+
         if (defenseRange.playerInRange && !safeSpaceRange.playerInRange)
         {
             Quaternion targetRotation = Quaternion.LookRotation(player.transform.position - transform.position);
@@ -179,6 +165,15 @@ public class MageBehaviour : BaseEnemyStats
             nmAgent.stoppingDistance = defenseRange.gameObject.transform.localScale.x / 2.1f;
             nmAgent.SetDestination(player.transform.position);
         }
+    }
+
+    void Fleeing()
+    {
+        nmAgent.stoppingDistance = 0;
+
+        Vector3 direction = (transform.position - player.transform.position).normalized;
+        Vector3 newPosition = transform.position + direction * 10f;
+        nmAgent.SetDestination(newPosition);
     }
 
     /// <summary>
@@ -202,7 +197,7 @@ public class MageBehaviour : BaseEnemyStats
 
     void Patroll()
     {
-        if (Vector3.Distance(transform.position, patrollTarget) < 0.75f)
+        if (Vector3.Distance(transform.position, patrollTarget) < 1.5f)
         {
             IteratePatrollPointIndex();
             UpdateDestination();
@@ -224,4 +219,17 @@ public class MageBehaviour : BaseEnemyStats
         }
     }
     #endregion
+
+
+    #region Coroutines
+    IEnumerator AbilityCooldown(float cooldown, bool AbilityReady)
+    {
+        AbilityReady = false;
+
+        yield return new WaitForSeconds(cooldown);
+
+        AbilityReady = true;
+    }
+    #endregion
 }
+ 
