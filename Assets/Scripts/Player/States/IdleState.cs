@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class IdleState : PlayerBaseState
 {
@@ -11,6 +8,16 @@ public class IdleState : PlayerBaseState
         if (player.inputVector.magnitude != 0)
         {
             player.SwitchState(player.walkState);
+        }
+
+        if (player.dashIsOn)
+        {
+            player.SwitchState(player.dashState);
+        }
+
+        if (player.isAttacking)
+        {
+            player.SwitchState(player.attackState);
         }
     }
 }
