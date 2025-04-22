@@ -39,4 +39,5 @@ public partial class PlayerStateManager
     private Vector3 gravityVector;
     private Vector3 isometricImput;
     private Matrix4x4 referenceMatrix;
+    [HideInInspector] public bool isInvencible = false;
 }

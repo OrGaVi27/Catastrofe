@@ -5,17 +5,23 @@ using UnityEngine;
 
 public class BasePlayerStats : MonoBehaviour
 {
-    public float maxHealth = 100f ;
+    public float maxHealth = 100f;
     public float currentHealth;
     public float damage = 0f;
+    public PlayerStateManager playerState;
 
     public void TakeDamage(float damageAmount)
     {
-        currentHealth -= damageAmount;
-        if (currentHealth <= 0f)
+        if (playerState.isInvencible)
         {
-            Die();
+            currentHealth -= damageAmount;
+
+            if (currentHealth <= 0f)
+            {
+                Die();
+            }
         }
+
     }
 
     public void Heal(float healAmount)
@@ -27,7 +33,8 @@ public class BasePlayerStats : MonoBehaviour
         }
     }
 
-    public void Die(){
+    public void Die()
+    {
         Debug.Log("Player has died.");
-     }
+    }
 }
