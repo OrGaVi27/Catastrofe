@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -56,26 +55,38 @@ public partial class PlayerStateManager : MonoBehaviour
         Rotate();
     }
 
-    IEnumerator Dash()
+    public void Dash()
     {
-        float startTime = Time.time;
-        while (Time.time < startTime + dashTime)
+        if (Time.time < dashStartTime + dashTime)
         {
-            controller.Move(isometricImput * dashSpeed * Time.deltaTime);
-            yield return null;
+            controller.Move(transform.forward * dashSpeed * Time.deltaTime);
         }
-
-        yield return new WaitForSeconds(dashTime);
-        
-        dashIsOn = false;
+        else
+        {
+            dashIsOn = false;
+        }
     }
 
     public void Rotate()
     {
-        if (isometricImput.magnitude == 0)return;
+        if (isometricImput.magnitude == 0) return;
 
         var rotation = Quaternion.LookRotation(isometricImput);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, playerRotateSpeed * Time.deltaTime);
+    }
+
+    public void Attack()
+    {
+        if (attackChargeTime + attackStartTime > Time.time)
+        {
+            Debug.Log("normal attack");
+        }
+        else
+        {
+            Debug.Log("STRONG ATTACK!");
+        }
+
+        isAttacking = false;
     }
 
     #endregion

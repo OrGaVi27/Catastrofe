@@ -1,22 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public partial class PlayerStateManager
 {
-    private void OnMovement(InputValue value)
+    public void OnMovement(InputValue value)
     {
         inputVector = value.Get<Vector2>();
-        moveVector.x = inputVector.x ;
-        moveVector.z = inputVector.y ;
+        moveVector.x = inputVector.x;
+        moveVector.z = inputVector.y;
     }
-    private void OnDash(InputValue value)
+    public void OnDash(InputValue value)
     {
-        if (!dashIsOn)
+        if (!dashIsOn && dashStartTime + dashTime + dashCooldown < Time.time)
         {
             dashIsOn = true;
-            StartCoroutine(Dash());
+            dashStartTime = Time.time;
+        }
+    }
+    public void OnAttack(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            isAttacking = true;
+            attackIsCharging = true;
+            attackStartTime = Time.time;
+        }
+
+        if (!value.isPressed)
+        {
+            attackIsCharging = false;
         }
     }
 }
+
