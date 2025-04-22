@@ -45,8 +45,6 @@ public class ComportamientoArquero : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-
-
     }
 
     // Update is called once per frame
@@ -206,6 +204,7 @@ public class ComportamientoArquero : MonoBehaviour
         nmAgent.SetDestination(posicionFinal);
     }
 
+
     public void DispararFlecha()
     {
         if (puedeDisparar == true && isMoving == false)
@@ -213,27 +212,15 @@ public class ComportamientoArquero : MonoBehaviour
             isLookingToPlayer = true;
             animator.SetBool("Attacking", true);
 
+            //La flecha se instanciará en el script de la flecha y se llama en la animacion
 
             puedeDisparar = false;
 
-            // Calcular la dirección hacia el jugador
-            Vector3 direccion = (player.transform.position - transform.position).normalized;
-            GameObject flecha = Instantiate(flechaPrefab, transform.position, Quaternion.LookRotation(direccion));
+            // InstanciarFlecha();
 
-            // Asignar el daño del arquero a la flecha
-            Flecha flechaScript = flecha.GetComponent<Flecha>();
-            if (flechaScript != null)
-            {
-                flechaScript.damage = damage;
-            }
-
-            Debug.Log("Flecha disparada hacia el jugador.");
-        }
-        else
-        {
-            Debug.Log("Flecha en cooldown");
         }
 
     }
+
 
 }

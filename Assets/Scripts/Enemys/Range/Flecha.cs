@@ -47,6 +47,7 @@ public class Flecha : MonoBehaviour
 
         if (other.tag == "Player" || other.tag == "Ground" || other.tag == "Wall")
         {
+            Debug.Log("Flecha colisiona con " + other.tag);
             Destroy(gameObject);
         }
 
