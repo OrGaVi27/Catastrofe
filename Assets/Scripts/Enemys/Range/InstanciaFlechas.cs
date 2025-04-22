@@ -20,7 +20,7 @@ public class InstanciaFlechas : MonoBehaviour
         // Calcular la dirección hacia el jugador
         Vector3 direccion = (player.transform.position - transform.position).normalized;
 
-        Vector3 posicionFlecha = new Vector3(transform.position.x, 3f, transform.position.z);
+        Vector3 posicionFlecha = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
 
         GameObject flecha = Instantiate(flechaPrefab, posicionFlecha, Quaternion.LookRotation(direccion));
 
