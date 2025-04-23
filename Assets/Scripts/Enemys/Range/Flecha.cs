@@ -17,7 +17,7 @@ public class Flecha : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         currentDelateTime = 0;
 
-        direccion = (player.transform.position - transform.position).normalized;
+        direccion = (player.transform.GetChild(0).position - transform.position).normalized;
         rb = GetComponent<Rigidbody>();
     }
 

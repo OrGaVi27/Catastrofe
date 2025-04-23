@@ -30,12 +30,22 @@ public class EnemigoElemental : MonoBehaviour
     public GameObject enemigoGrande;
     private new Renderer renderer;
 
+    [Header("Color particulas")]
+    Color rojoPersonalizado;
+    Color marronPersonalizado;
+    Color azulPersonalizado;
+    Color amarilloPersonalizado;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
         renderer = enemigoGrande.GetComponent<Renderer>();
+
+        ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
+        ColorUtility.TryParseHtmlString("#B07C66", out marronPersonalizado);
+        ColorUtility.TryParseHtmlString("#BDBB6C", out amarilloPersonalizado);
+        ColorUtility.TryParseHtmlString("#525FEF", out azulPersonalizado);
 
         // Generar un número aleatorio entre 0 y 3
         int elementoAleatorio = Random.Range(0, 4);
@@ -45,22 +55,22 @@ public class EnemigoElemental : MonoBehaviour
         {
             case 0:
                 fuego = true;
-                colorElemento = new Color32(0xEF, 0x26, 0x26, 0xFF);
+                colorElemento = rojoPersonalizado;
                 break;
 
             case 1:
                 agua = true;
-                colorElemento = new Color32(0x31, 0xB7, 0xEB, 0xFF);
+                colorElemento = azulPersonalizado;
                 break;
 
             case 2:
                 roca = true;
-                colorElemento = new Color32(0xAB, 0x66, 0x27, 0xFF);
+                colorElemento = marronPersonalizado;
                 break;
 
             case 3:
                 electricidad = true;
-                colorElemento = new Color32(0xE9, 0xEE, 0x30, 0xFF);
+                colorElemento = amarilloPersonalizado;
                 break;
 
         }
