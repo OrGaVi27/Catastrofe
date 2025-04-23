@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BasePlayerStats : MonoBehaviour
@@ -8,11 +5,11 @@ public class BasePlayerStats : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth;
     public float damage = 0f;
-    public PlayerStateManager playerState;
+    public bool isInvencible = false;
 
     public void TakeDamage(float damageAmount)
     {
-        if (playerState.isInvencible)
+        if (isInvencible)
         {
             currentHealth -= damageAmount;
 
