@@ -12,13 +12,17 @@ public class EnemyMeleeBehavior : MonoBehaviour
     public LayerMask whatIsPlayer, whatIsGround;
 
     // Rangos
-    public float rangoDeVision;
+    // public float rangoDeVision;
+    public GameObject rangoDeVision;
     public float rangoDeAtaque;
 
     // Estados
     public bool estaEnEquipo = false;
     public bool estaEnAreaDefensa = false;
     public bool hayMagoCercaConHueco = false;
+    public bool estoyEnUnEquipo = false;
+    public Transform magoConMenosAliados;
+    public List <GameObject> [] magosDisponibles;
 
     private bool alreadyAttacked;
 
@@ -49,13 +53,19 @@ public class EnemyMeleeBehavior : MonoBehaviour
     {
         bool playerEnRangoVision = PlayerEnRangoVision();
         bool playerEnRangoPegar = PlayerEnRangoPegar();
+        Debug.Log(playerEnRangoVision);
 
         if (EstoyEnEquipo())
-        {
+        {   
+            Debug.Log("Estoy en equipo");
             if (EstoyEnAreaDefensa())
             {
+            Debug.Log("Estoy en areaDefensa");
+
                 if (playerEnRangoVision)
                 {
+            Debug.Log("Estoy en AreaVision");
+
                     if (playerEnRangoPegar)
                         Pegar();
                     else
@@ -64,6 +74,8 @@ public class EnemyMeleeBehavior : MonoBehaviour
                 else
                 {
                     AcercarseAlPlayer();
+            Debug.Log("Me acerco al player");
+
                 }
             }
             else
@@ -112,9 +124,12 @@ public class EnemyMeleeBehavior : MonoBehaviour
     bool TengoMagoCercaConHueco() => hayMagoCercaConHueco;
 
     bool PlayerEnRangoVision()
-    {
-        return Physics.CheckSphere(transform.position, rangoDeVision, whatIsPlayer);
-    }
+{
+    SphereCollider sphCol = rangoDeVision.GetComponent<SphereCollider>(); // Pillo el componente para poder calcular el area de vision
+    float radio = sphCol.radius * rangoDeVision.transform.lossyScale.x; // lo convierto en float
+    return Physics.CheckSphere(transform.position, radio, whatIsPlayer);
+    //Cambiar el radio de la sphera por raycast como el MagoBehaviour
+}
 
     bool PlayerEnRangoPegar()
     {
@@ -128,10 +143,55 @@ public class EnemyMeleeBehavior : MonoBehaviour
     }
 
     void AsignarseAMagoConMenosAliados()
+{
+    int menorCantidad = int.MaxValue;
+    MageBehaviour mejorMago = null;
+
+    GameObject[] magos = GameObject.FindGameObjectsWithTag("Mago");
+
+    foreach (GameObject magoObj in magos)
     {
-        Debug.Log("Me asigno al mago con menos aliados...");
-        // minionMele.SetDestination(magoConMenosAliados.position);
+        MageBehaviour mago = magoObj.GetComponent<MageBehaviour>();
+        if (mago == null) continue;
+
+        int cantidadActual = 0;
+
+        foreach (GameObject miembro in mago.teamMembers)
+        {
+            if (miembro != null)
+                cantidadActual++;
+        }
+
+        if (cantidadActual < 5 && cantidadActual < menorCantidad)
+        {
+            menorCantidad = cantidadActual;
+            mejorMago = mago;
+        }
     }
+
+    if (mejorMago != null)
+    {
+        for (int i = 0; i < mejorMago.teamMembers.Length; i++)
+        {
+            if (mejorMago.teamMembers[i] == null)
+            {
+                mejorMago.teamMembers[i] = gameObject; // este minion se asigna
+                targetToFollow = mejorMago.transform;
+                estoyEnUnEquipo = true;
+                estaEnEquipo = true;
+                magoConMenosAliados = mejorMago.transform;
+
+                Debug.Log("Asignado al mago: " + mejorMago.name);
+                break;
+            }
+        }
+    }
+    else
+    {
+        Debug.Log("No hay magos con hueco.");
+    }
+}
+
 
     void AcercarseAlPlayer()
     {

@@ -37,11 +37,11 @@ public class MageBehaviour : BaseEnemyStats
         nmAgent.speed = movementSpeed;
 
         player = GameObject.FindGameObjectWithTag("Player");
-
+        
         UpdateDestination();
 
         //PROVISIONAL
-        teamMembers[0] = gameObject;
+        // teamMembers[0] = gameObject;
 
 
     }
@@ -80,6 +80,7 @@ public class MageBehaviour : BaseEnemyStats
             else
             {
                 Debug.Log("FearMode: activated");
+                nmAgent.SetDestination(transform.position);
             }
         }
         else
@@ -182,18 +183,36 @@ public class MageBehaviour : BaseEnemyStats
     /// </summary>
     /// <param name="playerPosition"></param>
     /// <returns></returns>
+
+    // private bool PlayerInLOS()
+    // {
+    //     RaycastHit LOS;
+    //     Vector3 direction = player.transform.position - transform.position;
+    //     Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, (int)QueryTriggerInteraction.Ignore);
+
+    //     if (LOS.collider.gameObject.CompareTag("Player"))
+    //     {   
+    //         return true;
+    //     }
+
+    //     return false;
+    // }
+
     private bool PlayerInLOS()
+{
+    RaycastHit LOS;
+    Vector3 direction = player.transform.position - transform.position;
+    
+    if (Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
     {
-        RaycastHit LOS;
-        Vector3 direction = player.transform.position - transform.position;
-        Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, (int)QueryTriggerInteraction.Ignore);
-        if (LOS.collider.gameObject.CompareTag("Player"))
+        if (LOS.collider.CompareTag("Player"))
         {
             return true;
         }
-
-        return false;
     }
+
+    return false;
+}
 
     void Patroll()
     {
