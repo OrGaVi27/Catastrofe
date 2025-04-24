@@ -6,9 +6,9 @@ public class Flecha : MonoBehaviour
 {
     public GameObject player;
     public float damage;
-    public float tiempoDeVidaTotal = 3f;
+    public float tiempoDeVidaTotal;
     private float currentDelateTime;
-    public float velocidadFlecha = 10f;
+    public float velocidadFlecha;
     private Vector3 direccion;
     private Rigidbody rb;
 
@@ -18,6 +18,11 @@ public class Flecha : MonoBehaviour
         currentDelateTime = 0;
 
         direccion = (player.transform.GetChild(0).position - transform.position).normalized;
+
+        // Ajustar la rotación de la flecha para que el eje X sea 0
+        Quaternion rotacionActual = Quaternion.LookRotation(direccion);
+        transform.rotation = Quaternion.Euler(0, rotacionActual.eulerAngles.y, rotacionActual.eulerAngles.z);
+
         rb = GetComponent<Rigidbody>();
     }
 

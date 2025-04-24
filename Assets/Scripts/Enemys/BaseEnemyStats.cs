@@ -6,7 +6,7 @@ using UnityEngine;
 public class BaseEnemyStats : MonoBehaviour
 {
     public float maxHealth = 100f;
-    protected float currentHealth;
+    public float currentHealth;
     public float damage = 0f;
     public float movementSpeed = 1f;
 

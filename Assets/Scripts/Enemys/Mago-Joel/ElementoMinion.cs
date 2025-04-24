@@ -36,7 +36,7 @@ public class ElementoMinion : MonoBehaviour
     {
         if (elemento == 0)
         {
-            Debug.Log("El Minion no tiene elemento");
+            // Debug.Log("El Minion no tiene elemento");
             iconoElemento.sprite = null;
             iconoElemento.color = Color.clear;
             Vida.color = Color.white;
@@ -45,7 +45,7 @@ public class ElementoMinion : MonoBehaviour
         }
         else if (elemento == 1)
         {
-            Debug.Log("El Minion es de fuego");
+            // Debug.Log("El Minion es de fuego");
             iconoElemento.sprite = iconosElementos[0];
             iconoElemento.color = Color.white;
             Vida.color = rojoPersonalizado;
@@ -56,7 +56,7 @@ public class ElementoMinion : MonoBehaviour
         }
         else if (elemento == 2)
         {
-            Debug.Log("El Minion es de agua");
+            // Debug.Log("El Minion es de agua");
             iconoElemento.sprite = iconosElementos[1];
             iconoElemento.color = Color.white;
             Vida.color = azulPersonalizado;
@@ -66,7 +66,7 @@ public class ElementoMinion : MonoBehaviour
         }
         else if (elemento == 3)
         {
-            Debug.Log("El Minion es de roca");
+            // Debug.Log("El Minion es de roca");
             iconoElemento.sprite = iconosElementos[2];
             iconoElemento.color = Color.white;
             Vida.color = marronPersonalizado;
@@ -76,7 +76,7 @@ public class ElementoMinion : MonoBehaviour
         }
         else if (elemento == 4)
         {
-            Debug.Log("El Minion es de electricidad");
+            // Debug.Log("El Minion es de electricidad");
             iconoElemento.sprite = iconosElementos[3];
             iconoElemento.color = Color.white;
             Vida.color = amarilloPersonalizado;
