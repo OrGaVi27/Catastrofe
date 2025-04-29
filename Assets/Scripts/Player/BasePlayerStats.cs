@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class BasePlayerStats : MonoBehaviour
 {
-    public float maxHealth = 100f ;
+    public float maxHealth = 100f;
     public float currentHealth;
+
+    public int maxMana = 5;
+    public int currentMana;
     public float damage = 0f;
 
     public void TakeDamage(float damageAmount)
@@ -27,7 +30,8 @@ public class BasePlayerStats : MonoBehaviour
         }
     }
 
-    public void Die(){
+    public void Die()
+    {
         Debug.Log("Player has died.");
-     }
+    }
 }
