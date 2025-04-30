@@ -20,6 +20,7 @@ public class MageBehaviour : BaseEnemyStats
     public EnemyVisionArea visionRange;
     public EnemyVisionArea defenseRange;
     public EnemyVisionArea safeSpaceRange;
+    public LayerMask whatIsEnemy;
 
     [Space]
     [Header("Healing")]
@@ -209,18 +210,41 @@ public class MageBehaviour : BaseEnemyStats
     /// </summary>
     /// <param name="playerPosition"></param>
     /// <returns></returns>
+
+    // private bool PlayerInLOS()
+    // {
+    //     RaycastHit LOS;
+    //     Vector3 direction = player.transform.position - transform.position;
+    //     Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, (int)QueryTriggerInteraction.Ignore);
+
+    //     if (LOS.collider.gameObject.CompareTag("Player"))
+    //     {   
+    //         return true;
+    //     }
+
+    //     return false;
+    // }
+
     private bool PlayerInLOS()
+{
+    RaycastHit LOS;
+    Vector3 direction = player.transform.position - transform.position;
+    
+    if (Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
     {
-        RaycastHit LOS;
-        Vector3 direction = player.transform.position - transform.position;
-        Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, (int)QueryTriggerInteraction.Ignore);
-        if (LOS.collider.gameObject.CompareTag("Player"))
+
+        if (LOS.collider.CompareTag("Player"))
         {
             return true;
         }
-
-        return false;
+        if (LOS.collider.CompareTag("Minion"))
+        {
+            return false;
+        }
     }
+
+    return false;
+}
 
     void Patroll()
     {

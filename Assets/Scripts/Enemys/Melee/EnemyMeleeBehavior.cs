@@ -5,20 +5,16 @@ using UnityEngine.AI;
 
 public class EnemyMeleeBehavior : MonoBehaviour
 {
-    // Movimiento
     public NavMeshAgent minionMele;
     public Transform player;
     public Transform targetToFollow;
     public LayerMask whatIsPlayer, whatIsGround;
 
-    // Rangos
-    public float rangoDeVision;
+    public GameObject rangoDeVision;
     public float rangoDeAtaque;
 
-    // Estados
     public bool estaEnEquipo = false;
-    public bool estaEnAreaDefensa = false;
-    public bool hayMagoCercaConHueco = false;
+    public bool estoyEnUnEquipo = false;
 
     private bool alreadyAttacked;
 
@@ -28,42 +24,22 @@ public class EnemyMeleeBehavior : MonoBehaviour
         minionMele = GetComponent<NavMeshAgent>();
     }
 
-    void Start()
-    {
-        // Collider colliderMinion = GetComponent<Collider>();
-        // GameObject magoObj = GameObject.FindWithTag("Mago");
-
-        // if (magoObj != null)
-        // {
-        //     Collider colliderMago = magoObj.GetComponent<Collider>();
-
-        //     if (colliderMinion != null && colliderMago != null)
-        //     {
-        //         Physics.IgnoreCollision(colliderMinion, colliderMago, true);
-        //     }
-        // }
-    }
-
-
     void Update()
     {
-        bool playerEnRangoVision = PlayerEnRangoVision();
-        bool playerEnRangoPegar = PlayerEnRangoPegar();
-
-        if (EstoyEnEquipo())
+        if (estoyEnUnEquipo)
         {
-            if (EstoyEnAreaDefensa())
+            if (EstoyEnAreaDeDefensa())
             {
-                if (playerEnRangoVision)
+                if (PlayerEnRangoVision())
                 {
-                    if (playerEnRangoPegar)
+                    if (PlayerEnRangoDePegar())
                         Pegar();
                     else
                         Perseguir();
                 }
                 else
                 {
-                    AcercarseAlPlayer();
+                    SeguirAliado();
                 }
             }
             else
@@ -73,26 +49,15 @@ public class EnemyMeleeBehavior : MonoBehaviour
         }
         else
         {
-            if (TengoMagoCercaConHueco())
+            if (HayMagoDisponibleCercano())
             {
                 AsignarseAMagoConMenosAliados();
-                if (playerEnRangoVision)
-                {
-                    if (playerEnRangoPegar)
-                        Pegar();
-                    else
-                        Perseguir();
-                }
-                else
-                {
-                    SeguirAliado();
-                }
             }
             else
             {
-                if (playerEnRangoVision)
+                if (PlayerEnRangoVision())
                 {
-                    if (playerEnRangoPegar)
+                    if (PlayerEnRangoDePegar())
                         Pegar();
                     else
                         Perseguir();
@@ -105,62 +70,91 @@ public class EnemyMeleeBehavior : MonoBehaviour
         }
     }
 
-    bool EstoyEnEquipo() => estaEnEquipo;
-
-    bool EstoyEnAreaDefensa() => estaEnAreaDefensa;
-
-    bool TengoMagoCercaConHueco() => hayMagoCercaConHueco;
-
     bool PlayerEnRangoVision()
     {
-        return Physics.CheckSphere(transform.position, rangoDeVision, whatIsPlayer);
+        SphereCollider sphCol = rangoDeVision.GetComponent<SphereCollider>();
+        float radio = sphCol.radius * rangoDeVision.transform.lossyScale.x;
+        return Physics.CheckSphere(transform.position, radio, whatIsPlayer);
     }
 
-    bool PlayerEnRangoPegar()
+    bool PlayerEnRangoDePegar()
     {
         return Physics.CheckSphere(transform.position, rangoDeAtaque, whatIsPlayer);
     }
 
-    void PosicionarseEnAreaDefensa()
+    bool EstoyEnAreaDeDefensa()
     {
-        Debug.Log("Me posiciono en el área de defensa...");
-        // minionMele.SetDestination(posiciónDefensiva);
+        if (targetToFollow == null) return false;
+        float distancia = Vector3.Distance(transform.position, targetToFollow.position);
+        float areaDefensa = 5f;
+        return distancia < areaDefensa;
+    }
+
+    bool HayMagoDisponibleCercano()
+    {
+        GameObject[] magos = GameObject.FindGameObjectsWithTag("Mago");
+        foreach (GameObject magoObj in magos)
+        {
+            MageBehaviour mago = magoObj.GetComponent<MageBehaviour>();
+            if (mago == null) continue;
+
+            foreach (GameObject miembro in mago.teamMembers)
+            {
+                if (miembro == null)
+                    return true;
+            }
+        }
+        return false;
     }
 
     void AsignarseAMagoConMenosAliados()
     {
-        Debug.Log("Me asigno al mago con menos aliados...");
-        // minionMele.SetDestination(magoConMenosAliados.position);
-    }
+        int menorCantidad = int.MaxValue;
+        MageBehaviour mejorMago = null;
 
-    void AcercarseAlPlayer()
-    {
-        Debug.Log("Me acerco al jugador...");
-        minionMele.SetDestination(player.position);
+        GameObject[] magos = GameObject.FindGameObjectsWithTag("Mago");
+
+        foreach (GameObject magoObj in magos)
+        {
+            MageBehaviour mago = magoObj.GetComponent<MageBehaviour>();
+            if (mago == null) continue;
+
+            int cantidadActual = 0;
+            foreach (GameObject miembro in mago.teamMembers)
+                if (miembro != null) cantidadActual++;
+
+            if (cantidadActual < 5 && cantidadActual < menorCantidad)
+            {
+                menorCantidad = cantidadActual;
+                mejorMago = mago;
+            }
+        }
+
+        if (mejorMago != null)
+        {
+            for (int i = 0; i < mejorMago.teamMembers.Length; i++)
+            {
+                if (mejorMago.teamMembers[i] == null)
+                {
+                    mejorMago.teamMembers[i] = gameObject;
+                    targetToFollow = mejorMago.transform;
+                    estoyEnUnEquipo = true;
+                    estaEnEquipo = true;
+                    break;
+                }
+            }
+        }
     }
 
     void Perseguir()
     {
-        Debug.Log("Persiguiendo al jugador...");
         minionMele.SetDestination(player.position);
-    }
-
-    void SeguirAliado()
-    {
-        if (targetToFollow != null)
-        {
-            Debug.Log("Siguiendo a aliado...");
-            minionMele.SetDestination(targetToFollow.position);
-        }
-        else
-        {
-            Debug.Log("No hay aliado asignado para seguir.");
-        }
+        Debug.Log("Persiguiend Player");
     }
 
     void Pegar()
     {
-        minionMele.SetDestination(transform.position); // Se detiene
+        minionMele.SetDestination(transform.position);
         transform.LookAt(player);
 
         if (!alreadyAttacked)
@@ -168,6 +162,24 @@ public class EnemyMeleeBehavior : MonoBehaviour
             alreadyAttacked = true;
             Debug.Log("¡Atacando al jugador!");
             Invoke(nameof(ResetAttack), 1.5f);
+        }
+    }
+
+    void SeguirAliado()
+    {
+        if (targetToFollow != null)
+        {
+            Debug.Log("Acompañando Aliado");
+            minionMele.SetDestination(targetToFollow.position);
+        }
+    }
+
+    void PosicionarseEnAreaDefensa()
+    {
+        if (targetToFollow != null)
+        {
+            Debug.Log("Estoy en posicion de area de defensa");
+            minionMele.SetDestination(targetToFollow.position);
         }
     }
 
