@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,6 +13,7 @@ public class MageBehaviour : BaseEnemyStats
     [Space]
     [Header("Team")]
     public GameObject[] teamMembers = new GameObject[5];
+    public bool fearMode = false;
 
     [Space]
     [Header("Vision Areas")]
@@ -24,6 +26,11 @@ public class MageBehaviour : BaseEnemyStats
     public float healCooldown = 5f;
     public float healAmount = 15f;
     private bool healReady = true;
+
+    [Space]
+    [Header("Animation")]
+    public Animator anim;
+
     private GameObject player;
     private NavMeshAgent nmAgent;
 
@@ -38,10 +45,12 @@ public class MageBehaviour : BaseEnemyStats
 
         player = GameObject.FindGameObjectWithTag("Player");
 
+        anim.SetInteger("State", 1);
+
         UpdateDestination();
 
         //PROVISIONAL
-        teamMembers[0] = gameObject;
+       // teamMembers[0] = gameObject;
 
 
     }
@@ -53,6 +62,7 @@ public class MageBehaviour : BaseEnemyStats
         {
             if (CheckTeam())
             {
+                fearMode = false;
                 if (currentHealth != maxHealth)
                 {
                     if (defenseRange.playerInRange)
@@ -79,7 +89,8 @@ public class MageBehaviour : BaseEnemyStats
             }
             else
             {
-                Debug.Log("FearMode: activated");
+                fearMode = true;
+                nmAgent.SetDestination(transform.position);
             }
         }
         else
@@ -93,6 +104,20 @@ public class MageBehaviour : BaseEnemyStats
 
             Patroll();
 
+        }
+
+
+        if (nmAgent.velocity != Vector3.zero)
+        {
+            anim.SetInteger("State", 2);
+        }
+        else if (!fearMode)
+        {
+            anim.SetInteger("State", 1);
+        }
+        else
+        { 
+            anim.SetInteger("State", 3);
         }
     }
 
@@ -128,6 +153,8 @@ public class MageBehaviour : BaseEnemyStats
     /// <param name="healAmount"></param>
     public void HealTeam(float healAmount)
     {
+        anim.SetInteger("State", 4);
+
         Heal(healAmount);
         foreach (GameObject teamMember in teamMembers)
         {
