@@ -20,7 +20,6 @@ public class MageBehaviour : BaseEnemyStats
     public EnemyVisionArea visionRange;
     public EnemyVisionArea defenseRange;
     public EnemyVisionArea safeSpaceRange;
-    public LayerMask whatIsEnemy;
 
     [Space]
     [Header("Healing")]
@@ -236,10 +235,6 @@ public class MageBehaviour : BaseEnemyStats
         if (LOS.collider.CompareTag("Player"))
         {
             return true;
-        }
-        if (LOS.collider.CompareTag("Minion"))
-        {
-            return false;
         }
     }
 
