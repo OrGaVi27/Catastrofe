@@ -25,7 +25,7 @@ public class BarradeMana : MonoBehaviour
         switch (playerStats.currentMana)
         {
             case 0:
-                Debug.Log("No tienes mana");
+                // Debug.Log("No tienes mana");
                 foreach (var mana in manaSrpite)
                 {
                     mana.color = Color.clear;
@@ -33,7 +33,7 @@ public class BarradeMana : MonoBehaviour
                 break;
 
             default:
-                Debug.Log($"Tienes {playerStats.currentMana} de mana");
+                // Debug.Log($"Tienes {playerStats.currentMana} de mana");
                 for (int i = 0; i < manaSrpite.Length; i++)
                 {
                     if (i < playerStats.currentMana)
