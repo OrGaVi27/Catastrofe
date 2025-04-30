@@ -16,6 +16,7 @@ public partial class PlayerStateManager : MonoBehaviour
     {
         currentState = idleState;
         currentState.EnterState(this);
+        baseStats = GetComponent<BasePlayerStats>();
     }
 
     // Update is called once per frame
@@ -51,6 +52,16 @@ public partial class PlayerStateManager : MonoBehaviour
         isometricImput = referenceMatrix.MultiplyPoint3x4(moveVector);
 
         controller.Move(isometricImput * playerSpeed * Time.deltaTime);
+
+        Rotate();
+    }
+
+    public void Move(float speed)
+    {
+        referenceMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
+        isometricImput = referenceMatrix.MultiplyPoint3x4(moveVector);
+
+        controller.Move(isometricImput * speed * Time.deltaTime);
 
         Rotate();
     }

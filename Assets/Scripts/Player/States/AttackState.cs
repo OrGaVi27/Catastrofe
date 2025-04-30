@@ -14,5 +14,7 @@ public class AttackState : PlayerBaseState
         {
             player.SwitchState(player.idleState);
         }
+
+        player.Move(player.attackMovSpeed);
     }
 }

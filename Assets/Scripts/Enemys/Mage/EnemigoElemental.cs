@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class EnemigoElemental : MonoBehaviour
 {
     [Header("Area")]
-    public float tamañoArea = 8;
+    public float tamañoArea;
     public GameObject particulas;
     public GameObject particulasExterior;
 
@@ -87,10 +87,10 @@ public class EnemigoElemental : MonoBehaviour
 
         // Actualizar el radio del shape de las partículas
         var shapeParticulas = particulas.GetComponent<ParticleSystem>().shape;
-        shapeParticulas.radius = (tamañoArea / 2.6f);
+        shapeParticulas.radius = tamañoArea / 2;
 
         var shapeParticulasExterior = particulasExterior.GetComponent<ParticleSystem>().shape;
-        shapeParticulasExterior.radius = (tamañoArea / 2.6f);
+        shapeParticulasExterior.radius = tamañoArea / 2f;
 
         if (muerte == true)
         {

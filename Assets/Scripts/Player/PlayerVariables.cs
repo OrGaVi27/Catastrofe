@@ -35,8 +35,10 @@ public partial class PlayerStateManager
     public bool attackIsCharging = false;
     public float attackChargeTime;
     public float attackStartTime;
+    public float attackMovSpeed;
 
     private Vector3 gravityVector;
     private Vector3 isometricImput;
     private Matrix4x4 referenceMatrix;
+    [HideInInspector] public BasePlayerStats baseStats;
 }

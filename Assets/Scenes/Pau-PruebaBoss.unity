@@ -166,6 +166,13 @@ MonoBehaviour:
   dashIsOn: 0
   dashSpeed: 17
   dashTime: 0.2
+  dashCooldown: 0
+  isAttacking: 0
+  attackIsCharging: 0
+  attackChargeTime: 0
+  attackStartTime: 0
+  attackMovSpeed: 0
+  baseStats: {fileID: 0}
 --- !u!143 &104798647
 CharacterController:
   m_ObjectHideFlags: 0

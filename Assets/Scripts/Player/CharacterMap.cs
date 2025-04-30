@@ -11,7 +11,7 @@ public partial class PlayerStateManager
     }
     public void OnDash(InputValue value)
     {
-        if (!dashIsOn && dashStartTime + dashTime + dashCooldown < Time.time)
+        if (!dashIsOn && dashStartTime + dashTime + dashCooldown < Time.time && controller.isGrounded)
         {
             dashIsOn = true;
             dashStartTime = Time.time;
@@ -19,7 +19,7 @@ public partial class PlayerStateManager
     }
     public void OnAttack(InputValue value)
     {
-        if (value.isPressed)
+        if (value.isPressed && controller.isGrounded)
         {
             isAttacking = true;
             attackIsCharging = true;
