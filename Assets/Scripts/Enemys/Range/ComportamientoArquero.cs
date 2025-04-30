@@ -90,22 +90,25 @@ public class ComportamientoArquero : MonoBehaviour
         // Hacer que el arquero siempre mire al jugador
         if (visionRange.playerInRange && isLookingToPlayer)
         {
-            Vector3 direccionHaciaJugador = player.transform.position - transform.position;
+            Vector3 direccionHaciaJugador = (player.transform.position - transform.position).normalized;
             Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionHaciaJugador);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotacionObjetivo, Time.deltaTime * 5f); // Ajusta el factor de suavidad (5f)
-
         }
+        
 
         //Cooldown entre ataques
-        if (tiempoUltimoDisparo >= tiempoEntreDisparos)
-        {
-            puedeDisparar = true;
-            tiempoUltimoDisparo = 0f;
-        }
-        else if (tiempoUltimoDisparo < tiempoEntreDisparos)
+        if (tiempoUltimoDisparo <= tiempoEntreDisparos)
         {
             tiempoUltimoDisparo += Time.deltaTime;
+            animator.SetBool("CanAttack", false);
+
         }
+        else if (tiempoUltimoDisparo > tiempoEntreDisparos)
+        {
+            puedeDisparar = true;
+
+        }
+
 
         if (inTeam)
         {
@@ -113,17 +116,17 @@ public class ComportamientoArquero : MonoBehaviour
             {
                 if (elementoMinion.elemento > 0)
                 {
-                    Debug.Log("Atacar");
+                    // Debug.Log("Atacar");
                     DispararFlecha();
                 }
                 else
                 {
-                    Debug.Log("Vuelvo al area de defensa");
+                    // Debug.Log("Vuelvo al area de defensa");
                 }
             }
             else
             {
-                Debug.Log("Defender");
+                // Debug.Log("Defender");
             }
         }
         else
@@ -131,7 +134,7 @@ public class ComportamientoArquero : MonoBehaviour
             if (attackRange.magesInRange)
             {
                 //Falta añadir la logica de mirar todos los magos que tiene cerca y añadirse al que menos minions tenga
-                Debug.Log("Se asigna a un mago");
+                // Debug.Log("Se asigna a un mago");
                 inTeam = true;
             }
             else
@@ -142,26 +145,24 @@ public class ComportamientoArquero : MonoBehaviour
                     {
                         if (safeSpaceRange.playerInRange)
                         {
-                            Debug.Log("Huir");
-                            // puedeDisparar = false;
+                            // Debug.Log("Huir");
                             HuirDelJugador();
                         }
                         else
                         {
-                            Debug.Log("Atacar");
+                            // Debug.Log("Atacar");
                             DispararFlecha();
                         }
                     }
                     else
                     {
-                        Debug.Log("Perseguir");
-                        // puedeDisparar = false;
+                        // Debug.Log("Perseguir");
                         PerseguirAlJugador();
                     }
                 }
                 else
                 {
-                    Debug.Log("Patrullar");
+                    // Debug.Log("Patrullar");
                 }
             }
         }
@@ -172,7 +173,6 @@ public class ComportamientoArquero : MonoBehaviour
         animator.SetBool("Attacking", false);
 
         isLookingToPlayer = false;
-        tiempoUltimoDisparo = 0f;
 
         // Calcular dirección opuesta al jugador
         Vector3 direccionAlejamiento = (transform.position - player.transform.position).normalized;
@@ -194,8 +194,6 @@ public class ComportamientoArquero : MonoBehaviour
 
         isLookingToPlayer = true;
 
-        tiempoUltimoDisparo = 0f;
-
         Vector3 direccionPerseguir = (transform.position - player.transform.position).normalized;
         // Vector3 posicionFinal = transform.position - direccionPerseguir * 3f;
         Vector3 posicionFinal = player.transform.position + direccionPerseguir * 10f;
@@ -209,14 +207,16 @@ public class ComportamientoArquero : MonoBehaviour
     {
         if (puedeDisparar == true && isMoving == false)
         {
+            tiempoUltimoDisparo = 0;
             isLookingToPlayer = true;
+
+            animator.SetBool("CanAttack", true);
             animator.SetBool("Attacking", true);
 
             //La flecha se instanciará en el script de la flecha y se llama en la animacion
 
             puedeDisparar = false;
 
-            // InstanciarFlecha();
 
         }
 
