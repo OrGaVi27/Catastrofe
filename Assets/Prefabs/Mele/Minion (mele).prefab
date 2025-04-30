@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6829975621113290804}
   - component: {fileID: 2555875011903306278}
   - component: {fileID: 508825985921003228}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Vision Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,9 +83,9 @@ GameObject:
   - component: {fileID: 8075069779597033110}
   - component: {fileID: 2024155847730372198}
   - component: {fileID: 1321175846564701564}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Minion (mele)
-  m_TagString: Untagged
+  m_TagString: Minion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -189,9 +189,9 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3.5
+  m_Speed: 6
   m_Acceleration: 8
-  avoidancePriority: 60
+  avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -242,9 +242,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   rangoDeVision: {fileID: 4799739773480411771}
-  rangoDeAtaque: 2
+  rangoDeAtaque: 2.5
   estaEnEquipo: 0
-  estaEnAreaDefensa: 0
-  hayMagoCercaConHueco: 1
   estoyEnUnEquipo: 0
-  magoConMenosAliados: {fileID: 0}

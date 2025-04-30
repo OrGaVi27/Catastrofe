@@ -84,11 +84,11 @@ GameObject:
   - component: {fileID: 6268628808784324404}
   m_Layer: 0
   m_Name: Mage
-  m_TagString: Untagged
+  m_TagString: Mago
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &615265719084956167
 Transform:
   m_ObjectHideFlags: 0
@@ -223,7 +223,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   teamMembers:
   - {fileID: 0}
   - {fileID: 0}
@@ -235,7 +234,6 @@ MonoBehaviour:
   safeSpaceRange: {fileID: 6523963492157491471}
   healCooldown: 5
   healAmount: 15
-  player: {fileID: 0}
 --- !u!1 &5313759692885505598
 GameObject:
   m_ObjectHideFlags: 0
