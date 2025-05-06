@@ -3745,6 +3745,8 @@ MonoBehaviour:
   attackIsCharging: 0
   attackChargeTime: 0
   attackStartTime: 0
+  attackMovSpeed: 0
+  baseStats: {fileID: 0}
 --- !u!143 &104798647
 CharacterController:
   m_ObjectHideFlags: 0
@@ -20917,6 +20919,7 @@ GameObject:
   - component: {fileID: 572064494}
   - component: {fileID: 572064493}
   - component: {fileID: 572064492}
+  - component: {fileID: 572064495}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
