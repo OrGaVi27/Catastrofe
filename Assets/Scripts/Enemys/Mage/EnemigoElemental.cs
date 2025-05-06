@@ -18,16 +18,10 @@ public class EnemigoElemental : MonoBehaviour
     public bool electricidad = false;
 
 
-    [Header("Muerte manual")]
-    public bool muerte = false;
-    public int deathSpeed = 40;
-
-
-    [Header("Materiales elementos")]
-    public Material[] materialesElementos;
+    // [Header("Materiales elementos")]
+    // public Material[] materialesElementos;
 
     [Header("Enemigo grande")]
-    public GameObject enemigoGrande;
     private new Renderer renderer;
 
     [Header("Color particulas")]
@@ -40,7 +34,6 @@ public class EnemigoElemental : MonoBehaviour
     void Start()
     {
 
-        renderer = enemigoGrande.GetComponent<Renderer>();
 
         ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
         ColorUtility.TryParseHtmlString("#B07C66", out marronPersonalizado);
@@ -76,18 +69,20 @@ public class EnemigoElemental : MonoBehaviour
         }
 
         // Asignar el material correspondiente
-        renderer.material = materialesElementos[elementoAleatorio];
+        // renderer.material = materialesElementos[elementoAleatorio];
 
         // Configurar el color de las partículas
         var particleSystem = particulas.GetComponent<ParticleSystem>();
         var main = particleSystem.main;
         main.startColor = colorElemento;
         particulas.GetComponent<Renderer>().material.color = colorElemento;
+        Debug.Log("Color de las partículas: " + colorElemento);
 
         var particleSystemExterior = particulasExterior.GetComponent<ParticleSystem>();
         var mainExterior = particleSystemExterior.main;
         mainExterior.startColor = colorElemento;
         particulasExterior.GetComponent<Renderer>().material.color = colorElemento;
+        Debug.Log("Color de las partículas exterior: " + colorElemento);
     }
 
     // Update is called once per frame
@@ -102,22 +97,5 @@ public class EnemigoElemental : MonoBehaviour
         var shapeParticulasExterior = particulasExterior.GetComponent<ParticleSystem>().shape;
         shapeParticulasExterior.radius = tamañoArea / 2f;
 
-        if (muerte == true)
-        {
-            Death();
-        }
-    }
-
-    public void Death()
-    {
-        if (tamañoArea > 0)
-        {
-            tamañoArea -= Time.deltaTime * deathSpeed;
-            transform.localScale = new Vector3(tamañoArea, transform.localScale.y, tamañoArea);
-        }
-        else
-        {
-            Destroy(enemigoGrande);
-        }
     }
 }

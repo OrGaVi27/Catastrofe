@@ -7,7 +7,6 @@ public class ComportamientoArquero : MonoBehaviour
 {
     [Header("Arquero basico")]
     public GameObject player;
-    public bool inTeam = false;
     public bool isMoving = false;
     public bool isLookingToPlayer = false;
     public NavMeshAgent nmAgent;
@@ -39,6 +38,11 @@ public class ComportamientoArquero : MonoBehaviour
     private float tiempoIdle = 0f; // Temporizador
     public int idleAlt = 0;
 
+
+    [Header("Comportamiento Mago")]
+    public Transform targetToFollow;
+    public bool estoyEnUnEquipo = false;
+    public bool estaEnEquipo = false;
 
 
     // Start is called before the first frame update
@@ -94,7 +98,7 @@ public class ComportamientoArquero : MonoBehaviour
             Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionHaciaJugador);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotacionObjetivo, Time.deltaTime * 5f); // Ajusta el factor de suavidad (5f)
         }
-        
+
 
         //Cooldown entre ataques
         if (tiempoUltimoDisparo <= tiempoEntreDisparos)
@@ -110,7 +114,7 @@ public class ComportamientoArquero : MonoBehaviour
         }
 
 
-        if (inTeam)
+        if (estoyEnUnEquipo)
         {
             if (attackRange.playerInRange)
             {
@@ -133,9 +137,8 @@ public class ComportamientoArquero : MonoBehaviour
         {
             if (attackRange.magesInRange)
             {
-                //Falta añadir la logica de mirar todos los magos que tiene cerca y añadirse al que menos minions tenga
                 // Debug.Log("Se asigna a un mago");
-                inTeam = true;
+                AsignarseAMagoConMenosAliados();
             }
             else
             {
@@ -163,6 +166,7 @@ public class ComportamientoArquero : MonoBehaviour
                 else
                 {
                     // Debug.Log("Patrullar");
+                    SeguirAliado();
                 }
             }
         }
@@ -202,7 +206,6 @@ public class ComportamientoArquero : MonoBehaviour
         nmAgent.SetDestination(posicionFinal);
     }
 
-
     public void DispararFlecha()
     {
         if (puedeDisparar == true && isMoving == false)
@@ -220,6 +223,54 @@ public class ComportamientoArquero : MonoBehaviour
 
         }
 
+    }
+
+    void AsignarseAMagoConMenosAliados()
+    {
+        int menorCantidad = int.MaxValue;
+        MageBehaviour mejorMago = null;
+
+        GameObject[] magos = GameObject.FindGameObjectsWithTag("Mago");
+
+        foreach (GameObject magoObj in magos)
+        {
+            MageBehaviour mago = magoObj.GetComponent<MageBehaviour>();
+            if (mago == null) continue;
+
+            int cantidadActual = 0;
+            foreach (GameObject miembro in mago.teamMembers)
+                if (miembro != null) cantidadActual++;
+
+            if (cantidadActual < 5 && cantidadActual < menorCantidad)
+            {
+                menorCantidad = cantidadActual;
+                mejorMago = mago;
+            }
+        }
+
+        if (mejorMago != null)
+        {
+            for (int i = 0; i < mejorMago.teamMembers.Length; i++)
+            {
+                if (mejorMago.teamMembers[i] == null)
+                {
+                    mejorMago.teamMembers[i] = gameObject;
+                    targetToFollow = mejorMago.transform;
+                    estoyEnUnEquipo = true;
+                    estaEnEquipo = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    void SeguirAliado()
+    {
+        if (targetToFollow != null)
+        {
+            Debug.Log("Acompañando Aliado");
+            nmAgent.SetDestination(targetToFollow.position);
+        }
     }
 
 
