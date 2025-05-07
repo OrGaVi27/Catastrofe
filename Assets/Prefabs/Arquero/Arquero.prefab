@@ -1188,6 +1188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75a08aac45ebb4489b712860e850fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  damage: 10
+  movementSpeed: 1
   player: {fileID: 1186758457141217327, guid: 6be14fc055c43f341a1c01549e3b56fa, type: 3}
   isMoving: 0
   isLookingToPlayer: 0
@@ -1197,7 +1201,6 @@ MonoBehaviour:
   safeSpaceRange: {fileID: 8975460043068518324}
   elementoMinion: {fileID: 2236301409729590851}
   distanciaAlejamiento: 5
-  damage: 10
   tiempoEntreDisparos: 2
   puedeDisparar: 1
   tiempoUltimoDisparo: 0
@@ -1207,6 +1210,7 @@ MonoBehaviour:
   targetToFollow: {fileID: 0}
   estoyEnUnEquipo: 0
   estaEnEquipo: 0
+  distanciaMago: 10
 --- !u!114 &2236301409729590851
 MonoBehaviour:
   m_ObjectHideFlags: 0

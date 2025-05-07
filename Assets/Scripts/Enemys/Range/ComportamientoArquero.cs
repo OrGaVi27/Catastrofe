@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ComportamientoArquero : MonoBehaviour
+public class ComportamientoArquero : BaseEnemyStats
 {
     [Header("Arquero basico")]
     public GameObject player;
@@ -27,7 +27,6 @@ public class ComportamientoArquero : MonoBehaviour
 
 
     [Header("Ataque a distancia")]
-    public float damage = 10f;
     public float tiempoEntreDisparos = 1.5f;
     public bool puedeDisparar = true;
     public float tiempoUltimoDisparo = 0f;
@@ -43,12 +42,14 @@ public class ComportamientoArquero : MonoBehaviour
     public Transform targetToFollow;
     public bool estoyEnUnEquipo = false;
     public bool estaEnEquipo = false;
+    public float distanciaMago = 10f;
 
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        nmAgent.speed = movementSpeed;
     }
 
     // Update is called once per frame
@@ -116,29 +117,49 @@ public class ComportamientoArquero : MonoBehaviour
 
         if (estoyEnUnEquipo)
         {
-            if (attackRange.playerInRange)
+            if (safeSpaceRange.playerInRange)
             {
-                if (elementoMinion.elemento > 0)
-                {
-                    // Debug.Log("Atacar");
-                    DispararFlecha();
-                }
-                else
-                {
-                    // Debug.Log("Vuelvo al area de defensa");
-                }
+                // Debug.Log("Huir");
+                HuirDelJugador();
             }
             else
             {
-                // Debug.Log("Defender");
+                if (attackRange.playerInRange)
+                {
+                    if (elementoMinion.elemento > 0)
+                    {
+                        // Debug.Log("Atacar");
+                        DispararFlecha();
+                    }
+                    else
+                    {
+                        if (targetToFollow != null)
+                        {
+                            Debug.Log("Vuelvo al area de defensa");
+                            nmAgent.SetDestination(targetToFollow.position);
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (targetToFollow != null)
+                    {
+                        Debug.Log("Defender");
+                        nmAgent.SetDestination(targetToFollow.position);
+                    }
+                }
             }
+
         }
         else
         {
-            if (attackRange.magesInRange)
+            if (!estaEnEquipo && HayMagoDisponibleCercano(distanciaMago))
             {
-                // Debug.Log("Se asigna a un mago");
-                AsignarseAMagoConMenosAliados();
+
+                Debug.Log("Se asigna a un mago");
+                AsignarseAMagoConMenosAliados(distanciaMago);
+
             }
             else
             {
@@ -225,7 +246,29 @@ public class ComportamientoArquero : MonoBehaviour
 
     }
 
-    void AsignarseAMagoConMenosAliados()
+    bool HayMagoDisponibleCercano(float rango = 10f)
+    {
+        GameObject[] magos = GameObject.FindGameObjectsWithTag("Mago");
+
+        foreach (GameObject magoObj in magos)
+        {
+            float distancia = Vector3.Distance(transform.position, magoObj.transform.position);
+            if (distancia > rango) continue;
+
+            MageBehaviour mago = magoObj.GetComponent<MageBehaviour>();
+            if (mago == null) continue;
+
+            foreach (GameObject miembro in mago.teamMembers)
+            {
+                if (miembro == null)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    void AsignarseAMagoConMenosAliados(float rango = 10f)
     {
         int menorCantidad = int.MaxValue;
         MageBehaviour mejorMago = null;
@@ -234,6 +277,9 @@ public class ComportamientoArquero : MonoBehaviour
 
         foreach (GameObject magoObj in magos)
         {
+            float distancia = Vector3.Distance(transform.position, magoObj.transform.position);
+            if (distancia > rango) continue;
+
             MageBehaviour mago = magoObj.GetComponent<MageBehaviour>();
             if (mago == null) continue;
 
