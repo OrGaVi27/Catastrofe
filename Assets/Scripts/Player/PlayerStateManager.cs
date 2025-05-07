@@ -88,16 +88,18 @@ public partial class PlayerStateManager : MonoBehaviour
 
     public void Attack()
     {
+        isAttacking = false;
+
         if (attackChargeTime + attackStartTime > Time.time)
         {
-            Debug.Log("normal attack");
+            //Debug.Log("normal attack");
+            anim.SetBool("StrongAttack", false);
         }
         else
         {
-            Debug.Log("STRONG ATTACK!");
+            //Debug.Log("STRONG ATTACK!");
+            anim.SetBool("StrongAttack", true);
         }
-
-        isAttacking = false;
     }
 
     #endregion

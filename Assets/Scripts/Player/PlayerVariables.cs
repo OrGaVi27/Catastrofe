@@ -37,6 +37,11 @@ public partial class PlayerStateManager
     public float attackStartTime;
     public float attackMovSpeed;
 
+    [Space]
+    [Header("Animation")]
+    public Animator anim;
+
+
     private Vector3 gravityVector;
     private Vector3 isometricImput;
     private Matrix4x4 referenceMatrix;
