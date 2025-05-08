@@ -9,7 +9,7 @@ public partial class PlayerStateManager
         moveVector.x = inputVector.x;
         moveVector.z = inputVector.y;
     }
-    public void OnDash(InputValue value)
+    public void OnDash()
     {
         if (!dashIsOn && dashStartTime + dashTime + dashCooldown < Time.time && controller.isGrounded)
         {
@@ -29,6 +29,9 @@ public partial class PlayerStateManager
         if (!value.isPressed)
         {
             attackIsCharging = false;
+            attackStartTime = Time.time;
+            noOfAttacks++;
+            noOfAttacks = Mathf.Clamp(noOfAttacks, 0, 2);
         }
     }
 }

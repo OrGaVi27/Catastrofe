@@ -34,8 +34,11 @@ public partial class PlayerStateManager
     public bool isAttacking = false;
     public bool attackIsCharging = false;
     public float attackChargeTime;
-    public float attackStartTime;
+    private float attackStartTime;
+    private float attackInputTime;
     public float attackMovSpeed;
+    public float maxComboDelay = 0;
+    [HideInInspector] public static int noOfAttacks;
 
     [Space]
     [Header("Animation")]
