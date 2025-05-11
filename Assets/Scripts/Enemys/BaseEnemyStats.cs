@@ -45,10 +45,10 @@ public class BaseEnemyStats : MonoBehaviour
     {
         animator.SetBool("Death", true);
 
-        if (nmAgent != null)
+       /*  if (nmAgent != null)
         {
             nmAgent.enabled = false;
-        }
+        } */
 
         // Opcional: Desactivar colisiones si es necesario
         Collider collider = GetComponent<Collider>();
