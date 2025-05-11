@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -32,7 +31,6 @@ public class MageBehaviour : BaseEnemyStats
     public Animator anim;
 
     private GameObject player;
-    private NavMeshAgent nmAgent;
 
 
     void Start()
@@ -243,7 +241,7 @@ public class MageBehaviour : BaseEnemyStats
 
     void Patroll()
     {
-        if (Vector3.Distance(transform.position, patrollTarget) < 1.5f)
+        if (Vector3.Distance(transform.position, patrollTarget) < 3f)
         {
             IteratePatrollPointIndex();
             UpdateDestination();
