@@ -134,7 +134,6 @@ public partial class PlayerStateManager : MonoBehaviour
         if(Time.time - attackInputTime > maxComboDelay)
         {
             noOfAttacks = 0;
-            anim.SetLayerWeight(1, 0.01f);
         }
     }
 

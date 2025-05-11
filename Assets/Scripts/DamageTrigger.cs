@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DamageTrigger : MonoBehaviour
@@ -14,11 +11,15 @@ public class DamageTrigger : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger Entered: " + other.gameObject.name);
-        if (other.CompareTag(targetTag))
+        /*  if (other.CompareTag(targetTag))
+         {
+             Debug.Log("Damage Triggered: " + other.gameObject.name);
+             other.gameObject.GetComponent<MageBehaviour>().TakeDamage(damageAmount);
+         } */
+
+        if (other.gameObject.GetComponent<BaseEnemyStats>() != null)
         {
-            Debug.Log("Damage Triggered: " + other.gameObject.name);
-            other.gameObject.GetComponent<MageBehaviour>().TakeDamage(damageAmount);
+            other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(damageAmount);
         }
     }
 
