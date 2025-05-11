@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +31,7 @@ public partial class PlayerStateManager : MonoBehaviour
         currentState.UpdateState(this);
 
         ApplyGravity();
+        AttackAnimUpdate();
     }
 
     public void SwitchState(PlayerBaseState newState)
@@ -88,16 +90,51 @@ public partial class PlayerStateManager : MonoBehaviour
 
     public void Attack()
     {
+
+        if(noOfAttacks == 1)
+        {
+            anim.SetBool("Attack1", true);
+        }
+        if (noOfAttacks >= 2 && anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
+        {
+            anim.SetBool("Attack1", false);
+            anim.SetBool("Attack2", true);
+        }
+        
+
         if (attackChargeTime + attackStartTime > Time.time)
         {
-            Debug.Log("normal attack");
+            //Debug.Log("normal attack");
+            anim.SetBool("StrongAttack", false);
         }
         else
         {
-            Debug.Log("STRONG ATTACK!");
+            //Debug.Log("STRONG ATTACK!");
+            anim.SetBool("StrongAttack", true);
         }
 
-        isAttacking = false;
+        if (anim.GetCurrentAnimatorStateInfo(1).IsName("-"))
+        {
+            isAttacking = false;
+        }
+    }
+
+    public void AttackAnimUpdate()
+    {
+        if (anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
+        {
+            anim.SetBool("Attack1", false);
+        }
+        if (anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack2"))
+        {
+            anim.SetBool("Attack2", false);
+            noOfAttacks = 0;
+        }
+
+        if(Time.time - attackInputTime > maxComboDelay)
+        {
+            noOfAttacks = 0;
+        }
     }
 
     #endregion
