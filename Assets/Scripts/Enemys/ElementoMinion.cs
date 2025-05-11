@@ -90,6 +90,7 @@ public class ElementoMinion : MonoBehaviour
     {
         if (elemento == 0 && other.gameObject.tag == "EnemigoElemental")
         {
+            Debug.Log("El Minion ha tocado a un enemigo elemental");
             EnemigoElemental enemigo = other.GetComponent<EnemigoElemental>();
 
             if (enemigo.fuego)

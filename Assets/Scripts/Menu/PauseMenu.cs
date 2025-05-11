@@ -63,7 +63,7 @@ public class PauseMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(selectedButton);
     }
 
-    public void Volver(GameObject panel)
+    public void DesactivarEscena(GameObject panel)
     {
         panel.SetActive(false);
     }

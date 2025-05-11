@@ -1000,6 +1000,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1840342180127769400}
   - component: {fileID: 6010468584295621288}
+  - component: {fileID: 2825381722921696339}
   m_Layer: 0
   m_Name: Arquero
   m_TagString: Untagged
@@ -1036,7 +1037,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4880263369946412194}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1049,6 +1050,42 @@ NavMeshAgent:
   m_BaseOffset: 0.8
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2825381722921696339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4880263369946412194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c75a08aac45ebb4489b712860e850fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  damage: 0
+  movementSpeed: 6.5
+  dead: 0
+  animator: {fileID: 2556365148579501376}
+  nmAgent: {fileID: 6010468584295621288}
+  player: {fileID: 0}
+  isMoving: 0
+  isLookingToPlayer: 0
+  visionRange: {fileID: 2788040719239263534}
+  attackRange: {fileID: 8592001534874714254}
+  safeSpaceRange: {fileID: 8975460043068518324}
+  elementoMinion: {fileID: 2236301409729590851}
+  distanciaAlejamiento: 2
+  tiempoEntreDisparos: 1.5
+  puedeDisparar: 1
+  tiempoUltimoDisparo: 0
+  flechaPrefab: {fileID: 6487266126422603919, guid: af70f6be5bb045542bd36e327e90b1b4, type: 3}
+  idleAlt: 0
+  targetToFollow: {fileID: 0}
+  estoyEnUnEquipo: 0
+  estaEnEquipo: 0
+  distanciaMago: 10
 --- !u!1 &5038009718143157150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,7 +1098,6 @@ GameObject:
   - component: {fileID: 2175760816819295684}
   - component: {fileID: 1950801086273580218}
   - component: {fileID: 2215270939230362440}
-  - component: {fileID: 5139917026993949448}
   - component: {fileID: 3542253375709869421}
   - component: {fileID: 2236301409729590851}
   m_Layer: 0
@@ -1085,7 +1121,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8474125619699437370}
-  - {fileID: 8978311592092969925}
   m_Father: {fileID: 1840342180127769400}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2175760816819295684
@@ -1161,22 +1196,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5139917026993949448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5038009718143157150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60fa8d83bc0769d40a9e1a87deafabfb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  damage: 0
-  movementSpeed: 1
 --- !u!114 &3542253375709869421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1184,28 +1203,35 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5038009718143157150}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c75a08aac45ebb4489b712860e850fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  damage: 10
+  movementSpeed: 6.5
+  dead: 0
+  animator: {fileID: 2556365148579501376}
+  nmAgent: {fileID: 6010468584295621288}
   player: {fileID: 1186758457141217327, guid: 6be14fc055c43f341a1c01549e3b56fa, type: 3}
-  inTeam: 0
   isMoving: 0
   isLookingToPlayer: 0
-  nmAgent: {fileID: 6010468584295621288}
   visionRange: {fileID: 2788040719239263534}
   attackRange: {fileID: 8592001534874714254}
   safeSpaceRange: {fileID: 8975460043068518324}
   elementoMinion: {fileID: 2236301409729590851}
   distanciaAlejamiento: 5
-  damage: 10
   tiempoEntreDisparos: 2
   puedeDisparar: 1
   tiempoUltimoDisparo: 0
   flechaPrefab: {fileID: 6487266126422603919, guid: af70f6be5bb045542bd36e327e90b1b4, type: 3}
-  animator: {fileID: 2556365148579501376}
   idleAlt: 0
+  targetToFollow: {fileID: 0}
+  estoyEnUnEquipo: 0
+  estaEnEquipo: 0
+  distanciaMago: 10
 --- !u!114 &2236301409729590851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1676,7 +1702,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: bc79b2bae793395469687f4a30cb5c67, type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 9000000, guid: e92abda9b6da8da4bbc6b3ee23ac3d6a, type: 2}
+      objectReference: {fileID: 9000000, guid: 8ad39be1344eee244a0834ff649bb517, type: 2}
     - target: {fileID: 5866666021909216657, guid: bc79b2bae793395469687f4a30cb5c67, type: 3}
       propertyPath: m_Controller
       value: 
@@ -1735,97 +1761,3 @@ MonoBehaviour:
   player: {fileID: 0}
   flechaPrefab: {fileID: 6487266126422603919, guid: af70f6be5bb045542bd36e327e90b1b4, type: 3}
   damage: 10
---- !u!1001 &8868686832574155822
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 2308704426209266571}
-    m_Modifications:
-    - target: {fileID: -9070964651969378275, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b27906d83ee40c9439f90f4b3d1c2b31, type: 2}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.13604134
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.13604134
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.13604134
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.00030427
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -2708497312253239672, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b27906d83ee40c9439f90f4b3d1c2b31, type: 2}
-    - target: {fileID: 919132149155446097, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_Name
-      value: Arquero Modelo
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2585215151237025604, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b27906d83ee40c9439f90f4b3d1c2b31, type: 2}
-    - target: {fileID: 6054140826855891635, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b27906d83ee40c9439f90f4b3d1c2b31, type: 2}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
---- !u!4 &8978311592092969925 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e45b8f9969df503488c86a880aaa09b7, type: 3}
-  m_PrefabInstance: {fileID: 8868686832574155822}
-  m_PrefabAsset: {fileID: 0}

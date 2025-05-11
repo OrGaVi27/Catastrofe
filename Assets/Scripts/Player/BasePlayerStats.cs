@@ -12,7 +12,7 @@ public class BasePlayerStats : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
-        if (isInvencible)
+        if (!isInvencible)
         {
             currentHealth -= damageAmount;
 

@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ComportamientoArquero : MonoBehaviour
+public class ComportamientoArquero : BaseEnemyStats
 {
     [Header("Arquero basico")]
     public GameObject player;
-    public bool inTeam = false;
     public bool isMoving = false;
     public bool isLookingToPlayer = false;
-    public NavMeshAgent nmAgent;
 
 
     [Header("Rangos")]
@@ -28,31 +26,40 @@ public class ComportamientoArquero : MonoBehaviour
 
 
     [Header("Ataque a distancia")]
-    public float damage = 10f;
     public float tiempoEntreDisparos = 1.5f;
     public bool puedeDisparar = true;
     public float tiempoUltimoDisparo = 0f;
     public GameObject flechaPrefab;
 
     [Header("Animaciones")]
-    public Animator animator;
     private float tiempoIdle = 0f; // Temporizador
     public int idleAlt = 0;
 
+
+    [Header("Comportamiento Mago")]
+    public Transform targetToFollow;
+    public bool estoyEnUnEquipo = false;
+    public bool estaEnEquipo = false;
+    public float distanciaMago = 10f;
 
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        nmAgent.speed = movementSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (dead == true)
+        {
+            Debug.Log("Muerto");
+            Die();
+        }
 
         tiempoIdle += Time.deltaTime;
-
 
         if (tiempoIdle >= 5f)
         {
@@ -74,12 +81,12 @@ public class ComportamientoArquero : MonoBehaviour
         }
 
 
-        if (nmAgent.velocity.magnitude > 0)
+        if (nmAgent.velocity.magnitude > 0.2)
         {
             isMoving = true;
             animator.SetBool("IsMoving", true);
         }
-        else if (nmAgent.velocity.magnitude <= 0)
+        else if (nmAgent.velocity.magnitude <= 0.2)
         {
             isMoving = false;
             animator.SetBool("IsMoving", false);
@@ -88,13 +95,13 @@ public class ComportamientoArquero : MonoBehaviour
 
 
         // Hacer que el arquero siempre mire al jugador
-        if (visionRange.playerInRange && isLookingToPlayer)
+        if (visionRange.playerInRange && isLookingToPlayer && dead == false)
         {
             Vector3 direccionHaciaJugador = (player.transform.position - transform.position).normalized;
             Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionHaciaJugador);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotacionObjetivo, Time.deltaTime * 5f); // Ajusta el factor de suavidad (5f)
         }
-        
+
 
         //Cooldown entre ataques
         if (tiempoUltimoDisparo <= tiempoEntreDisparos)
@@ -110,32 +117,51 @@ public class ComportamientoArquero : MonoBehaviour
         }
 
 
-        if (inTeam)
+        if (estoyEnUnEquipo && dead == false)
         {
-            if (attackRange.playerInRange)
+            if (safeSpaceRange.playerInRange)
             {
-                if (elementoMinion.elemento > 0)
-                {
-                    // Debug.Log("Atacar");
-                    DispararFlecha();
-                }
-                else
-                {
-                    // Debug.Log("Vuelvo al area de defensa");
-                }
+                // Debug.Log("Huir");
+                HuirDelJugador();
             }
             else
             {
-                // Debug.Log("Defender");
+                if (attackRange.playerInRange)
+                {
+                    if (elementoMinion.elemento > 0)
+                    {
+                        // Debug.Log("Atacar");
+                        DispararFlecha();
+                    }
+                    else
+                    {
+                        if (targetToFollow != null)
+                        {
+                            Debug.Log("Vuelvo al area de defensa");
+                            SeguirAliado();
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (targetToFollow != null)
+                    {
+                        Debug.Log("Defender");
+                        SeguirAliado();
+                    }
+                }
             }
+
         }
-        else
+        else if (dead == false)
         {
-            if (attackRange.magesInRange)
+            if (!estaEnEquipo && HayMagoDisponibleCercano(distanciaMago))
             {
-                //Falta añadir la logica de mirar todos los magos que tiene cerca y añadirse al que menos minions tenga
-                // Debug.Log("Se asigna a un mago");
-                inTeam = true;
+
+                Debug.Log("Se asigna a un mago");
+                AsignarseAMagoConMenosAliados(distanciaMago);
+
             }
             else
             {
@@ -163,6 +189,7 @@ public class ComportamientoArquero : MonoBehaviour
                 else
                 {
                     // Debug.Log("Patrullar");
+                    SeguirAliado();
                 }
             }
         }
@@ -202,7 +229,6 @@ public class ComportamientoArquero : MonoBehaviour
         nmAgent.SetDestination(posicionFinal);
     }
 
-
     public void DispararFlecha()
     {
         if (puedeDisparar == true && isMoving == false)
@@ -220,6 +246,87 @@ public class ComportamientoArquero : MonoBehaviour
 
         }
 
+    }
+
+
+    bool HayMagoDisponibleCercano(float rango = 10f)
+    {
+        GameObject[] magos = GameObject.FindGameObjectsWithTag("Mago");
+
+        foreach (GameObject magoObj in magos)
+        {
+            float distancia = Vector3.Distance(transform.position, magoObj.transform.position);
+            if (distancia > rango) continue;
+
+            MageBehaviour mago = magoObj.GetComponent<MageBehaviour>();
+            if (mago == null) continue;
+
+            foreach (GameObject miembro in mago.teamMembers)
+            {
+                if (miembro == null)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    void AsignarseAMagoConMenosAliados(float rango = 10f)
+    {
+        int menorCantidad = int.MaxValue;
+        MageBehaviour mejorMago = null;
+
+        GameObject[] magos = GameObject.FindGameObjectsWithTag("Mago");
+
+        foreach (GameObject magoObj in magos)
+        {
+            float distancia = Vector3.Distance(transform.position, magoObj.transform.position);
+            if (distancia > rango) continue;
+
+            MageBehaviour mago = magoObj.GetComponent<MageBehaviour>();
+            if (mago == null) continue;
+
+            int cantidadActual = 0;
+            foreach (GameObject miembro in mago.teamMembers)
+                if (miembro != null) cantidadActual++;
+
+            if (cantidadActual < 5 && cantidadActual < menorCantidad)
+            {
+                menorCantidad = cantidadActual;
+                mejorMago = mago;
+            }
+        }
+
+        if (mejorMago != null)
+        {
+            for (int i = 0; i < mejorMago.teamMembers.Length; i++)
+            {
+                if (mejorMago.teamMembers[i] == null)
+                {
+                    mejorMago.teamMembers[i] = gameObject;
+                    targetToFollow = mejorMago.transform;
+                    estoyEnUnEquipo = true;
+                    estaEnEquipo = true;
+                    break;
+                }
+            }
+        }
+    }
+    void SeguirAliado()
+    {
+        if (targetToFollow != null)
+        {
+            Debug.Log("Acompañando Aliado");
+
+            // Calcular la dirección hacia el mago
+            Vector3 direccionHaciaMago = (targetToFollow.position - transform.position).normalized;
+
+            // Calcular la posición objetivo a 2 unidades del mago
+            Vector3 posicionObjetivo = targetToFollow.position - direccionHaciaMago * 4f;
+
+            // Establecer la posición objetivo en el NavMeshAgent
+            nmAgent.SetDestination(posicionObjetivo);
+        }
     }
 
 
