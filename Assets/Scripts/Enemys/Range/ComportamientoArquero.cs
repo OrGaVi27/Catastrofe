@@ -9,7 +9,6 @@ public class ComportamientoArquero : BaseEnemyStats
     public GameObject player;
     public bool isMoving = false;
     public bool isLookingToPlayer = false;
-    public NavMeshAgent nmAgent;
 
 
     [Header("Rangos")]
@@ -33,7 +32,6 @@ public class ComportamientoArquero : BaseEnemyStats
     public GameObject flechaPrefab;
 
     [Header("Animaciones")]
-    public Animator animator;
     private float tiempoIdle = 0f; // Temporizador
     public int idleAlt = 0;
 
@@ -55,9 +53,13 @@ public class ComportamientoArquero : BaseEnemyStats
     // Update is called once per frame
     void Update()
     {
+        if (dead == true)
+        {
+            Debug.Log("Muerto");
+            Die();
+        }
 
         tiempoIdle += Time.deltaTime;
-
 
         if (tiempoIdle >= 5f)
         {
@@ -79,12 +81,12 @@ public class ComportamientoArquero : BaseEnemyStats
         }
 
 
-        if (nmAgent.velocity.magnitude > 0)
+        if (nmAgent.velocity.magnitude > 0.2)
         {
             isMoving = true;
             animator.SetBool("IsMoving", true);
         }
-        else if (nmAgent.velocity.magnitude <= 0)
+        else if (nmAgent.velocity.magnitude <= 0.2)
         {
             isMoving = false;
             animator.SetBool("IsMoving", false);
@@ -93,7 +95,7 @@ public class ComportamientoArquero : BaseEnemyStats
 
 
         // Hacer que el arquero siempre mire al jugador
-        if (visionRange.playerInRange && isLookingToPlayer)
+        if (visionRange.playerInRange && isLookingToPlayer && dead == false)
         {
             Vector3 direccionHaciaJugador = (player.transform.position - transform.position).normalized;
             Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionHaciaJugador);
@@ -115,7 +117,7 @@ public class ComportamientoArquero : BaseEnemyStats
         }
 
 
-        if (estoyEnUnEquipo)
+        if (estoyEnUnEquipo && dead == false)
         {
             if (safeSpaceRange.playerInRange)
             {
@@ -136,7 +138,7 @@ public class ComportamientoArquero : BaseEnemyStats
                         if (targetToFollow != null)
                         {
                             Debug.Log("Vuelvo al area de defensa");
-                            nmAgent.SetDestination(targetToFollow.position);
+                            SeguirAliado();
                         }
 
                     }
@@ -146,13 +148,13 @@ public class ComportamientoArquero : BaseEnemyStats
                     if (targetToFollow != null)
                     {
                         Debug.Log("Defender");
-                        nmAgent.SetDestination(targetToFollow.position);
+                        SeguirAliado();
                     }
                 }
             }
 
         }
-        else
+        else if (dead == false)
         {
             if (!estaEnEquipo && HayMagoDisponibleCercano(distanciaMago))
             {
@@ -246,6 +248,7 @@ public class ComportamientoArquero : BaseEnemyStats
 
     }
 
+
     bool HayMagoDisponibleCercano(float rango = 10f)
     {
         GameObject[] magos = GameObject.FindGameObjectsWithTag("Mago");
@@ -309,13 +312,20 @@ public class ComportamientoArquero : BaseEnemyStats
             }
         }
     }
-
     void SeguirAliado()
     {
         if (targetToFollow != null)
         {
             Debug.Log("Acompañando Aliado");
-            nmAgent.SetDestination(targetToFollow.position);
+
+            // Calcular la dirección hacia el mago
+            Vector3 direccionHaciaMago = (targetToFollow.position - transform.position).normalized;
+
+            // Calcular la posición objetivo a 2 unidades del mago
+            Vector3 posicionObjetivo = targetToFollow.position - direccionHaciaMago * 4f;
+
+            // Establecer la posición objetivo en el NavMeshAgent
+            nmAgent.SetDestination(posicionObjetivo);
         }
     }
 
