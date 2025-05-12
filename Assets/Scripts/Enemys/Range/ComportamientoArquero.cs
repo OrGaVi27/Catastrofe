@@ -46,6 +46,8 @@ public class ComportamientoArquero : BaseEnemyStats
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
+
         player = GameObject.FindGameObjectWithTag("Player");
         nmAgent.speed = movementSpeed;
     }
@@ -53,11 +55,7 @@ public class ComportamientoArquero : BaseEnemyStats
     // Update is called once per frame
     void Update()
     {
-        if (dead == true)
-        {
-            Debug.Log("Muerto");
-            Die();
-        }
+
 
         tiempoIdle += Time.deltaTime;
 
@@ -81,12 +79,12 @@ public class ComportamientoArquero : BaseEnemyStats
         }
 
 
-        if (nmAgent.velocity.magnitude > 0.2)
+        if (nmAgent.velocity.magnitude > 0.5)
         {
             isMoving = true;
             animator.SetBool("IsMoving", true);
         }
-        else if (nmAgent.velocity.magnitude <= 0.2)
+        else if (nmAgent.velocity.magnitude <= 0.5)
         {
             isMoving = false;
             animator.SetBool("IsMoving", false);
@@ -137,7 +135,7 @@ public class ComportamientoArquero : BaseEnemyStats
                     {
                         if (targetToFollow != null)
                         {
-                            Debug.Log("Vuelvo al area de defensa");
+                            // Debug.Log("Vuelvo al area de defensa");
                             SeguirAliado();
                         }
 
@@ -147,7 +145,7 @@ public class ComportamientoArquero : BaseEnemyStats
                 {
                     if (targetToFollow != null)
                     {
-                        Debug.Log("Defender");
+                        // Debug.Log("Defender");
                         SeguirAliado();
                     }
                 }
@@ -159,7 +157,7 @@ public class ComportamientoArquero : BaseEnemyStats
             if (!estaEnEquipo && HayMagoDisponibleCercano(distanciaMago))
             {
 
-                Debug.Log("Se asigna a un mago");
+                // Debug.Log("Se asigna a un mago");
                 AsignarseAMagoConMenosAliados(distanciaMago);
 
             }
@@ -193,10 +191,12 @@ public class ComportamientoArquero : BaseEnemyStats
                 }
             }
         }
+
     }
 
     public void HuirDelJugador()
     {
+
         animator.SetBool("Attacking", false);
 
         isLookingToPlayer = false;
@@ -211,7 +211,6 @@ public class ComportamientoArquero : BaseEnemyStats
         direccionAlejamiento.y = 0;
         Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionAlejamiento);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotacionObjetivo, Time.deltaTime * 5f); // Ajusta el factor de suavidad (5f)
-
 
     }
 
@@ -316,7 +315,7 @@ public class ComportamientoArquero : BaseEnemyStats
     {
         if (targetToFollow != null)
         {
-            Debug.Log("Acompañando Aliado");
+            // Debug.Log("Acompañando Aliado");
 
             // Calcular la dirección hacia el mago
             Vector3 direccionHaciaMago = (targetToFollow.position - transform.position).normalized;

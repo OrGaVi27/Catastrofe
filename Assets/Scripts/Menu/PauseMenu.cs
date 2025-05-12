@@ -28,7 +28,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame && pausaPanel.activeSelf == false)
+        if ((Keyboard.current.escapeKey.wasPressedThisFrame || Input.GetKeyDown(KeyCode.JoystickButton7)) && pausaPanel.activeSelf == false)
         {
             Pausa();
         }
@@ -38,7 +38,11 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Pausa activada");
         pausaPanel.SetActive(!pausaPanel.activeSelf);
-        SelecionMando(volverAlJuego);
+        if (pausaPanel == true)
+        {
+            SelecionMando(volverAlJuego);
+        }
+
         Time.timeScale = pausaPanel.activeSelf ? 0 : 1;
     }
 
