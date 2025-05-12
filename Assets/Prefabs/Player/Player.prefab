@@ -982,7 +982,7 @@ MonoBehaviour:
   currentHealth: 0
   maxMana: 5
   currentMana: 0
-  damage: 10
+  damage: 50
   isInvencible: 0
 --- !u!54 &2412358064744661668
 Rigidbody:
@@ -4270,6 +4270,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 8b22a1d9b90cdc84c82994449658e37b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ba9b7d230600aa4e8069a5897b5708e, type: 2}
     - target: {fileID: 919132149155446097, guid: 8b22a1d9b90cdc84c82994449658e37b, type: 3}
       propertyPath: m_Name
       value: Espada
