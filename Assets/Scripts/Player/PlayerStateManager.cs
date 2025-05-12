@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -95,7 +94,7 @@ public partial class PlayerStateManager : MonoBehaviour
         {
             anim.SetBool("Attack1", true);
         }
-        if (noOfAttacks >= 2 && anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.5f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
+        if (noOfAttacks >= 2 && anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
         {
             anim.SetBool("Attack1", false);
             anim.SetBool("Attack2", true);

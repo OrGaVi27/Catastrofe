@@ -31,7 +31,7 @@ public partial class PlayerStateManager
             attackIsCharging = false;
             attackStartTime = Time.time;
             noOfAttacks++;
-            noOfAttacks = Mathf.Clamp(noOfAttacks, 0, 2);
+            noOfAttacks = Mathf.Clamp(noOfAttacks, 0, 3);
         }
     }
 }
