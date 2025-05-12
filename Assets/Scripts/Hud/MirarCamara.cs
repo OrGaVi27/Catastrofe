@@ -9,6 +9,7 @@ public class MirarCamara : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        camara = GameObject.FindGameObjectWithTag("LookAt");
 
     }
 

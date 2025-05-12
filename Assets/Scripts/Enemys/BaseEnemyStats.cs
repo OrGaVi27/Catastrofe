@@ -22,12 +22,16 @@ public class BaseEnemyStats : MonoBehaviour
     [Header("NavMesh")]
     public NavMeshAgent nmAgent;
 
+    [Header("Canvas")]
+    public Canvas canvas;
+
 
     public void TakeDamage(float damageAmount)
     {
         currentHealth -= damageAmount;
         if (currentHealth <= 0f)
         {
+            dead = true;
             Die();
         }
     }
@@ -43,12 +47,16 @@ public class BaseEnemyStats : MonoBehaviour
 
     public void Die()
     {
+        Debug.Log("Muerto");
+
         animator.SetBool("Death", true);
 
-       /*  if (nmAgent != null)
+        dead = true;
+
+        if (nmAgent != null)
         {
             nmAgent.enabled = false;
-        } */
+        }
 
         // Opcional: Desactivar colisiones si es necesario
         Collider collider = GetComponent<Collider>();
@@ -57,27 +65,14 @@ public class BaseEnemyStats : MonoBehaviour
             collider.enabled = false;
         }
 
-        Invoke("Desaparecer", 15f); // Llama a Desaparecer después de 15 segundos
-    }
+        canvas.gameObject.SetActive(false); // Desactiva el canvas del enemigo
 
-    public void Desaparecer()
-    {
-        Vector3 nuevaPosicion = transform.position;
-        nuevaPosicion.y = -10f;
-
-        Vector3 posicionInicial = transform.position;
-        Vector3 posicionFinal = new Vector3(posicionInicial.x, -10f, posicionInicial.z);
-        float duracion = 5f; // Duración del descenso en segundos
-        float tiempo = 0f;
-        transform.position = Vector3.Lerp(posicionInicial, posicionFinal, tiempo / duracion);
-        tiempo += Time.deltaTime;
-
-        Invoke("DestroyObject", 10f);
-
+        Invoke("DestroyObject", 10f); // Llama a Desaparecer después de 15 segundos
     }
 
     public void DestroyObject()
     {
+        Debug.Log("Desaparecer");
         Destroy(gameObject);
     }
 }
