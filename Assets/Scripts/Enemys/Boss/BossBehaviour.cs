@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BossBehaviour : MonoBehaviour
 {
+    [Header("Boss")]
+    public Animator bossAnim;
+    [Space]
+
     [Header("Elements")]
     public bool fire;
     public bool water;
@@ -27,50 +32,74 @@ public class BossBehaviour : MonoBehaviour
     [Space]
 
     [Header("Pelea")]
-    public float distanceCaC;
-    public float distanciaMaxAttack;
+    public float timeAttack;
+    private float currentTimeAttack;
+    public MeleeAtack melee;
+    public DistanceAttack distance;
 
-    public Transform player;
-    private float distancePlayer;
+    public BossMovement move;
 
-    void Update()
+    private int MA;
+    private int DA;
+
+    public void Start()
     {
+        melee = FindAnyObjectByType<MeleeAtack>();
+        distance = FindAnyObjectByType<DistanceAttack>();
+        move = GetComponent<BossMovement>();
+    }
+
+    public void Update()
+    {
+        if (move.nmAgent.velocity.magnitude > 0.5)
+        {
+            bossAnim.SetBool("move", true);
+        }
+        else
+        {
+            bossAnim.SetBool("move", false);
+        }
+
         if (currentLiife <= 0)
         {
             if (lifesCount <= 4)
             {
                 ChangeElement();
 
-                //animacion de cabio de elemento
                 lifesCount += 1;
                 currentLiife = maxLiife;
             }
             else
             {
-                //animacion morir Morir
-
-                //eliminarme
+                BossDeath();
             }
         }
         else
         {
-            if (distancePlayer <= distanceCaC)
+            TimeAttack();
+
+            if (melee.meleeAtack == true)
             {
-                //ataque CaC
+                Melee();
+
+                move.Direccion();
             }
-            else if (distancePlayer >= distanceCaC && distancePlayer <= distanciaMaxAttack)
+            else if (distance.distanceAttack == true)
             {
-                //Ataque a Distancia
+                Distance();
+
+                move.PerseguirAlJugador();
             }
         }
     }
 
-    void ChangeElement()
+#region Elementos
+    public void ChangeElement()
     {
         //pasar al siguiente elemnento de la lista de activeElements
     }
 
-    void UpdateActiveElements()
+    public void UpdateActiveElements()
     {
         if(fire /* && no esta en activeElements el fuego*/)
         {
@@ -101,8 +130,79 @@ public class BossBehaviour : MonoBehaviour
         }
 
     }
+#endregion
+
+#region Ataques
+    public void Melee()
+    {
+        if(MA <= 50 && currentTimeAttack >= timeAttack)
+        {
+            bossAnim.SetInteger("meleeAttack", 1);
+
+            Debug.Log("Giro");
+        }
+        else if (MA >= 51 && currentTimeAttack >= timeAttack)
+        {
+            bossAnim.SetInteger("meleeAttack", 2);
+
+            Debug.Log("Pegar");
+        }
+    }
+
+    public void MeleeIdle()
+    {
+        bossAnim.SetInteger("meleeAttack", 0);
+    }
+
+    public void Distance()
+    {
+        if (DA <= 50 && currentTimeAttack >= timeAttack)
+        {
+            bossAnim.SetInteger("distanceAttack", 1);
+
+            Debug.Log("Bola");
+        }
+        else if (DA >= 51 && currentTimeAttack >= timeAttack)
+        {
+            bossAnim.SetInteger("distanceAttack", 2);
+
+            Debug.Log("Rayo");
+        }
+    }
+
+    public void DsitanceIdle()
+    {
+        bossAnim.SetInteger("distanceAttack", 0);
+    }
+
+    private void TimeAttack()
+    {
+        currentTimeAttack += Time.deltaTime;
+    }
+
+    public void ResetTimeAttack()
+    {
+        currentTimeAttack = 0;
+
+        MA = Random.RandomRange(0, 101);
+        DA = Random.RandomRange(0, 101);
+
+        Debug.Log(MA);
+        Debug.Log(DA);
+    }
+#endregion
+
+    public void BossDeath()
+    {
+        bossAnim.SetBool("death", true);
+    }
+
+    public void DestoryBoss()
+    {
+        Destroy(gameObject);
+    }
     
-    void OnEnable()
+    public void OnEnable()
     {
         UpdateActiveElements();
 

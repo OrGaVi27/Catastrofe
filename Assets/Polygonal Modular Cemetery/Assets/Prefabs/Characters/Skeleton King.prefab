@@ -947,6 +947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4274711746911522}
   - component: {fileID: 95570096995429180}
+  - component: {fileID: 3251379763039562876}
   m_Layer: 0
   m_Name: Skeleton King
   m_TagString: Untagged
@@ -965,7 +966,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4846311460363774}
   - {fileID: 4740167049717132}
@@ -981,7 +982,7 @@ Animator:
   m_GameObject: {fileID: 1562229183175638}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a43234716de67684cbc8e115a429e11a, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2cc90daead54a4042b37135d061a1cb6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -992,6 +993,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3251379763039562876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562229183175638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73a90a9f9a9aad34b85b77cd165ff3d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1567776419408530
 GameObject:
   m_ObjectHideFlags: 0
@@ -2015,7 +2028,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
