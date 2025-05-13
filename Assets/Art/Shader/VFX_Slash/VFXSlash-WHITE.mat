@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: VFXSlash
+  m_Name: VFXSlash-WHITE
   m_Shader: {fileID: -6465566751694194690, guid: c9223d7c212269546b405fd74b431003, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -46,20 +46,20 @@ Material:
     - _Blend: 0
     - _CastShadows: 0
     - _CoreSize: 0.73
-    - _Core_Height: 0.28
-    - _Core_Width: 3.21
+    - _Core_Height: 0.43
+    - _Core_Width: 1.85
     - _Cull: 0
     - _Distorsion: 0.165
     - _Distorsion_Scale: 25
-    - _Distortion: 0.351
+    - _Distortion: 0.307
     - _DstBlend: 10
     - _Height: 0.6
-    - _Outer_Height: 0.5
+    - _Outer_Height: 1
     - _Outer_Width: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Roundness: 1
-    - _Scroll: -0
+    - _Scroll: 0
     - _SrcBlend: 5
     - _Surface: 1
     - _Width: 0.5
@@ -67,8 +67,8 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 1
     m_Colors:
-    - _Core_Color: {r: 7.9999995, g: 0.079999916, b: 0.079999916, a: 0}
-    - _DistortionTiling: {r: 0.5, g: 5, b: 0, a: 0}
+    - _Core_Color: {r: 1.9999999, g: 1.9999999, b: 1.9999999, a: 0}
+    - _DistortionTiling: {r: 0.5, g: 5.5, b: 0, a: 0}
     - _Outer_Color: {r: 0.625, g: 0.625, b: 0.625, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1444687963649146001
