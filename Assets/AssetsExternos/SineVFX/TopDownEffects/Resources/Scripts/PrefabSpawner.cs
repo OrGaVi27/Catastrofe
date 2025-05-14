@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PrefabSpawner : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class PrefabSpawner : MonoBehaviour
     // Spawning a Prefab of a Complete Effect on mouse position
     public void SpawnPrefab()
     {
-        Ray ray = sceneCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = sceneCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {

@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class MageBehaviour : BaseEnemyStats
 {
+    public float fleeSpeedMult = 1.5f;
+    [Space]
     [Header("Patroll")]
     public Transform[] patrollPoints;
     Vector3 patrollTarget;
@@ -24,18 +26,20 @@ public class MageBehaviour : BaseEnemyStats
     [Header("Healing")]
     public float healCooldown = 5f;
     public float healAmount = 15f;
-    private bool healReady = true;
+    private float lastTimeHealed = 0;
+    private bool healReady = false;
 
     [Space]
     [Header("Animation")]
     public Animator anim;
 
     private GameObject player;
+    
 
 
     void Start()
     {
-        currentHealth = maxHealth - 50f;
+        //currentHealth = maxHealth - 50f;
 
         nmAgent = GetComponent<NavMeshAgent>();
 
@@ -56,6 +60,8 @@ public class MageBehaviour : BaseEnemyStats
     // Update is called once per frame
     void Update()
     {
+        if(nmAgent.speed != movementSpeed) nmAgent.speed = movementSpeed;
+
         if (visionRange.playerInRange && PlayerInLOS())
         {
             if (CheckTeam())
@@ -70,11 +76,9 @@ public class MageBehaviour : BaseEnemyStats
                     }
                     else
                     {
-                        if (healReady)
+                        if (lastTimeHealed + healCooldown < Time.time)
                         {
-                            // Heals the mage and all its team members
-                            HealTeam(healAmount);
-                            StartCoroutine(AbilityCooldown(healCooldown, healReady));
+                            healReady = true;
                         }
                     }
                 }
@@ -104,8 +108,14 @@ public class MageBehaviour : BaseEnemyStats
 
         }
 
-
-        if (nmAgent.velocity != Vector3.zero)
+        if (healReady)
+        {
+            anim.SetInteger("State", 4);
+            nmAgent.SetDestination(transform.position);
+            lastTimeHealed = Time.time;
+            healReady = false;
+        }
+        else if (nmAgent.velocity != Vector3.zero)
         {
             anim.SetInteger("State", 2);
         }
@@ -114,7 +124,7 @@ public class MageBehaviour : BaseEnemyStats
             anim.SetInteger("State", 1);
         }
         else
-        { 
+        {
             anim.SetInteger("State", 3);
         }
     }
@@ -195,6 +205,7 @@ public class MageBehaviour : BaseEnemyStats
     void Fleeing()
     {
         nmAgent.stoppingDistance = 0;
+        nmAgent.speed = movementSpeed * fleeSpeedMult;
 
         Vector3 direction = (transform.position - player.transform.position).normalized;
         Vector3 newPosition = transform.position + direction * 10f;
@@ -261,18 +272,6 @@ public class MageBehaviour : BaseEnemyStats
         {
             patrollIndex = 0;
         }
-    }
-    #endregion
-
-
-    #region Coroutines
-    IEnumerator AbilityCooldown(float cooldown, bool AbilityReady)
-    {
-        AbilityReady = false;
-
-        yield return new WaitForSeconds(cooldown);
-
-        AbilityReady = true;
     }
     #endregion
 }
