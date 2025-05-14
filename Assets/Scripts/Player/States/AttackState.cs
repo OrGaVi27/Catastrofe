@@ -23,7 +23,11 @@ public class AttackState : PlayerBaseState
         
         
         
-        if (!player.isAttacking)
+        if (!player.isAttacking && player.inputVector.magnitude != 0)
+        {
+            player.SwitchState(player.walkState);
+        } 
+        else if (!player.isAttacking)
         {
             player.SwitchState(player.idleState);
         }

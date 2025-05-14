@@ -1235,6 +1235,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   nmAgent: {fileID: 0}
   canvas: {fileID: 0}
+  fleeSpeedMult: 1.5
   patrollPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -1727,6 +1728,7 @@ GameObject:
   - component: {fileID: 309875053366282118}
   - component: {fileID: 5409926668478254361}
   - component: {fileID: 3786757032217864533}
+  - component: {fileID: 2591794249157829132}
   m_Layer: 0
   m_Name: ParticulasExterior (1)
   m_TagString: Untagged
@@ -6558,6 +6560,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &2591794249157829132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919769512822828976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01bd4505c59917749afe4095cb3808e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6068203063894157003
 GameObject:
   m_ObjectHideFlags: 0
@@ -17123,6 +17137,7 @@ GameObject:
   - component: {fileID: 690232721519879974}
   - component: {fileID: 651145619657934805}
   - component: {fileID: 1506295187869980883}
+  - component: {fileID: 735028573556569660}
   m_Layer: 0
   m_Name: Particulas (1)
   m_TagString: Untagged
@@ -21999,6 +22014,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &735028573556569660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8688685836597482613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01bd4505c59917749afe4095cb3808e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8770417242458525424
 GameObject:
   m_ObjectHideFlags: 0
@@ -22176,7 +22203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198636194039707924, guid: 9ab168a77239b3d43be281129b95e8b8, type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 1.0000
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
