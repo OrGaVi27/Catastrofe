@@ -66,7 +66,7 @@ public class BossBehaviour : MonoBehaviour
             bossAnim.SetBool("move", false);
         }
 
-        if(inAttack == true)
+        if(melee.meleeAtack == true || distance.distanceAttack == true)
         {
             move.Direccion();
         }
