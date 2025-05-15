@@ -37,16 +37,22 @@ public class BossBehaviour : MonoBehaviour
     public MeleeAtack melee;
     public DistanceAttack distance;
 
+    private bool inAttack;
+
     public BossMovement move;
 
     private int MA;
     private int DA;
+
+    public bool deathBoss;
 
     public void Start()
     {
         melee = FindAnyObjectByType<MeleeAtack>();
         distance = FindAnyObjectByType<DistanceAttack>();
         move = GetComponent<BossMovement>();
+
+        deathBoss = false;
     }
 
     public void Update()
@@ -60,14 +66,22 @@ public class BossBehaviour : MonoBehaviour
             bossAnim.SetBool("move", false);
         }
 
+        if(inAttack == true)
+        {
+            move.Direccion();
+        }
+        else
+        {
+            move.PerseguirAlJugador();
+        }
+
         if (currentLiife <= 0)
         {
             if (lifesCount <= 4)
             {
                 ChangeElement();
 
-                lifesCount += 1;
-                currentLiife = maxLiife;
+                ResetLifes();
             }
             else
             {
@@ -78,17 +92,13 @@ public class BossBehaviour : MonoBehaviour
         {
             TimeAttack();
 
-            if (melee.meleeAtack == true)
+            if (melee.meleeAtack == true && deathBoss == false)
             {
                 Melee();
-
-                move.Direccion();
             }
-            else if (distance.distanceAttack == true)
+            else if (distance.distanceAttack == true && deathBoss == false)
             {
                 Distance();
-
-                move.PerseguirAlJugador();
             }
         }
     }
@@ -130,6 +140,13 @@ public class BossBehaviour : MonoBehaviour
         }
 
     }
+
+    public void ResetLifes()
+    {
+        lifesCount += 1;
+
+        currentLiife = maxLiife;
+    }
 #endregion
 
 #region Ataques
@@ -139,11 +156,15 @@ public class BossBehaviour : MonoBehaviour
         {
             bossAnim.SetInteger("meleeAttack", 1);
 
+            inAttack = true;
+
             Debug.Log("Giro");
         }
         else if (MA >= 51 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("meleeAttack", 2);
+
+            inAttack = true;
 
             Debug.Log("Pegar");
         }
@@ -152,6 +173,8 @@ public class BossBehaviour : MonoBehaviour
     public void MeleeIdle()
     {
         bossAnim.SetInteger("meleeAttack", 0);
+
+        inAttack = false;
     }
 
     public void Distance()
@@ -160,11 +183,15 @@ public class BossBehaviour : MonoBehaviour
         {
             bossAnim.SetInteger("distanceAttack", 1);
 
+            inAttack = true;
+
             Debug.Log("Bola");
         }
         else if (DA >= 51 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("distanceAttack", 2);
+
+            inAttack = true;
 
             Debug.Log("Rayo");
         }
@@ -173,6 +200,8 @@ public class BossBehaviour : MonoBehaviour
     public void DsitanceIdle()
     {
         bossAnim.SetInteger("distanceAttack", 0);
+
+        inAttack = false;
     }
 
     private void TimeAttack()
@@ -195,6 +224,8 @@ public class BossBehaviour : MonoBehaviour
     public void BossDeath()
     {
         bossAnim.SetBool("death", true);
+
+        deathBoss = true;
     }
 
     public void DestoryBoss()

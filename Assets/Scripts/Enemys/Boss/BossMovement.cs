@@ -32,7 +32,7 @@ public class BossMovement : MonoBehaviour
         Quaternion rotacionDeseada = Quaternion.LookRotation(direccion);
 
         //Rota usando la velocidad angular (angularSpeed) del NavMeshAgent
-        float velocidadEnAngulo = 150;
+        float velocidadEnAngulo = 140;
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotacionDeseada, velocidadEnAngulo * Time.deltaTime);
     }
