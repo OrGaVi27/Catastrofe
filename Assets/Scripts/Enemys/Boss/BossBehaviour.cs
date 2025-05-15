@@ -66,6 +66,7 @@ public class BossBehaviour : MonoBehaviour
             bossAnim.SetBool("move", false);
         }
 
+        //Bug aqui (creo)
         if(melee.meleeAtack == true || distance.distanceAttack == true)
         {
             move.Direccion();
@@ -95,10 +96,14 @@ public class BossBehaviour : MonoBehaviour
             if (melee.meleeAtack == true && deathBoss == false)
             {
                 Melee();
+
+                //move.Direccion();
             }
             else if (distance.distanceAttack == true && deathBoss == false)
             {
                 Distance();
+
+                //move.PerseguirAlJugador();
             }
         }
     }
