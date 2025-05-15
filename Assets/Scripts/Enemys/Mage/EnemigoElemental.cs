@@ -76,13 +76,13 @@ public class EnemigoElemental : MonoBehaviour
         var main = particleSystem.main;
         main.startColor = colorElemento;
         particulas.GetComponent<Renderer>().material.color = colorElemento;
-        Debug.Log("Color de las partículas: " + colorElemento);
+        //Debug.Log("Color de las partículas: " + colorElemento);
 
         var particleSystemExterior = particulasExterior.GetComponent<ParticleSystem>();
         var mainExterior = particleSystemExterior.main;
         mainExterior.startColor = colorElemento;
         particulasExterior.GetComponent<Renderer>().material.color = colorElemento;
-        Debug.Log("Color de las partículas exterior: " + colorElemento);
+        //Debug.Log("Color de las partículas exterior: " + colorElemento);
     }
 
     // Update is called once per frame

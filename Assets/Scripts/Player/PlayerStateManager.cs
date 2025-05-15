@@ -22,6 +22,11 @@ public partial class PlayerStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (baseStats.currentMana <= 0)  element = 0;
+
+        ElementControll();
+
+
         if (currentState != fallState && !controller.isGrounded)
         {
             SwitchState(fallState);
@@ -52,6 +57,8 @@ public partial class PlayerStateManager : MonoBehaviour
         referenceMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         isometricImput = referenceMatrix.MultiplyPoint3x4(moveVector);
 
+        anim.SetFloat("RunMultiplier", moveVector.magnitude);
+
         controller.Move(isometricImput * playerSpeed * Time.deltaTime);
 
         Rotate();
@@ -61,6 +68,8 @@ public partial class PlayerStateManager : MonoBehaviour
     {
         referenceMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         isometricImput = referenceMatrix.MultiplyPoint3x4(moveVector);
+
+        anim.SetFloat("RunMultiplier", moveVector.magnitude);
 
         controller.Move(isometricImput * speed * Time.deltaTime);
 
@@ -89,28 +98,17 @@ public partial class PlayerStateManager : MonoBehaviour
 
     public void Attack()
     {
+        
 
-        if(noOfAttacks == 1)
+        if (noOfAttacks == 1)
         {
             anim.SetBool("Attack1", true);
-        }
+        }/* 
         if (noOfAttacks >= 2 && anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
         {
             anim.SetBool("Attack1", false);
             anim.SetBool("Attack2", true);
-        }
-        
-
-        if (attackChargeTime + attackStartTime > Time.time)
-        {
-            //Debug.Log("normal attack");
-            anim.SetBool("StrongAttack", false);
-        }
-        else
-        {
-            //Debug.Log("STRONG ATTACK!");
-            anim.SetBool("StrongAttack", true);
-        }
+        } */
 
         if (anim.GetCurrentAnimatorStateInfo(1).IsName("-"))
         {
@@ -123,18 +121,43 @@ public partial class PlayerStateManager : MonoBehaviour
         if (anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
         {
             anim.SetBool("Attack1", false);
-        }
+        }/* 
         if (anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack2"))
         {
             anim.SetBool("Attack2", false);
             noOfAttacks = 0;
-        }
+        } */
 
-        if(Time.time - attackInputTime > maxComboDelay)
+        if (Time.time - attackInputTime > maxComboDelay)
         {
             noOfAttacks = 0;
         }
     }
 
+    public void ElementControll()
+    {
+        switch (element)
+        {
+            case 0:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[0];
+                break;
+
+            case 1:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[1];
+                break;
+
+            case 2:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[2];
+                break;
+
+            case 3:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[3];
+                break;
+
+            case 4:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[4];
+                break;
+        }
+    }
     #endregion
 }

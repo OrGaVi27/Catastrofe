@@ -26,7 +26,7 @@ public class BaseEnemyStats : MonoBehaviour
     public Canvas canvas;
 
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(float damageAmount, int element)
     {
         currentHealth -= damageAmount;
         if (currentHealth <= 0f)
