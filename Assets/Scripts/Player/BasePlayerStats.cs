@@ -8,6 +8,7 @@ public class BasePlayerStats : MonoBehaviour
     public int maxMana = 5;
     public int currentMana;
     public float damage = 0f;
+    public float DamageMultiplier = 1f;
     public bool isInvencible = false;
 
     public void TakeDamage(float damageAmount)

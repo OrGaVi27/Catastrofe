@@ -709,8 +709,8 @@ GameObject:
   - component: {fileID: 5240151184346613512}
   - component: {fileID: 5259987993606127549}
   - component: {fileID: 2814158365879127857}
-  - component: {fileID: 1908672958716258452}
   - component: {fileID: 6143138056906678529}
+  - component: {fileID: 1908672958716258452}
   - component: {fileID: 2412358064744661668}
   m_Layer: 0
   m_Name: Player
@@ -937,6 +937,25 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6143138056906678529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695957459192586695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a7f3e22e784e724ca738bfeffcdaabc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  maxMana: 5
+  currentMana: 0
+  damage: 50
+  DamageMultiplier: 1
+  isInvencible: 0
 --- !u!114 &1908672958716258452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -959,31 +978,18 @@ MonoBehaviour:
   dashSpeed: 35
   dashTime: 0.2
   dashCooldown: 1
+  cutEffect: {fileID: 0}
+  cutEffects: []
   isAttacking: 0
   attackIsCharging: 0
   attackChargeTime: 1
+  attackStartTime: 0
+  chargedAttack: 0
   attackMovSpeed: 5
   maxComboDelay: 1
   anim: {fileID: 6083586929133468098}
   baseStats: {fileID: 0}
---- !u!114 &6143138056906678529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1695957459192586695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a7f3e22e784e724ca738bfeffcdaabc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  maxMana: 5
-  currentMana: 0
-  damage: 50
-  isInvencible: 0
+  element: 0
 --- !u!54 &2412358064744661668
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2950,6 +2956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 6083586929133468098}
   layerIndex: 1
+  layerWeightChangeSpeed: 1
 --- !u!1 &5730738575860640405
 GameObject:
   m_ObjectHideFlags: 0
@@ -3270,9 +3277,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26b910eae02ec643b16247b0670045b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTag: Enemy
   attaker: {fileID: 1695957459192586695}
   damageAmount: 0
+  element: 0
 --- !u!1 &6346756055526549493
 GameObject:
   m_ObjectHideFlags: 0

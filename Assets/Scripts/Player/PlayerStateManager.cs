@@ -22,7 +22,7 @@ public partial class PlayerStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (baseStats.currentMana <= 0)  element = 0;
+        if (baseStats.currentMana <= 0) element = 0;
 
         ElementControll();
 
@@ -98,7 +98,7 @@ public partial class PlayerStateManager : MonoBehaviour
 
     public void Attack()
     {
-        
+
 
         if (noOfAttacks == 1)
         {
@@ -157,6 +157,18 @@ public partial class PlayerStateManager : MonoBehaviour
             case 4:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[4];
                 break;
+        }
+    }
+
+    public float DamageOutput()
+    {
+        if (anim.GetBool("StrongAttack"))
+        {
+            return baseStats.damage * baseStats.DamageMultiplier;
+        }
+        else
+        {
+            return baseStats.damage;
         }
     }
     #endregion

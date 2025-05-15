@@ -8,7 +8,6 @@ public class DamageTrigger : MonoBehaviour
     public int element = 0;
     void Start()
     {
-        damageAmount = attaker.GetComponent<BasePlayerStats>().damage;
     }
 
     void Update()
@@ -25,7 +24,7 @@ public class DamageTrigger : MonoBehaviour
          } */
         if (other.gameObject.GetComponent<BaseEnemyStats>() != null)
         {
-            other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(damageAmount, element);
+            other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(attaker.GetComponent<PlayerStateManager>().DamageOutput(), element);
             
             if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0)
             {

@@ -38,6 +38,7 @@ public partial class PlayerStateManager
     public bool attackIsCharging = false;
     public float attackChargeTime;
     [HideInInspector] public float attackStartTime;
+    [HideInInspector] public bool chargedAttack = false;
     private float attackInputTime;
     public float attackMovSpeed;
     public float maxComboDelay = 0;
