@@ -60,6 +60,8 @@ public class MageBehaviour : BaseEnemyStats
     // Update is called once per frame
     void Update()
     {
+        if (currentHealth <= 0) return;
+        
         if(nmAgent.speed != movementSpeed) nmAgent.speed = movementSpeed;
 
         if (visionRange.playerInRange && PlayerInLOS())

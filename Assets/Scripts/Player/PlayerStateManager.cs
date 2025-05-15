@@ -136,26 +136,42 @@ public partial class PlayerStateManager : MonoBehaviour
 
     public void ElementControll()
     {
+        
+        ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
+        ColorUtility.TryParseHtmlString("#B07C66", out marronPersonalizado);
+        ColorUtility.TryParseHtmlString("#BDBB6C", out amarilloPersonalizado);
+        ColorUtility.TryParseHtmlString("#525FEF", out azulPersonalizado);
+
         switch (element)
         {
             case 0:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[0];
+                elementSpark.SetActive(false);
+                
                 break;
 
             case 1:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[1];
+                elementSpark.SetActive(true);
+                elementSpark.GetComponent<ParticleSystem>().startColor = rojoPersonalizado;
                 break;
 
             case 2:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[2];
+                elementSpark.SetActive(true);
+                elementSpark.GetComponent<ParticleSystem>().startColor = marronPersonalizado;
                 break;
 
             case 3:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[3];
+                elementSpark.SetActive(true);
+                elementSpark.GetComponent<ParticleSystem>().startColor = amarilloPersonalizado;
                 break;
 
             case 4:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[4];
+                elementSpark.SetActive(true);
+                elementSpark.GetComponent<ParticleSystem>().startColor = azulPersonalizado;
                 break;
         }
     }

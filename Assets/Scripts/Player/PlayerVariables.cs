@@ -29,6 +29,7 @@ public partial class PlayerStateManager
     public float dashTime;
     public float dashCooldown;
     public GameObject cutEffect;
+    public GameObject elementSpark;
     public List<Material> cutEffects;
     protected float dashStartTime;
 
@@ -53,5 +54,10 @@ public partial class PlayerStateManager
     private Vector3 isometricImput;
     private Matrix4x4 referenceMatrix;
     [HideInInspector] public BasePlayerStats baseStats;
-    /* [HideInInspector] */ public int element = 0;
+    /* [HideInInspector] */
+    public int element = 0;
+    Color rojoPersonalizado;
+    Color marronPersonalizado;
+    Color azulPersonalizado;
+    Color amarilloPersonalizado;
 }
