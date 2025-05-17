@@ -22,7 +22,7 @@ public partial class PlayerStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (baseStats.currentMana <= 0) element = 0;
+        if (baseStats.currentMana <= 0 && currentState != attackState) element = 0;
 
         ElementControll();
 
@@ -136,7 +136,7 @@ public partial class PlayerStateManager : MonoBehaviour
 
     public void ElementControll()
     {
-        
+
         ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
         ColorUtility.TryParseHtmlString("#B07C66", out marronPersonalizado);
         ColorUtility.TryParseHtmlString("#BDBB6C", out amarilloPersonalizado);
@@ -147,31 +147,34 @@ public partial class PlayerStateManager : MonoBehaviour
             case 0:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[0];
                 elementSpark.SetActive(false);
-                
                 break;
 
             case 1:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[1];
                 elementSpark.SetActive(true);
-                elementSpark.GetComponent<ParticleSystem>().startColor = rojoPersonalizado;
+                var main1 = elementSpark.GetComponent<ParticleSystem>().main;
+                main1.startColor = rojoPersonalizado;
                 break;
 
             case 2:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[2];
                 elementSpark.SetActive(true);
-                elementSpark.GetComponent<ParticleSystem>().startColor = marronPersonalizado;
+                var main2 = elementSpark.GetComponent<ParticleSystem>().main;
+                main2.startColor = marronPersonalizado;
                 break;
 
             case 3:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[3];
                 elementSpark.SetActive(true);
-                elementSpark.GetComponent<ParticleSystem>().startColor = amarilloPersonalizado;
+                var main3 = elementSpark.GetComponent<ParticleSystem>().main;
+                main3.startColor = amarilloPersonalizado;
                 break;
 
             case 4:
                 cutEffect.GetComponent<MeshRenderer>().material = cutEffects[4];
                 elementSpark.SetActive(true);
-                elementSpark.GetComponent<ParticleSystem>().startColor = azulPersonalizado;
+                var main4 = elementSpark.GetComponent<ParticleSystem>().main;
+                main4.startColor = azulPersonalizado;
                 break;
         }
     }

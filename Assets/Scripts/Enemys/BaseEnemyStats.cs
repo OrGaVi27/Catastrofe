@@ -13,7 +13,7 @@ public class BaseEnemyStats : MonoBehaviour
     public float currentHealth;
     public float damage = 0f;
     public float movementSpeed = 1f;
-
+    public int element;
     public bool dead = false;
 
     [Header("Animaciones")]
@@ -26,9 +26,40 @@ public class BaseEnemyStats : MonoBehaviour
     public Canvas canvas;
 
 
-    public void TakeDamage(float damageAmount, int element)
+    public void TakeDamage(float damageAmount, int attackElement, float elementMultiplier)
     {
-        currentHealth -= damageAmount;
+        animator.SetTrigger("Hit");
+
+        if (attackElement == 0)
+        {
+            currentHealth -= damageAmount;
+        }
+        else if (attackElement == 1 && element == 4)
+        {
+            currentHealth -= damageAmount * 0.5f;
+        }
+        else if (attackElement == 4 && element == 1)
+        {
+            currentHealth -= damageAmount * elementMultiplier;
+        }
+        else if (attackElement - 1 == element)
+        {
+            currentHealth -= damageAmount * 0.5f;
+        }
+        else if (attackElement + 1 == element)
+        {
+            currentHealth -= damageAmount * elementMultiplier;
+        }
+        else
+        {
+            currentHealth -= damageAmount;
+        }
+
+
+
+        //currentHealth -= damageAmount;
+
+
         if (currentHealth <= 0f)
         {
             dead = true;

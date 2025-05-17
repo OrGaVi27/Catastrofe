@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -32,9 +31,10 @@ public class MageBehaviour : BaseEnemyStats
     [Space]
     [Header("Animation")]
     public Animator anim;
+    public GameObject staff;
 
     private GameObject player;
-    
+
 
 
     void Start()
@@ -51,8 +51,10 @@ public class MageBehaviour : BaseEnemyStats
 
         UpdateDestination();
 
+        
+
         //PROVISIONAL
-       // teamMembers[0] = gameObject;
+        // teamMembers[0] = gameObject;
 
 
     }
@@ -60,9 +62,10 @@ public class MageBehaviour : BaseEnemyStats
     // Update is called once per frame
     void Update()
     {
+        StaffColor();
         if (currentHealth <= 0) return;
-        
-        if(nmAgent.speed != movementSpeed) nmAgent.speed = movementSpeed;
+
+        if (!defenseRange.playerInRange) nmAgent.speed = movementSpeed;
 
         if (visionRange.playerInRange && PlayerInLOS())
         {
@@ -236,21 +239,21 @@ public class MageBehaviour : BaseEnemyStats
     // }
 
     private bool PlayerInLOS()
-{
-    RaycastHit LOS;
-    Vector3 direction = player.transform.position - transform.position;
-    
-    if (Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
     {
+        RaycastHit LOS;
+        Vector3 direction = player.transform.position - transform.position;
 
-        if (LOS.collider.CompareTag("Player"))
+        if (Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
         {
-            return true;
-        }
-    }
 
-    return false;
-}
+            if (LOS.collider.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     void Patroll()
     {
@@ -273,6 +276,33 @@ public class MageBehaviour : BaseEnemyStats
         if (patrollIndex == patrollPoints.Length)
         {
             patrollIndex = 0;
+        }
+    }
+
+    void StaffColor()
+    {
+        var colorMult = 0.05f;
+        switch (element)
+        {
+            case 0:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(191, 191, 191));
+                break;
+
+            case 1:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(239, 74, 74) * colorMult); ;
+                break;
+
+            case 2:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(176, 124, 102) * colorMult);
+                break;
+
+            case 3:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(189, 187, 108) * colorMult);
+                break;
+
+            case 4:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(82, 95, 239) * colorMult);
+                break;
         }
     }
     #endregion
