@@ -18,14 +18,20 @@ public class EnemyMeleeBehavior : MonoBehaviour
 
     private bool alreadyAttacked;
 
+    // NUEVO: Referencia al Animator
+    private Animator anim;
+
     void Awake()
     {
         player = GameObject.Find("Player").transform;
         minionMele = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>(); // Referencia al Animator
     }
 
     void Update()
     {
+        anim.SetBool("isWalking", minionMele.velocity.magnitude > 0.1f);
+
         if (estoyEnUnEquipo)
         {
             if (EstoyEnAreaDeDefensa())
@@ -149,7 +155,6 @@ public class EnemyMeleeBehavior : MonoBehaviour
     void Perseguir()
     {
         minionMele.SetDestination(player.position);
-        Debug.Log("Persiguiend Player");
     }
 
     void Pegar()
@@ -160,6 +165,7 @@ public class EnemyMeleeBehavior : MonoBehaviour
         if (!alreadyAttacked)
         {
             alreadyAttacked = true;
+            anim.SetTrigger("Attack");
             Debug.Log("¡Atacando al jugador!");
             Invoke(nameof(ResetAttack), 1.5f);
         }
@@ -169,7 +175,6 @@ public class EnemyMeleeBehavior : MonoBehaviour
     {
         if (targetToFollow != null)
         {
-            Debug.Log("Acompañando Aliado");
             minionMele.SetDestination(targetToFollow.position);
         }
     }
@@ -178,7 +183,6 @@ public class EnemyMeleeBehavior : MonoBehaviour
     {
         if (targetToFollow != null)
         {
-            Debug.Log("Estoy en posicion de area de defensa");
             minionMele.SetDestination(targetToFollow.position);
         }
     }
@@ -186,5 +190,21 @@ public class EnemyMeleeBehavior : MonoBehaviour
     void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    // NUEVO: Método para recibir daño
+    public void TakeDamage()
+    {
+        anim.SetTrigger("TakeDamage");
+        Debug.Log("Recibiendo daño...");
+    }
+
+    // NUEVO: Método para morir
+    public void Die()
+    {
+        anim.SetTrigger("Dead");
+        Debug.Log("Enemigo muerto");
+        this.enabled = false;
+        minionMele.enabled = false;
     }
 }
