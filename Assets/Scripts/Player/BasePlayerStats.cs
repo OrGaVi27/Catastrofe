@@ -16,6 +16,8 @@ public class BasePlayerStats : MonoBehaviour
     {
         if (!isInvencible)
         {
+            GetComponent<PlayerStateManager>().anim.SetTrigger("Hit");
+            CameraShakeManager.instance.ShakeCamera(GetComponent<PlayerStateManager>().GetComponent<Cinemachine.CinemachineImpulseSource>());
             currentHealth -= damageAmount;
 
             if (currentHealth <= 0f)

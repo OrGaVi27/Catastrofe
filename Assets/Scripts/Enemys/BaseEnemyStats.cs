@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,31 +25,42 @@ public class BaseEnemyStats : MonoBehaviour
 
     public void TakeDamage(float damageAmount, int attackElement, float elementMultiplier)
     {
-        animator.SetTrigger("Hit");
+
 
         if (attackElement == 0)
         {
             currentHealth -= damageAmount;
+            animator.SetTrigger("Hit");
+        }
+        else if (element == 0)
+        {
+            currentHealth -= damageAmount;
+            animator.SetTrigger("Hit");
         }
         else if (attackElement == 1 && element == 4)
         {
             currentHealth -= damageAmount * 0.5f;
+            animator.SetTrigger("Hit");
         }
         else if (attackElement == 4 && element == 1)
         {
             currentHealth -= damageAmount * elementMultiplier;
+            animator.SetTrigger("BigHit");
         }
         else if (attackElement - 1 == element)
         {
             currentHealth -= damageAmount * 0.5f;
+            animator.SetTrigger("Hit");
         }
         else if (attackElement + 1 == element)
         {
             currentHealth -= damageAmount * elementMultiplier;
+            animator.SetTrigger("BigHit");
         }
         else
         {
             currentHealth -= damageAmount;
+            animator.SetTrigger("Hit");
         }
 
 
@@ -69,6 +77,7 @@ public class BaseEnemyStats : MonoBehaviour
 
     public void Heal(float healAmount)
     {
+        animator.SetTrigger("Heal");
         currentHealth += healAmount;
         if (currentHealth > maxHealth)
         {

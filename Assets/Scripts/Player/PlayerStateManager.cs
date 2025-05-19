@@ -190,5 +190,10 @@ public partial class PlayerStateManager : MonoBehaviour
             return baseStats.damage;
         }
     }
+
+    public void CameraShake()
+    {
+        
+    }
     #endregion
 }

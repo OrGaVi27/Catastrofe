@@ -7,6 +7,7 @@ public class ElementoMinion : MonoBehaviour
     public int elemento = 0;
     public Material[] materialesElementos;
     private new Renderer renderer;
+    public BaseEnemyStats baseStats;
 
     public Sprite[] iconosElementos;
     public Image iconoElemento;
@@ -59,30 +60,25 @@ public class ElementoMinion : MonoBehaviour
             // Debug.Log("El Minion es de agua");
             iconoElemento.sprite = iconosElementos[1];
             iconoElemento.color = Color.white;
-            Vida.color = azulPersonalizado;
-            Vida2.color = azulPersonalizado;
-
-
+            Vida.color = marronPersonalizado;
+            Vida2.color = marronPersonalizado;
         }
         else if (elemento == 3)
         {
             // Debug.Log("El Minion es de roca");
             iconoElemento.sprite = iconosElementos[2];
             iconoElemento.color = Color.white;
-            Vida.color = marronPersonalizado;
-            Vida2.color = marronPersonalizado;
 
-
+            Vida.color = amarilloPersonalizado;
+            Vida2.color = amarilloPersonalizado;
         }
         else if (elemento == 4)
         {
             // Debug.Log("El Minion es de electricidad");
             iconoElemento.sprite = iconosElementos[3];
             iconoElemento.color = Color.white;
-            Vida.color = amarilloPersonalizado;
-            Vida2.color = amarilloPersonalizado;
-
-
+            Vida.color = azulPersonalizado;
+            Vida2.color = azulPersonalizado;
         }
     }
 
@@ -97,20 +93,21 @@ public class ElementoMinion : MonoBehaviour
             {
                 elemento = 1;
             }
-            else if (enemigo.agua)
+            else if (enemigo.roca)
             {
                 elemento = 2;
             }
-            else if (enemigo.roca)
+            else if (enemigo.electricidad)
             {
                 elemento = 3;
             }
-            else if (enemigo.electricidad)
+            else if (enemigo.agua)
             {
                 elemento = 4;
             }
 
             renderer.material = materialesElementos[elemento];
+            baseStats.element = elemento;
         }
     }
 
@@ -119,6 +116,7 @@ public class ElementoMinion : MonoBehaviour
         if (other.gameObject.tag == "EnemigoElemental")
         {
             elemento = 0;
+            baseStats.element = elemento;
             renderer.material = materialesElementos[elemento];
         }
     }
