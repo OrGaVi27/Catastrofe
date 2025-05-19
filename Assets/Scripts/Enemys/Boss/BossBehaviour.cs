@@ -66,14 +66,17 @@ public class BossBehaviour : MonoBehaviour
             bossAnim.SetBool("move", false);
         }
 
-        //Bug aqui (creo)
-        if(melee.meleeAtack == true || distance.distanceAttack == true)
+        if(melee.meleeAtack == true && inAttack == true || distance.distanceAttack == true && inAttack == true)
         {
             move.Direccion();
         }
-        else
+        else if(melee.meleeAtack == false && inAttack == false || distance.distanceAttack == false && inAttack == false)
         {
             move.PerseguirAlJugador();
+        }
+        else if(deathBoss == true)
+        {
+            Debug.Log("a");
         }
 
         if (currentLiife <= 0)
@@ -218,8 +221,8 @@ public class BossBehaviour : MonoBehaviour
     {
         currentTimeAttack = 0;
 
-        MA = Random.RandomRange(0, 101);
-        DA = Random.RandomRange(0, 101);
+        MA = Random.Range(0, 101);
+        DA = Random.Range(0, 101);
 
         Debug.Log(MA);
         Debug.Log(DA);
