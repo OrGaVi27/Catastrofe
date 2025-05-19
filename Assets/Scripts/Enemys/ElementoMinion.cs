@@ -5,6 +5,9 @@ using UnityEngine.UI;
 public class ElementoMinion : MonoBehaviour
 {
     public int elemento = 0;
+
+    public GameObject parte1;
+    public GameObject parte2;
     public Material[] materialesElementos;
     private new Renderer renderer;
 
@@ -23,7 +26,6 @@ public class ElementoMinion : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        renderer = GetComponent<Renderer>();
         ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
         ColorUtility.TryParseHtmlString("#B07C66", out marronPersonalizado);
         ColorUtility.TryParseHtmlString("#BDBB6C", out amarilloPersonalizado);
@@ -90,7 +92,7 @@ public class ElementoMinion : MonoBehaviour
     {
         if (elemento == 0 && other.gameObject.tag == "EnemigoElemental")
         {
-            Debug.Log("El Minion ha tocado a un enemigo elemental");
+            // Debug.Log("El Minion ha tocado a un enemigo elemental");
             EnemigoElemental enemigo = other.GetComponent<EnemigoElemental>();
 
             if (enemigo.fuego)
@@ -110,7 +112,9 @@ public class ElementoMinion : MonoBehaviour
                 elemento = 4;
             }
 
-            renderer.material = materialesElementos[elemento];
+            parte1.GetComponent<Renderer>().material = materialesElementos[elemento];
+            parte2.GetComponent<Renderer>().material = materialesElementos[elemento];
+
         }
     }
 
@@ -119,7 +123,8 @@ public class ElementoMinion : MonoBehaviour
         if (other.gameObject.tag == "EnemigoElemental")
         {
             elemento = 0;
-            renderer.material = materialesElementos[elemento];
+            parte1.GetComponent<Renderer>().material = materialesElementos[elemento];
+            parte2.GetComponent<Renderer>().material = materialesElementos[elemento];
         }
     }
 }

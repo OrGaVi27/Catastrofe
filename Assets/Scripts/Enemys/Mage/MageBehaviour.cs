@@ -32,6 +32,9 @@ public class MageBehaviour : BaseEnemyStats
 
     private GameObject player;
 
+    [Header("Elementos")]
+    public EnemigoElemental elemento;
+
 
     void Start()
     {
@@ -48,7 +51,7 @@ public class MageBehaviour : BaseEnemyStats
         UpdateDestination();
 
         //PROVISIONAL
-       // teamMembers[0] = gameObject;
+        // teamMembers[0] = gameObject;
 
 
     }
@@ -61,6 +64,8 @@ public class MageBehaviour : BaseEnemyStats
             if (CheckTeam())
             {
                 fearMode = false;
+                elemento.elementoAleatorio = elemento.numeroElemento;
+
                 if (currentHealth != maxHealth)
                 {
                     if (defenseRange.playerInRange)
@@ -88,11 +93,14 @@ public class MageBehaviour : BaseEnemyStats
             else
             {
                 fearMode = true;
+                elemento.elementoAleatorio = 4;
                 nmAgent.SetDestination(transform.position);
             }
         }
         else
         {
+            elemento.elementoAleatorio = elemento.numeroElemento;
+
             //Debug.Log("Patrolling");
             nmAgent.stoppingDistance = 0;
             if (Vector3.Distance(nmAgent.pathEndPosition, transform.position) < 5f)
@@ -114,7 +122,7 @@ public class MageBehaviour : BaseEnemyStats
             anim.SetInteger("State", 1);
         }
         else
-        { 
+        {
             anim.SetInteger("State", 3);
         }
     }
@@ -223,21 +231,21 @@ public class MageBehaviour : BaseEnemyStats
     // }
 
     private bool PlayerInLOS()
-{
-    RaycastHit LOS;
-    Vector3 direction = player.transform.position - transform.position;
-    
-    if (Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
     {
+        RaycastHit LOS;
+        Vector3 direction = player.transform.position - transform.position;
 
-        if (LOS.collider.CompareTag("Player"))
+        if (Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
         {
-            return true;
-        }
-    }
 
-    return false;
-}
+            if (LOS.collider.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     void Patroll()
     {
@@ -276,4 +284,3 @@ public class MageBehaviour : BaseEnemyStats
     }
     #endregion
 }
- 
