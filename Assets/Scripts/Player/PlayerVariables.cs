@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public partial class PlayerStateManager
@@ -27,6 +28,9 @@ public partial class PlayerStateManager
     public float dashSpeed;
     public float dashTime;
     public float dashCooldown;
+    public GameObject cutEffect;
+    public GameObject elementSpark;
+    public List<Material> cutEffects;
     protected float dashStartTime;
 
     [Space]
@@ -34,7 +38,8 @@ public partial class PlayerStateManager
     public bool isAttacking = false;
     public bool attackIsCharging = false;
     public float attackChargeTime;
-    private float attackStartTime;
+    [HideInInspector] public float attackStartTime;
+    [HideInInspector] public bool chargedAttack = false;
     private float attackInputTime;
     public float attackMovSpeed;
     public float maxComboDelay = 0;
@@ -49,4 +54,9 @@ public partial class PlayerStateManager
     private Vector3 isometricImput;
     private Matrix4x4 referenceMatrix;
     [HideInInspector] public BasePlayerStats baseStats;
+    [HideInInspector] public int element = 0;
+    Color rojoPersonalizado;
+    Color marronPersonalizado;
+    Color azulPersonalizado;
+    Color amarilloPersonalizado;
 }

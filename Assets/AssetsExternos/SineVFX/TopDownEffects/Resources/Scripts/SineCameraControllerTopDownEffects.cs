@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SineCameraControllerTopDownEffects : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class SineCameraControllerTopDownEffects : MonoBehaviour
     // Changing the rotation of the Main Camera in Update
     void Update()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        if (Mouse.current.scroll.ReadValue().y > 0f)
         {
             if (closeFar < 1f)
             {
@@ -42,7 +43,7 @@ public class SineCameraControllerTopDownEffects : MonoBehaviour
                 closeFar = 1f;
             }
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        else if (Mouse.current.scroll.ReadValue().y < 0f)
         {
             if (closeFar > 0f)
             {
@@ -56,7 +57,7 @@ public class SineCameraControllerTopDownEffects : MonoBehaviour
         closeFarLerp = Mathf.Lerp(closeFarLerp, closeFar, Time.deltaTime * scrollSpeed);
         camera.transform.position = Vector3.Lerp(farPivot.position, basePivot.position, closeFarLerp);
 
-        if (Input.GetMouseButton(0))
+        if (Mouse.current.leftButton.isPressed)
         {
             rotationPossible = true;
         }
@@ -68,7 +69,7 @@ public class SineCameraControllerTopDownEffects : MonoBehaviour
         if (rotationPossible == true)
         {
             rotation = gameObject.transform.localRotation;
-            x = rotation.eulerAngles.x + Input.GetAxis("Mouse Y") * rotationAmount;
+            x = rotation.eulerAngles.x + Mouse.current.delta.ReadValue().y * rotationAmount * 0.1f;
             if (x > maximumAngle && x < 180)
             {
                 x = maximumAngle;
@@ -77,7 +78,7 @@ public class SineCameraControllerTopDownEffects : MonoBehaviour
             {
                 x = 340f;
             }
-            y = rotation.eulerAngles.y + Input.GetAxis("Mouse X") * rotationAmount;
+            y = rotation.eulerAngles.y + Mouse.current.delta.ReadValue().x * rotationAmount * 0.1f;
             mouseAxisToVector.Set(x, y, 0f);
             rotation.eulerAngles = mouseAxisToVector;
             gameObject.transform.localRotation = rotation;

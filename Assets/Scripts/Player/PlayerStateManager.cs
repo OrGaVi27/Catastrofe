@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,6 +22,11 @@ public partial class PlayerStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (baseStats.currentMana <= 0 && currentState != attackState) element = 0;
+
+        ElementControll();
+
+
         if (currentState != fallState && !controller.isGrounded)
         {
             SwitchState(fallState);
@@ -53,6 +57,8 @@ public partial class PlayerStateManager : MonoBehaviour
         referenceMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         isometricImput = referenceMatrix.MultiplyPoint3x4(moveVector);
 
+        anim.SetFloat("RunMultiplier", moveVector.magnitude);
+
         controller.Move(isometricImput * playerSpeed * Time.deltaTime);
 
         Rotate();
@@ -62,6 +68,8 @@ public partial class PlayerStateManager : MonoBehaviour
     {
         referenceMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         isometricImput = referenceMatrix.MultiplyPoint3x4(moveVector);
+
+        anim.SetFloat("RunMultiplier", moveVector.magnitude);
 
         controller.Move(isometricImput * speed * Time.deltaTime);
 
@@ -91,27 +99,16 @@ public partial class PlayerStateManager : MonoBehaviour
     public void Attack()
     {
 
-        if(noOfAttacks == 1)
+
+        if (noOfAttacks == 1)
         {
             anim.SetBool("Attack1", true);
-        }
-        if (noOfAttacks >= 2 && anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.5f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
+        }/* 
+        if (noOfAttacks >= 2 && anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
         {
             anim.SetBool("Attack1", false);
             anim.SetBool("Attack2", true);
-        }
-        
-
-        if (attackChargeTime + attackStartTime > Time.time)
-        {
-            //Debug.Log("normal attack");
-            anim.SetBool("StrongAttack", false);
-        }
-        else
-        {
-            //Debug.Log("STRONG ATTACK!");
-            anim.SetBool("StrongAttack", true);
-        }
+        } */
 
         if (anim.GetCurrentAnimatorStateInfo(1).IsName("-"))
         {
@@ -124,18 +121,79 @@ public partial class PlayerStateManager : MonoBehaviour
         if (anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
         {
             anim.SetBool("Attack1", false);
-        }
+        }/* 
         if (anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack2"))
         {
             anim.SetBool("Attack2", false);
             noOfAttacks = 0;
-        }
+        } */
 
-        if(Time.time - attackInputTime > maxComboDelay)
+        if (Time.time - attackInputTime > maxComboDelay)
         {
             noOfAttacks = 0;
         }
     }
 
+    public void ElementControll()
+    {
+
+        ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
+        ColorUtility.TryParseHtmlString("#B07C66", out marronPersonalizado);
+        ColorUtility.TryParseHtmlString("#BDBB6C", out amarilloPersonalizado);
+        ColorUtility.TryParseHtmlString("#525FEF", out azulPersonalizado);
+
+        switch (element)
+        {
+            case 0:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[0];
+                elementSpark.SetActive(false);
+                break;
+
+            case 1:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[1];
+                elementSpark.SetActive(true);
+                var main1 = elementSpark.GetComponent<ParticleSystem>().main;
+                main1.startColor = rojoPersonalizado;
+                break;
+
+            case 2:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[2];
+                elementSpark.SetActive(true);
+                var main2 = elementSpark.GetComponent<ParticleSystem>().main;
+                main2.startColor = marronPersonalizado;
+                break;
+
+            case 3:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[3];
+                elementSpark.SetActive(true);
+                var main3 = elementSpark.GetComponent<ParticleSystem>().main;
+                main3.startColor = amarilloPersonalizado;
+                break;
+
+            case 4:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[4];
+                elementSpark.SetActive(true);
+                var main4 = elementSpark.GetComponent<ParticleSystem>().main;
+                main4.startColor = azulPersonalizado;
+                break;
+        }
+    }
+
+    public float DamageOutput()
+    {
+        if (anim.GetBool("StrongAttack"))
+        {
+            return baseStats.damage * baseStats.DamageMultiplier;
+        }
+        else
+        {
+            return baseStats.damage;
+        }
+    }
+
+    public void CameraShake()
+    {
+        
+    }
     #endregion
 }

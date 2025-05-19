@@ -23,6 +23,7 @@ public class EnemigoElemental : MonoBehaviour
 
     [Header("Enemigo grande")]
     private new Renderer renderer;
+    public GameObject mage;
 
     [Header("Color particulas")]
     Color rojoPersonalizado;
@@ -33,7 +34,7 @@ public class EnemigoElemental : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        
 
         ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
         ColorUtility.TryParseHtmlString("#B07C66", out marronPersonalizado);
@@ -42,6 +43,7 @@ public class EnemigoElemental : MonoBehaviour
 
         // Generar un número aleatorio entre 0 y 3
         int elementoAleatorio = Random.Range(0, 4);
+        mage.GetComponent<BaseEnemyStats>().element = elementoAleatorio + 1;
 
         // Establecer en true el elemento correspondiente
         switch (elementoAleatorio)
@@ -52,18 +54,18 @@ public class EnemigoElemental : MonoBehaviour
                 break;
 
             case 1:
-                agua = true;
-                colorElemento = azulPersonalizado;
-                break;
-
-            case 2:
                 roca = true;
                 colorElemento = marronPersonalizado;
                 break;
 
-            case 3:
+            case 2:
                 electricidad = true;
                 colorElemento = amarilloPersonalizado;
+                break;
+                
+            case 3:
+                agua = true;
+                colorElemento = azulPersonalizado;
                 break;
 
         }
@@ -76,13 +78,13 @@ public class EnemigoElemental : MonoBehaviour
         var main = particleSystem.main;
         main.startColor = colorElemento;
         particulas.GetComponent<Renderer>().material.color = colorElemento;
-        Debug.Log("Color de las partículas: " + colorElemento);
+        //Debug.Log("Color de las partículas: " + colorElemento);
 
         var particleSystemExterior = particulasExterior.GetComponent<ParticleSystem>();
         var mainExterior = particleSystemExterior.main;
         mainExterior.startColor = colorElemento;
         particulasExterior.GetComponent<Renderer>().material.color = colorElemento;
-        Debug.Log("Color de las partículas exterior: " + colorElemento);
+        //Debug.Log("Color de las partículas exterior: " + colorElemento);
     }
 
     // Update is called once per frame

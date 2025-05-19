@@ -1,9 +1,10 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class MageBehaviour : BaseEnemyStats
 {
+    public float fleeSpeedMult = 1.5f;
+    [Space]
     [Header("Patroll")]
     public Transform[] patrollPoints;
     Vector3 patrollTarget;
@@ -24,18 +25,21 @@ public class MageBehaviour : BaseEnemyStats
     [Header("Healing")]
     public float healCooldown = 5f;
     public float healAmount = 15f;
-    private bool healReady = true;
+    private float lastTimeHealed = 0;
+    private bool healReady = false;
 
     [Space]
     [Header("Animation")]
     public Animator anim;
+    public GameObject staff;
 
     private GameObject player;
 
 
+
     void Start()
     {
-        currentHealth = maxHealth - 50f;
+        //currentHealth = maxHealth - 50f;
 
         nmAgent = GetComponent<NavMeshAgent>();
 
@@ -47,8 +51,10 @@ public class MageBehaviour : BaseEnemyStats
 
         UpdateDestination();
 
+        
+
         //PROVISIONAL
-       // teamMembers[0] = gameObject;
+        // teamMembers[0] = gameObject;
 
 
     }
@@ -56,6 +62,11 @@ public class MageBehaviour : BaseEnemyStats
     // Update is called once per frame
     void Update()
     {
+        StaffColor();
+        if (currentHealth <= 0) return;
+
+        if (!defenseRange.playerInRange) nmAgent.speed = movementSpeed;
+
         if (visionRange.playerInRange && PlayerInLOS())
         {
             if (CheckTeam())
@@ -70,11 +81,9 @@ public class MageBehaviour : BaseEnemyStats
                     }
                     else
                     {
-                        if (healReady)
+                        if (lastTimeHealed + healCooldown < Time.time)
                         {
-                            // Heals the mage and all its team members
-                            HealTeam(healAmount);
-                            StartCoroutine(AbilityCooldown(healCooldown, healReady));
+                            healReady = true;
                         }
                     }
                 }
@@ -104,8 +113,14 @@ public class MageBehaviour : BaseEnemyStats
 
         }
 
-
-        if (nmAgent.velocity != Vector3.zero)
+        if (healReady)
+        {
+            anim.SetInteger("State", 4);
+            nmAgent.SetDestination(transform.position);
+            lastTimeHealed = Time.time;
+            healReady = false;
+        }
+        else if (nmAgent.velocity != Vector3.zero)
         {
             anim.SetInteger("State", 2);
         }
@@ -114,7 +129,7 @@ public class MageBehaviour : BaseEnemyStats
             anim.SetInteger("State", 1);
         }
         else
-        { 
+        {
             anim.SetInteger("State", 3);
         }
     }
@@ -195,6 +210,7 @@ public class MageBehaviour : BaseEnemyStats
     void Fleeing()
     {
         nmAgent.stoppingDistance = 0;
+        nmAgent.speed = movementSpeed * fleeSpeedMult;
 
         Vector3 direction = (transform.position - player.transform.position).normalized;
         Vector3 newPosition = transform.position + direction * 10f;
@@ -223,21 +239,21 @@ public class MageBehaviour : BaseEnemyStats
     // }
 
     private bool PlayerInLOS()
-{
-    RaycastHit LOS;
-    Vector3 direction = player.transform.position - transform.position;
-    
-    if (Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
     {
+        RaycastHit LOS;
+        Vector3 direction = player.transform.position - transform.position;
 
-        if (LOS.collider.CompareTag("Player"))
+        if (Physics.Raycast(transform.position, direction, out LOS, Mathf.Infinity, ~0, QueryTriggerInteraction.Ignore))
         {
-            return true;
-        }
-    }
 
-    return false;
-}
+            if (LOS.collider.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     void Patroll()
     {
@@ -262,17 +278,32 @@ public class MageBehaviour : BaseEnemyStats
             patrollIndex = 0;
         }
     }
-    #endregion
 
-
-    #region Coroutines
-    IEnumerator AbilityCooldown(float cooldown, bool AbilityReady)
+    void StaffColor()
     {
-        AbilityReady = false;
+        var colorMult = 0.05f;
+        switch (element)
+        {
+            case 0:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(191, 191, 191));
+                break;
 
-        yield return new WaitForSeconds(cooldown);
+            case 1:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(239, 74, 74) * colorMult); ;
+                break;
 
-        AbilityReady = true;
+            case 2:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(176, 124, 102) * colorMult);
+                break;
+
+            case 3:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(189, 187, 108) * colorMult);
+                break;
+
+            case 4:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(82, 95, 239) * colorMult);
+                break;
+        }
     }
     #endregion
 }
