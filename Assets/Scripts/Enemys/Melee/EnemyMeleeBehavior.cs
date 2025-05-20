@@ -17,21 +17,48 @@ public class EnemyMeleeBehavior : MonoBehaviour
     public bool estoyEnUnEquipo = false;
 
     private bool alreadyAttacked;
+    private bool IsMoving = false;
+    private bool isLookingToPlayer = false;
 
-    // NUEVO: Referencia al Animator
-    private Animator anim;
+    private Animator animator;
 
     void Awake()
     {
         player = GameObject.Find("Player").transform;
         minionMele = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>(); // Referencia al Animator
+
+        GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
+        minionMele.updateRotation = false;
+
     }
 
     void Update()
     {
-        anim.SetBool("isWalking", minionMele.velocity.magnitude > 0.1f);
+        // Animaciones Transiciones Caminar
+        if (minionMele.velocity.magnitude > 0.5)
+        {
+            IsMoving = true;
+            animator.SetBool("IsMoving", true);
+        }
+        else if (minionMele.velocity.magnitude <= 0.5)
+        {
+            IsMoving = false;
+            animator.SetBool("IsMoving", false);
+        }
 
+        // Hacer que el enemigo mire al jugador
+        if (PlayerEnRangoVision() && isLookingToPlayer)
+        {
+            Vector3 direccionHaciaJugador = (player.position - transform.position);
+            direccionHaciaJugador.y = 0f;
+            direccionHaciaJugador = direccionHaciaJugador.normalized;
+
+            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionHaciaJugador);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotacionObjetivo, Time.deltaTime * 10f);
+        }
+
+        // Comportamiento cuando el enemigo está en un equipo
         if (estoyEnUnEquipo)
         {
             if (EstoyEnAreaDeDefensa())
@@ -39,38 +66,39 @@ public class EnemyMeleeBehavior : MonoBehaviour
                 if (PlayerEnRangoVision())
                 {
                     if (PlayerEnRangoDePegar())
-                        Pegar();
+                        Pegar(); // Atacar cuerpo a cuerpo
                     else
-                        Perseguir();
+                        Perseguir(); // Seguir al jugador
                 }
                 else
                 {
-                    SeguirAliado();
+                    SeguirAliado(); // Seguir a un aliado si no está en rango de visión
                 }
             }
             else
             {
-                PosicionarseEnAreaDefensa();
+                PosicionarseEnAreaDefensa(); // Posicionarse en el área de defensa
             }
         }
         else
         {
+            // Comportamiento cuando el enemigo no está en un equipo
             if (HayMagoDisponibleCercano())
             {
-                AsignarseAMagoConMenosAliados();
+                AsignarseAMagoConMenosAliados(); // Buscar un mago cercano para unirse
             }
             else
             {
                 if (PlayerEnRangoVision())
                 {
                     if (PlayerEnRangoDePegar())
-                        Pegar();
+                        Pegar(); // Atacar cuerpo a cuerpo
                     else
-                        Perseguir();
+                        Perseguir(); // Seguir al jugador
                 }
                 else
                 {
-                    SeguirAliado();
+                    SeguirAliado(); // Seguir a un aliado
                 }
             }
         }
@@ -154,18 +182,22 @@ public class EnemyMeleeBehavior : MonoBehaviour
 
     void Perseguir()
     {
+        isLookingToPlayer = true;
         minionMele.SetDestination(player.position);
+        Debug.Log("Persiguiendo al jugador");
     }
 
     void Pegar()
     {
         minionMele.SetDestination(transform.position);
-        transform.LookAt(player);
+        isLookingToPlayer = true;
+        animator.SetBool("CanAttack", true);
+        animator.SetBool("Attacking", true);
+
 
         if (!alreadyAttacked)
         {
             alreadyAttacked = true;
-            anim.SetTrigger("Attack");
             Debug.Log("¡Atacando al jugador!");
             Invoke(nameof(ResetAttack), 1.5f);
         }
@@ -173,38 +205,50 @@ public class EnemyMeleeBehavior : MonoBehaviour
 
     void SeguirAliado()
     {
+        isLookingToPlayer = false;
         if (targetToFollow != null)
         {
-            minionMele.SetDestination(targetToFollow.position);
+            Debug.Log("Acompañando a un aliado");
+            float distanciaMinima = 2.0f; 
+            Vector3 direccion = targetToFollow.position - transform.position;
+            direccion.y = 0;
+
+            if (direccion.magnitude > distanciaMinima)
+            {
+                Vector3 destino = targetToFollow.position - direccion.normalized * distanciaMinima;
+                minionMele.SetDestination(destino);
+            }
+            else
+            {
+                minionMele.SetDestination(transform.position); 
+            }
         }
     }
 
     void PosicionarseEnAreaDefensa()
     {
+        isLookingToPlayer = false;
         if (targetToFollow != null)
         {
-            minionMele.SetDestination(targetToFollow.position);
+            Debug.Log("Posicionándose en el área de defensa");
+            float distanciaMinima = 2.0f;
+            Vector3 direccion = targetToFollow.position - transform.position;
+            direccion.y = 0;
+
+            if (direccion.magnitude > distanciaMinima)
+            {
+                Vector3 destino = targetToFollow.position - direccion.normalized * distanciaMinima;
+                minionMele.SetDestination(destino);
+            }
+            else
+            {
+                minionMele.SetDestination(transform.position); 
+            }
         }
     }
 
     void ResetAttack()
     {
         alreadyAttacked = false;
-    }
-
-    // NUEVO: Método para recibir daño
-    public void TakeDamage()
-    {
-        anim.SetTrigger("TakeDamage");
-        Debug.Log("Recibiendo daño...");
-    }
-
-    // NUEVO: Método para morir
-    public void Die()
-    {
-        anim.SetTrigger("Dead");
-        Debug.Log("Enemigo muerto");
-        this.enabled = false;
-        minionMele.enabled = false;
     }
 }
