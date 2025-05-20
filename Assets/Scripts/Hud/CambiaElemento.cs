@@ -1,23 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CambiaElemento : MonoBehaviour
 {
-    public int elemento = 0;
+    public int elemento;
+    public PlayerStateManager playerStateManager;
     public Sprite[] elementoSprite; // Array de sprites para los diferentes elementos
 
     // Start is called before the first frame update
     void Start()
     {
-
+        playerStateManager = GameObject.Find("Player").GetComponent<PlayerStateManager>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        /* if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             elemento = 0;
         }else if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -35,7 +35,8 @@ public class CambiaElemento : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             elemento = 4;
-        } 
+        }  */
+        elemento = playerStateManager.element;
 
         switch (elemento)
         {

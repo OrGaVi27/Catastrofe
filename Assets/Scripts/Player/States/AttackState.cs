@@ -1,31 +1,51 @@
 
+using UnityEngine;
+
 public class AttackState : PlayerBaseState
 {
     public override void EnterState(PlayerStateManager player)
     {
         player.anim.SetBool("IsAttacking", true);
+        if (player.element != 0 && player.baseStats.currentMana > 0) player.baseStats.currentMana--;
+        
     }
-    public override void ExitState(PlayerStateManager player) 
+    public override void ExitState(PlayerStateManager player)
     {
         player.anim.SetBool("IsAttacking", false);
+        
     }
     public override void UpdateState(PlayerStateManager player)
     {
+        if (!player.isAttacking && player.inputVector.magnitude != 0)
+        {
+            player.SwitchState(player.walkState);
+        }
+        else if (!player.isAttacking)
+        {
+            player.SwitchState(player.idleState);
+        }
+
+
         if (player.attackIsCharging)
         {
             player.anim.SetBool("IsCharging", true);
             player.anim.SetLayerWeight(1, 1);
-        }else
+
+            if (player.attackChargeTime + player.attackStartTime > Time.time)
+            {
+                //Debug.Log("normal attack");
+                player.anim.SetBool("StrongAttack", false);
+            }
+            else
+            {
+                //Debug.Log("STRONG ATTACK!");
+                player.anim.SetBool("StrongAttack", true);
+            }
+        }
+        else
         {
             player.anim.SetBool("IsCharging", false);
             player.Attack();
-        }
-        
-        
-        
-        if (!player.isAttacking)
-        {
-            player.SwitchState(player.idleState);
         }
 
         player.Move(player.attackMovSpeed);

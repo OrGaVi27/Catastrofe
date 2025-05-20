@@ -24,7 +24,9 @@ public class MageBehaviour : BaseEnemyStats
     [Header("Healing")]
     public float healCooldown = 5f;
     public float healAmount = 15f;
-    private bool healReady = true;
+    private bool healReady = false;
+    private float lastTimeHealed = 0f;
+    public float fleeSpeedMult;
 
     [Space]
     [Header("Animation")]
@@ -38,7 +40,7 @@ public class MageBehaviour : BaseEnemyStats
 
     void Start()
     {
-        currentHealth = maxHealth - 50f;
+        //currentHealth = maxHealth - 50f;
 
         nmAgent = GetComponent<NavMeshAgent>();
 
@@ -59,6 +61,11 @@ public class MageBehaviour : BaseEnemyStats
     // Update is called once per frame
     void Update()
     {
+        if (dead) return;
+        element = elemento.elementoAleatorio;
+
+        if (!defenseRange.playerInRange) nmAgent.speed = movementSpeed;
+
         if (visionRange.playerInRange && PlayerInLOS())
         {
             if (CheckTeam())
@@ -75,11 +82,9 @@ public class MageBehaviour : BaseEnemyStats
                     }
                     else
                     {
-                        if (healReady)
+                        if (lastTimeHealed + healCooldown < Time.time)
                         {
-                            // Heals the mage and all its team members
-                            HealTeam(healAmount);
-                            StartCoroutine(AbilityCooldown(healCooldown, healReady));
+                            healReady = true;
                         }
                     }
                 }
@@ -113,7 +118,14 @@ public class MageBehaviour : BaseEnemyStats
         }
 
 
-        if (nmAgent.velocity != Vector3.zero)
+        if (healReady)
+        {
+            anim.SetInteger("State", 4);
+            nmAgent.SetDestination(transform.position);
+            lastTimeHealed = Time.time;
+            healReady = false;
+        }
+        else if (nmAgent.velocity != Vector3.zero)
         {
             anim.SetInteger("State", 2);
         }
@@ -159,8 +171,6 @@ public class MageBehaviour : BaseEnemyStats
     /// <param name="healAmount"></param>
     public void HealTeam(float healAmount)
     {
-        anim.SetInteger("State", 4);
-
         Heal(healAmount);
         foreach (GameObject teamMember in teamMembers)
         {
@@ -203,6 +213,7 @@ public class MageBehaviour : BaseEnemyStats
     void Fleeing()
     {
         nmAgent.stoppingDistance = 0;
+        nmAgent.speed = movementSpeed * fleeSpeedMult;
 
         Vector3 direction = (transform.position - player.transform.position).normalized;
         Vector3 newPosition = transform.position + direction * 10f;

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,11 +10,13 @@ public class BaseEnemyStats : MonoBehaviour
     public float currentHealth;
     public float damage = 0f;
     public float movementSpeed = 1f;
-
+    public int element;
     public bool dead = false;
 
     [Header("Animaciones")]
     public Animator animator;
+    public Material[] DamageMaterials;
+    public float hitEfectLength;
 
     [Header("NavMesh")]
     public NavMeshAgent nmAgent;
@@ -26,9 +25,48 @@ public class BaseEnemyStats : MonoBehaviour
     public Canvas canvas;
 
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(float damageAmount, int attackElement, float elementMultiplier)
     {
-        currentHealth -= damageAmount;
+
+
+        if (attackElement == 0)
+        {
+            currentHealth -= damageAmount;
+            HitEffect();
+            //animator.SetTrigger("Hit");
+        }
+        else if (element == 0)
+        {
+            currentHealth -= damageAmount;
+            //animator.SetTrigger("Hit");
+        }
+        else if (attackElement == 1 && element == 4)
+        {
+            currentHealth -= damageAmount * 0.5f;
+            //animator.SetTrigger("Hit");
+        }
+        else if (attackElement == 4 && element == 1)
+        {
+            currentHealth -= damageAmount * elementMultiplier;
+            //animator.SetTrigger("BigHit");
+        }
+        else if (attackElement - 1 == element)
+        {
+            currentHealth -= damageAmount * 0.5f;
+            //animator.SetTrigger("Hit");
+        }
+        else if (attackElement + 1 == element)
+        {
+            currentHealth -= damageAmount * elementMultiplier;
+            //animator.SetTrigger("BigHit");
+        }
+        else
+        {
+            currentHealth -= damageAmount;
+            //animator.SetTrigger("Hit");
+        }
+
+
         if (currentHealth <= 0f)
         {
             dead = true;
@@ -38,6 +76,7 @@ public class BaseEnemyStats : MonoBehaviour
 
     public void Heal(float healAmount)
     {
+        animator.SetTrigger("Heal");
         currentHealth += healAmount;
         if (currentHealth > maxHealth)
         {
@@ -75,4 +114,6 @@ public class BaseEnemyStats : MonoBehaviour
         Debug.Log("Desaparecer");
         Destroy(gameObject);
     }
+
+    public void HitEffect() { }
 }
