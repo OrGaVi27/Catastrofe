@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +13,11 @@ public class BossBehaviour : MonoBehaviour
     public bool water;
     public bool electricity;
     public bool rock;
+
+    private Color rojoPersonalizado;
+    private Color marronPersonalizado;
+    private Color azulPersonalizado;
+    private Color amarilloPersonalizado;
 
     public List<string> activeElements = new List<string>();
     public List<string> allElements = new List<string>();
@@ -48,6 +50,11 @@ public class BossBehaviour : MonoBehaviour
 
     public void Start()
     {
+        ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
+        ColorUtility.TryParseHtmlString("#B07C66", out marronPersonalizado);
+        ColorUtility.TryParseHtmlString("#BDBB6C", out amarilloPersonalizado);
+        ColorUtility.TryParseHtmlString("#525FEF", out azulPersonalizado);
+
         melee = FindAnyObjectByType<MeleeAtack>();
         distance = FindAnyObjectByType<DistanceAttack>();
         move = GetComponent<BossMovement>();
