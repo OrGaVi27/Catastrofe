@@ -14,16 +14,27 @@ public class BossMovement : MonoBehaviour
     [Header("Movement")]
     public float movementSpeed;
     
-    void Start()
+    public void Start()
     {
         nmAgent = GetComponent<NavMeshAgent>();
         
         nmAgent.speed = movementSpeed;
+
     }
 
-    void Update()
+    public void Direccion()
     {
-        PerseguirAlJugador();
+        //Calcula la dirección hacia el jugador
+        Vector3 direccion = (player.position - transform.position).normalized;
+        direccion.y = 0;
+
+        //Calcula la rotación deseada
+        Quaternion rotacionDeseada = Quaternion.LookRotation(direccion);
+
+        //Rota usando la velocidad angular (angularSpeed) del NavMeshAgent
+        float velocidadEnAngulo = 140;
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotacionDeseada, velocidadEnAngulo * Time.deltaTime);
     }
 
     public void PerseguirAlJugador()
@@ -31,7 +42,6 @@ public class BossMovement : MonoBehaviour
         Vector3 direccionPerseguir = (transform.position - player.transform.position).normalized;
         Vector3 posicionFinal = transform.position - direccionPerseguir * movementSpeed;
 
-        // Establecer la posición del jugador como destino
         nmAgent.SetDestination(posicionFinal);
     }
 
@@ -42,7 +52,7 @@ public class BossMovement : MonoBehaviour
         transform.position = spawnPoint.transform.position;
     }
 
-    void OnEnable()
+    public void OnEnable()
     {
         StartBattle();
     }
