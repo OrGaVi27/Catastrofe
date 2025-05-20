@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossAnim : MonoBehaviour
 {
     public BossBehaviour boss;
+    public DamagePlayer damage;
 
     public void MeleeIdle()
     {
@@ -24,5 +25,10 @@ public class BossAnim : MonoBehaviour
     public void DestoryBoss()
     {
         boss.DestoryBoss();
+    }
+
+    public void Damage()
+    {
+        damage.ActiveDamage();
     }
 }

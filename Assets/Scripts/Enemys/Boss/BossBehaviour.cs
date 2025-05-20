@@ -76,45 +76,59 @@ public class BossBehaviour : MonoBehaviour
         }
         else if(deathBoss == true)
         {
-            Debug.Log("a");
+            Debug.Log("No move");
         }
 
-        if (currentLiife <= 0)
+        if (currentLiife <= 1950)
         {
-            if (lifesCount <= 4)
+            if (lifesCount == 0)
             {
                 ChangeElement();
-
-                ResetLifes();
+            }
+            if (currentLiife <= 1300)
+            {
+                if (lifesCount == 1)
+                {
+                    ChangeElement();
+                }
+                if (currentLiife <= 650)
+                {
+                    if (lifesCount == 2)
+                    {
+                        ChangeElement();
+                    }
+                    if(currentLiife <= 0)
+                    {
+                        BossDeath();
+                    }
+                    else
+                    {
+                        Attack();
+                    }
+                }
+                else
+                {
+                    Attack();
+                }
             }
             else
             {
-                BossDeath();
+                Attack();
             }
         }
         else
         {
-            TimeAttack();
-
-            if (melee.meleeAtack == true && deathBoss == false)
-            {
-                Melee();
-
-                //move.Direccion();
-            }
-            else if (distance.distanceAttack == true && deathBoss == false)
-            {
-                Distance();
-
-                //move.PerseguirAlJugador();
-            }
+            Attack();
         }
     }
 
 #region Elementos
     public void ChangeElement()
     {
+        lifesCount++;
+
         //pasar al siguiente elemnento de la lista de activeElements
+        Debug.Log("a");
     }
 
     public void UpdateActiveElements()
@@ -148,16 +162,26 @@ public class BossBehaviour : MonoBehaviour
         }
 
     }
-
-    public void ResetLifes()
-    {
-        lifesCount += 1;
-
-        currentLiife = maxLiife;
-    }
 #endregion
 
 #region Ataques
+    public void Attack()
+    {
+        TimeAttack();
+
+        if (melee.meleeAtack == true && deathBoss == false)
+        {
+            Melee();
+
+            //move.Direccion();
+        }
+        else if (distance.distanceAttack == true && deathBoss == false)
+        {
+            Distance();
+
+            //move.PerseguirAlJugador();
+        }
+    }
     public void Melee()
     {
         if(MA <= 50 && currentTimeAttack >= timeAttack)
@@ -224,8 +248,8 @@ public class BossBehaviour : MonoBehaviour
         MA = Random.Range(0, 101);
         DA = Random.Range(0, 101);
 
-        Debug.Log(MA);
-        Debug.Log(DA);
+        /*Debug.Log(MA);
+        Debug.Log(DA);*/
     }
 #endregion
 
@@ -234,6 +258,8 @@ public class BossBehaviour : MonoBehaviour
         bossAnim.SetBool("death", true);
 
         deathBoss = true;
+
+        Debug.Log("Muerto");
     }
 
     public void DestoryBoss()
