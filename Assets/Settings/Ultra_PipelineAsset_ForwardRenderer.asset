@@ -22,9 +22,9 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 8
       PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 44dfc73d0e6d2c4489f737015b16f223, type: 2}
+    overrideMaterial: {fileID: -876546973899608171, guid: 8ed23219049917144a2f8cd35f6f373a, type: 3}
     overrideMaterialPassIndex: 0
-    overrideShader: {fileID: -6465566751694194690, guid: c9223d7c212269546b405fd74b431003, type: 3}
+    overrideShader: {fileID: -6465566751694194690, guid: 8ed23219049917144a2f8cd35f6f373a, type: 3}
     overrideShaderPassIndex: 0
     overrideMode: 1
     overrideDepthState: 1
@@ -95,9 +95,9 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
-  m_RenderingMode: 0
-  m_DepthPrimingMode: 0
-  m_CopyDepthMode: 1
+  m_RenderingMode: 2
+  m_DepthPrimingMode: 1
+  m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
 --- !u!114 &2137080722323124085
@@ -122,11 +122,11 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 8
       PassNames: []
-    overrideMaterial: {fileID: 0}
+    overrideMaterial: {fileID: -876546973899608171, guid: 8ed23219049917144a2f8cd35f6f373a, type: 3}
     overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
+    overrideShader: {fileID: -6465566751694194690, guid: 8ed23219049917144a2f8cd35f6f373a, type: 3}
     overrideShaderPassIndex: 0
-    overrideMode: 1
+    overrideMode: 0
     overrideDepthState: 1
     depthCompareFunction: 5
     enableWrite: 0
@@ -166,9 +166,9 @@ MonoBehaviour:
       PassNames: []
     overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
+    overrideShader: {fileID: -6465566751694194690, guid: c9223d7c212269546b405fd74b431003, type: 3}
     overrideShaderPassIndex: 0
-    overrideMode: 1
+    overrideMode: 0
     overrideDepthState: 0
     depthCompareFunction: 4
     enableWrite: 1
