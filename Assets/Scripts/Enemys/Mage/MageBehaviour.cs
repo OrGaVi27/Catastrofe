@@ -62,7 +62,8 @@ public class MageBehaviour : BaseEnemyStats
     void Update()
     {
         if (dead) return;
-        element = elemento.elementoAleatorio;
+        //Se usa para calcular el daño de los ataques
+        element = elemento.elementoAleatorio + 1;
 
         if (!defenseRange.playerInRange) nmAgent.speed = movementSpeed;
 

@@ -149,6 +149,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bed4c3ee78b7373429e34b646ab7d1d3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -282,6 +283,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bed4c3ee78b7373429e34b646ab7d1d3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -502,6 +504,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bed4c3ee78b7373429e34b646ab7d1d3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -671,7 +674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ff34edf4140b84f84a1dfd2308e064, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mage: {fileID: 0}
+  mage: {fileID: 6268628808784324404}
 --- !u!1 &3833526441816502252
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +728,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 946c93e3e97a8cd4f8120ecd46742d35, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -843,6 +847,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e176265bdeaeeeb408f6edefcf95040e, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -934,6 +939,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bed4c3ee78b7373429e34b646ab7d1d3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1091,7 +1097,7 @@ GameObject:
   - component: {fileID: 6268628808784324404}
   m_Layer: 0
   m_Name: Mage
-  m_TagString: Enemy
+  m_TagString: Mago
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1234,7 +1240,9 @@ MonoBehaviour:
   element: 0
   dead: 0
   animator: {fileID: 968199782150386258}
-  nmAgent: {fileID: 0}
+  DamageMaterials: []
+  hitEfectLength: 0
+  nmAgent: {fileID: 5800397522494698082}
   canvas: {fileID: 4801895964022362535}
   patrollPoints:
   - {fileID: 0}
@@ -1243,7 +1251,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   teamMembers:
-  - {fileID: 4456364492117513580}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -1252,8 +1260,9 @@ MonoBehaviour:
   visionRange: {fileID: 7886865878348663151}
   defenseRange: {fileID: 2704988450797927609}
   safeSpaceRange: {fileID: 6523963492157491471}
-  healCooldown: 10
-  healAmount: 15
+  healCooldown: 5
+  healAmount: 50
+  fleeSpeedMult: 2
   anim: {fileID: 968199782150386258}
   elemento: {fileID: 6562675985379657288}
 --- !u!1 &4613905976319404735
@@ -1341,6 +1350,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e176265bdeaeeeb408f6edefcf95040e, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1561,6 +1571,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bed4c3ee78b7373429e34b646ab7d1d3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1680,6 +1691,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bed4c3ee78b7373429e34b646ab7d1d3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16580,6 +16592,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bed4c3ee78b7373429e34b646ab7d1d3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16667,6 +16680,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: bed4c3ee78b7373429e34b646ab7d1d3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16788,6 +16802,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e176265bdeaeeeb408f6edefcf95040e, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16916,6 +16931,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 946c93e3e97a8cd4f8120ecd46742d35, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22296,7 +22312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1842337099107477672, guid: b077711cea7c0424d838b815fc089b10, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.5
+      value: 1.86
       objectReference: {fileID: 0}
     - target: {fileID: 1842337099107477672, guid: b077711cea7c0424d838b815fc089b10, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

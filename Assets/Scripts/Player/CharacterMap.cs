@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -40,7 +41,7 @@ public partial class PlayerStateManager
         Vector2 elementImput = value.Get<Vector2>();
 
         //Debug.Log(elementImput);
-
+        if (baseStats.currentMana <= 0) return;
         switch (elementImput)
         {
 

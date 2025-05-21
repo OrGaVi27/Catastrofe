@@ -32,38 +32,37 @@ public class BaseEnemyStats : MonoBehaviour
         if (attackElement == 0)
         {
             currentHealth -= damageAmount;
-            HitEffect();
-            //animator.SetTrigger("Hit");
+            animator.SetTrigger("Hit");
         }
         else if (element == 0)
         {
             currentHealth -= damageAmount;
-            //animator.SetTrigger("Hit");
+            animator.SetTrigger("Hit");
         }
         else if (attackElement == 1 && element == 4)
         {
             currentHealth -= damageAmount * 0.5f;
-            //animator.SetTrigger("Hit");
+            animator.SetTrigger("Hit");
         }
         else if (attackElement == 4 && element == 1)
         {
             currentHealth -= damageAmount * elementMultiplier;
-            //animator.SetTrigger("BigHit");
+            animator.SetTrigger("BigHit");
         }
         else if (attackElement - 1 == element)
         {
             currentHealth -= damageAmount * 0.5f;
-            //animator.SetTrigger("Hit");
+            animator.SetTrigger("Hit");
         }
         else if (attackElement + 1 == element)
         {
             currentHealth -= damageAmount * elementMultiplier;
-            //animator.SetTrigger("BigHit");
+            animator.SetTrigger("BigHit");
         }
         else
         {
             currentHealth -= damageAmount;
-            //animator.SetTrigger("Hit");
+            animator.SetTrigger("Hit");
         }
 
 
@@ -86,7 +85,7 @@ public class BaseEnemyStats : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("Muerto");
+        //Debug.Log("Muerto");
 
         animator.SetBool("Death", true);
 
@@ -111,9 +110,7 @@ public class BaseEnemyStats : MonoBehaviour
 
     public void DestroyObject()
     {
-        Debug.Log("Desaparecer");
+        //Debug.Log("Desaparecer");
         Destroy(gameObject);
     }
-
-    public void HitEffect() { }
 }

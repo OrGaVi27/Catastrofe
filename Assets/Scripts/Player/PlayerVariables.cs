@@ -54,7 +54,7 @@ public partial class PlayerStateManager
     private Vector3 isometricImput;
     private Matrix4x4 referenceMatrix;
     [HideInInspector] public BasePlayerStats baseStats;
-    [HideInInspector] public int element = 0;
+    public int element = 0;
     Color rojoPersonalizado;
     Color marronPersonalizado;
     Color azulPersonalizado;

@@ -56,7 +56,8 @@ public class ComportamientoArquero : BaseEnemyStats
     void Update()
     {
 
-
+        //Se usa para calcular el daño de los ataques
+        element =  elementoMinion.elemento;
         tiempoIdle += Time.deltaTime;
 
         if (tiempoIdle >= 5f)
