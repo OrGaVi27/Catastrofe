@@ -31,6 +31,7 @@ public class MageBehaviour : BaseEnemyStats
     [Space]
     [Header("Animation")]
     public Animator anim;
+    public GameObject staff;
 
     private GameObject player;
 
@@ -63,7 +64,16 @@ public class MageBehaviour : BaseEnemyStats
     {
         if (dead) return;
         //Se usa para calcular el daño de los ataques
-        element = elemento.elementoAleatorio + 1;
+        if (elemento.elementoAleatorio == 4)
+        {
+            element = 0;
+        }
+        else
+        {
+            element = elemento.elementoAleatorio +1;
+        }
+        
+        StaffColor();
 
         if (!defenseRange.playerInRange) nmAgent.speed = movementSpeed;
 
@@ -282,17 +292,34 @@ public class MageBehaviour : BaseEnemyStats
             patrollIndex = 0;
         }
     }
-    #endregion
 
-
-    #region Coroutines
-    IEnumerator AbilityCooldown(float cooldown, bool AbilityReady)
+    void StaffColor()
     {
-        AbilityReady = false;
+        var colorMult = 0.05f;
+        switch (element)
+        {
+            case 0:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(191, 191, 191));
+                break;
 
-        yield return new WaitForSeconds(cooldown);
+            case 1:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(255, 0, 0) * colorMult); ;
+                break;
 
-        AbilityReady = true;
+            case 2:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(112, 49, 0) * colorMult);
+                break;
+
+            case 3:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(255, 251, 0) * colorMult);
+                break;
+
+            case 4:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(0, 21, 255) * colorMult);
+                break;
+        }
     }
     #endregion
+
+
 }

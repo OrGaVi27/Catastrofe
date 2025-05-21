@@ -22,11 +22,6 @@ public partial class PlayerStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (baseStats.currentMana <= 0 && currentState != attackState) element = 0;
-
-        ElementControll();
-
-
         if (currentState != fallState && !controller.isGrounded)
         {
             SwitchState(fallState);
@@ -34,6 +29,9 @@ public partial class PlayerStateManager : MonoBehaviour
 
         currentState.UpdateState(this);
 
+        if (baseStats.currentMana <= 0 && currentState != attackState) element = 0;
+
+        ElementControll();
         ApplyGravity();
         AttackAnimUpdate();
     }
@@ -78,7 +76,7 @@ public partial class PlayerStateManager : MonoBehaviour
 
     public void Dash()
     {
-        if (Time.time < dashStartTime + dashTime)
+        if (Time.time <= dashStartTime + dashTime)
         {
             controller.Move(transform.forward * dashSpeed * Time.deltaTime);
         }

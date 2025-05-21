@@ -74,28 +74,28 @@ public class EnemigoElemental : MonoBehaviour
 
                 break;
 
-            case 1:
+            case 3:
                 agua = true;
                 foreach (GameObject parte in partesMago)
                 {
-                    parte.GetComponent<Renderer>().material = materialesElementos[1];
+                    parte.GetComponent<Renderer>().material = materialesElementos[3];
                 }
-                ojosMago[0].GetComponent<Renderer>().material = materialesOjos[1];
-                ojosMago[1].GetComponent<Renderer>().material = materialesOjos[1];
+                ojosMago[0].GetComponent<Renderer>().material = materialesOjos[3];
+                ojosMago[1].GetComponent<Renderer>().material = materialesOjos[3];
                 colorElemento = azulPersonalizado;
                 particulas.SetActive(true);
                 particulasExterior.SetActive(true);
 
                 break;
 
-            case 2:
+            case 1:
                 roca = true;
                 foreach (GameObject parte in partesMago)
                 {
-                    parte.GetComponent<Renderer>().material = materialesElementos[2];
+                    parte.GetComponent<Renderer>().material = materialesElementos[1];
                 }
-                ojosMago[0].GetComponent<Renderer>().material = materialesOjos[2];
-                ojosMago[1].GetComponent<Renderer>().material = materialesOjos[2];
+                ojosMago[0].GetComponent<Renderer>().material = materialesOjos[1];
+                ojosMago[1].GetComponent<Renderer>().material = materialesOjos[1];
 
                 colorElemento = marronPersonalizado;
                 particulas.SetActive(true);
@@ -103,14 +103,14 @@ public class EnemigoElemental : MonoBehaviour
 
                 break;
 
-            case 3:
+            case 2:
                 electricidad = true;
                 foreach (GameObject parte in partesMago)
                 {
-                    parte.GetComponent<Renderer>().material = materialesElementos[3];
+                    parte.GetComponent<Renderer>().material = materialesElementos[2];
                 }
-                ojosMago[0].GetComponent<Renderer>().material = materialesOjos[3];
-                ojosMago[1].GetComponent<Renderer>().material = materialesOjos[3];
+                ojosMago[0].GetComponent<Renderer>().material = materialesOjos[2];
+                ojosMago[1].GetComponent<Renderer>().material = materialesOjos[2];
 
                 colorElemento = amarilloPersonalizado;
                 particulas.SetActive(true);
@@ -121,7 +121,7 @@ public class EnemigoElemental : MonoBehaviour
                 fuego = false;
                 agua = false;
                 roca = false;
-                electricidad = true;
+                electricidad = false;
 
                 foreach (GameObject parte in partesMago)
                 {

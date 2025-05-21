@@ -15,8 +15,6 @@ public class BaseEnemyStats : MonoBehaviour
 
     [Header("Animaciones")]
     public Animator animator;
-    public Material[] DamageMaterials;
-    public float hitEfectLength;
 
     [Header("NavMesh")]
     public NavMeshAgent nmAgent;

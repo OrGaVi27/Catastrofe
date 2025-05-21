@@ -56,30 +56,30 @@ public class ElementoMinion : MonoBehaviour
 
 
         }
-        else if (elemento == 2)
+        else if (elemento == 4)
         {
             // Debug.Log("El Minion es de agua");
-            iconoElemento.sprite = iconosElementos[1];
+            iconoElemento.sprite = iconosElementos[3];
             iconoElemento.color = Color.white;
             Vida.color = azulPersonalizado;
             Vida2.color = azulPersonalizado;
 
 
         }
-        else if (elemento == 3)
+        else if (elemento == 2)
         {
             // Debug.Log("El Minion es de roca");
-            iconoElemento.sprite = iconosElementos[2];
+            iconoElemento.sprite = iconosElementos[1];
             iconoElemento.color = Color.white;
             Vida.color = marronPersonalizado;
             Vida2.color = marronPersonalizado;
 
 
         }
-        else if (elemento == 4)
+        else if (elemento == 3)
         {
             // Debug.Log("El Minion es de electricidad");
-            iconoElemento.sprite = iconosElementos[3];
+            iconoElemento.sprite = iconosElementos[2];
             iconoElemento.color = Color.white;
             Vida.color = amarilloPersonalizado;
             Vida2.color = amarilloPersonalizado;
@@ -101,15 +101,15 @@ public class ElementoMinion : MonoBehaviour
             }
             else if (enemigo.agua)
             {
-                elemento = 2;
+                elemento = 4;
             }
             else if (enemigo.roca)
             {
-                elemento = 3;
+                elemento = 2;
             }
             else if (enemigo.electricidad)
             {
-                elemento = 4;
+                elemento = 3;
             }
 
             parte1.GetComponent<Renderer>().material = materialesElementos[elemento];

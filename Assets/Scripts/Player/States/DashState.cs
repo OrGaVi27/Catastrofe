@@ -1,8 +1,9 @@
-
+using UnityEngine;
 public class DashState : PlayerBaseState
 {
     public override void EnterState(PlayerStateManager player)
     {
+        Debug.Log("Entering Dash");
         player.baseStats.isInvencible = true;
         player.anim.SetInteger("State", 2);
     }

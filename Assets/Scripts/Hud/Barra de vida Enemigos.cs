@@ -24,14 +24,14 @@ public class BarradevidaEnemigos : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (healthSlider.value != enemyStats.currentHealth)
+        if (healthSlider.value != enemyStats.currentHealth / enemyStats.maxHealth * 100)
         {
-            healthSlider.value = enemyStats.currentHealth;
+            healthSlider.value = enemyStats.currentHealth / enemyStats.maxHealth * 100;
         }
 
         if (healthSlider.value != easeHealthSlider.value)
         {
-            easeHealthSlider.value = Mathf.Lerp(easeHealthSlider.value, enemyStats.currentHealth, lerpSpeed);
+            easeHealthSlider.value = Mathf.Lerp(easeHealthSlider.value, enemyStats.currentHealth / enemyStats.maxHealth * 100, lerpSpeed);
         }
 
     }
