@@ -27,6 +27,16 @@ public class BossAnim : MonoBehaviour
         boss.DestoryBoss();
     }
 
+    public void InstanceBolas()
+    {
+        boss.InstanceBolas();
+    }
+
+    public void InstanceRayo()
+    {
+        boss.InstanceRayo();
+    }
+
     public void Damage()
     {
         damage.ActiveDamage();

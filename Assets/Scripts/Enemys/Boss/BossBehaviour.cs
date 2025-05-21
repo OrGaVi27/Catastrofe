@@ -45,7 +45,23 @@ public class BossBehaviour : MonoBehaviour
 
     private int MA;
     private int DA;
+    [Space]
 
+    [Header("PuntosDisparo")]
+    public GameObject bola;
+    public GameObject rayo;
+    [Space]
+    public Transform point01;
+    public Transform point02;
+    public Transform point03;
+    public Transform point04;
+    public Transform point05;
+    public Transform point06;
+    public Transform point07;
+    public Transform point08;
+    [Space]
+
+    [Header("Muerte")]
     public bool deathBoss;
 
     public void Start()
@@ -73,17 +89,13 @@ public class BossBehaviour : MonoBehaviour
             bossAnim.SetBool("move", false);
         }
 
-        if(melee.meleeAtack == true && inAttack == true || distance.distanceAttack == true && inAttack == true)
+        if(melee.meleeAtack == true && inAttack == true && !deathBoss || distance.distanceAttack == true && inAttack == true && !deathBoss)
         {
             move.Direccion();
         }
-        else if(melee.meleeAtack == false && inAttack == false || distance.distanceAttack == false && inAttack == false)
+        else if(!melee.meleeAtack && !inAttack && !deathBoss|| !distance.distanceAttack && !inAttack && !deathBoss)
         {
             move.PerseguirAlJugador();
-        }
-        else if(deathBoss == true)
-        {
-            Debug.Log("No move");
         }
 
         if (currentLiife <= 1950)
@@ -179,14 +191,10 @@ public class BossBehaviour : MonoBehaviour
         if (melee.meleeAtack == true && deathBoss == false)
         {
             Melee();
-
-            //move.Direccion();
         }
         else if (distance.distanceAttack == true && deathBoss == false)
         {
             Distance();
-
-            //move.PerseguirAlJugador();
         }
     }
     public void Melee()
@@ -196,16 +204,12 @@ public class BossBehaviour : MonoBehaviour
             bossAnim.SetInteger("meleeAttack", 1);
 
             inAttack = true;
-
-            Debug.Log("Giro");
         }
         else if (MA >= 51 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("meleeAttack", 2);
 
             inAttack = true;
-
-            Debug.Log("Pegar");
         }
     }
 
@@ -223,16 +227,12 @@ public class BossBehaviour : MonoBehaviour
             bossAnim.SetInteger("distanceAttack", 1);
 
             inAttack = true;
-
-            Debug.Log("Bola");
         }
         else if (DA >= 51 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("distanceAttack", 2);
 
             inAttack = true;
-
-            Debug.Log("Rayo");
         }
     }
 
@@ -241,6 +241,24 @@ public class BossBehaviour : MonoBehaviour
         bossAnim.SetInteger("distanceAttack", 0);
 
         inAttack = false;
+    }
+
+    public void InstanceBolas()
+    {
+        Instantiate(bola, point01.position, point01.rotation);
+        Instantiate(bola, point02.position, point02.rotation);
+        Instantiate(bola, point03.position, point03.rotation);
+        Instantiate(bola, point04.position, point04.rotation);
+        Instantiate(bola, point05.position, point05.rotation);
+        Instantiate(bola, point06.position, point06.rotation);
+        Instantiate(bola, point07.position, point07.rotation);
+        Instantiate(bola, point08.position, point08.rotation);
+        Debug.Log("Bolas");
+    }
+
+    public void InstanceRayo()
+    {
+        Debug.Log("Rayo");
     }
 
     private void TimeAttack()
@@ -254,9 +272,6 @@ public class BossBehaviour : MonoBehaviour
 
         MA = Random.Range(0, 101);
         DA = Random.Range(0, 101);
-
-        /*Debug.Log(MA);
-        Debug.Log(DA);*/
     }
 #endregion
 
