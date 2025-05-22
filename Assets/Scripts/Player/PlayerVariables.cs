@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public partial class PlayerStateManager
 {
+    public bool rangeCharacter = false;
+
+
     #region States
     [HideInInspector] public WalkState walkState = new WalkState();
     [HideInInspector] public IdleState idleState = new IdleState();
@@ -34,7 +37,6 @@ public partial class PlayerStateManager
 
     [Space]
     [Header("Attack")]
-    public bool rangeCharacter = false;
     public GameObject[] Weapons;
     public Material[] weaponMaterials;
     public GameObject[] RangedProjectiles;

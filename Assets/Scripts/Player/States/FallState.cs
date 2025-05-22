@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class FallState : PlayerBaseState
 {
     public override void EnterState(PlayerStateManager player) { }
@@ -12,7 +10,7 @@ public class FallState : PlayerBaseState
         }
         else
         {
-            player.Move();
+            player.Move(4);
         }
     }
 }

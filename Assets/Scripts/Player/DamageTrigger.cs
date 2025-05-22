@@ -25,18 +25,25 @@ public class DamageTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        
+
         if (other.gameObject.GetComponent<BaseEnemyStats>() != null)
         {
             other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(damageAmount, element, elementMultiplier);
 
-            
-            
+
+
             if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0)
             {
                 attaker.GetComponent<BasePlayerStats>().currentMana++;
             }
         }
+    }
+    
+    public void SetDamage(float damageAmount, int element, float elementMultiplier)
+    {
+        this.damageAmount = damageAmount;
+        this.element = element;
+        this.elementMultiplier = elementMultiplier;
     }
 
 }
