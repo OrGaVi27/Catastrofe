@@ -13,7 +13,7 @@ public partial class PlayerStateManager
 
     [HideInInspector] public CharacterController controller;
     [HideInInspector] public PlayerInput input;
-    public PlayerBaseState currentState;
+    [HideInInspector] public PlayerBaseState currentState;
 
 
     [HideInInspector] public Vector3 moveVector;
@@ -29,18 +29,20 @@ public partial class PlayerStateManager
     public float dashTime;
     public float dashCooldown;
     public GameObject cutEffect;
-    public GameObject elementSpark;
     public List<Material> cutEffects;
     protected float dashStartTime;
 
     [Space]
     [Header("Attack")]
+    public bool rangeCharacter = false;
+    public GameObject[] Weapons;
+    public Material[] weaponMaterials;
+    public GameObject[] RangedProjectiles;
     public bool isAttacking = false;
     public bool attackIsCharging = false;
     public float attackChargeTime;
     [HideInInspector] public float attackStartTime;
     [HideInInspector] public bool chargedAttack = false;
-    private float attackInputTime;
     public float attackMovSpeed;
     public float maxComboDelay = 0;
     [HideInInspector] public static int noOfAttacks;
@@ -55,8 +57,4 @@ public partial class PlayerStateManager
     private Matrix4x4 referenceMatrix;
     [HideInInspector] public BasePlayerStats baseStats;
     public int element = 0;
-    Color rojoPersonalizado;
-    Color marronPersonalizado;
-    Color azulPersonalizado;
-    Color amarilloPersonalizado;
 }

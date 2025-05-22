@@ -295,7 +295,7 @@ public class MageBehaviour : BaseEnemyStats
 
     void StaffColor()
     {
-        var colorMult = 0.05f;
+        var colorMult = 0.02f;
         switch (element)
         {
             case 0:
@@ -307,7 +307,7 @@ public class MageBehaviour : BaseEnemyStats
                 break;
 
             case 2:
-                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(112, 49, 0) * colorMult);
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(214, 69, 12) * colorMult);
                 break;
 
             case 3:

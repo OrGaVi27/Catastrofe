@@ -20,19 +20,23 @@ public partial class PlayerStateManager
     }
     public void OnAttack(InputValue value)
     {
-        if (value.isPressed && controller.isGrounded)
+        if (value.isPressed && controller.isGrounded && !isAttacking)
+        {
+            isAttacking = true;
+            attackStartTime = Time.time;
+            anim.SetBool("IsAttacking", true);
+            if (element != 0 && baseStats.currentMana > 0) baseStats.currentMana--;
+        }
+        else if (value.isPressed && controller.isGrounded && isAttacking && !attackIsCharging)
         {
             isAttacking = true;
             attackIsCharging = true;
-            attackStartTime = Time.time;
         }
 
         if (!value.isPressed)
         {
             attackIsCharging = false;
             attackStartTime = Time.time;
-            noOfAttacks++;
-            noOfAttacks = Mathf.Clamp(noOfAttacks, 0, 3);
         }
     }
 

@@ -17,6 +17,20 @@ public partial class PlayerStateManager : MonoBehaviour
         currentState = idleState;
         currentState.EnterState(this);
         baseStats = GetComponent<BasePlayerStats>();
+
+        if (rangeCharacter)
+        {
+            Weapons[0].SetActive(false);
+            Weapons[1].SetActive(true);
+            anim.SetBool("IsRanged", true);
+            attackMovSpeed = 0.5f;
+        }
+        else
+        {
+            Weapons[0].SetActive(true);
+            Weapons[1].SetActive(false);
+            anim.SetBool("IsRanged", false);
+        } 
     }
 
     // Update is called once per frame
@@ -33,7 +47,6 @@ public partial class PlayerStateManager : MonoBehaviour
 
         ElementControll();
         ApplyGravity();
-        AttackAnimUpdate();
     }
 
     public void SwitchState(PlayerBaseState newState)
@@ -67,7 +80,16 @@ public partial class PlayerStateManager : MonoBehaviour
         referenceMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         isometricImput = referenceMatrix.MultiplyPoint3x4(moveVector);
         anim.SetInteger("State", 1);
-        anim.SetFloat("RunMultiplier", moveVector.magnitude);
+
+        if (rangeCharacter)
+        {
+            anim.SetFloat("RunMultiplier", moveVector.magnitude * 0.01f);
+        }
+        else
+        {
+            anim.SetFloat("RunMultiplier", moveVector.magnitude);
+        }
+        
 
         controller.Move(isometricImput * speed * Time.deltaTime);
 
@@ -96,85 +118,53 @@ public partial class PlayerStateManager : MonoBehaviour
 
     public void Attack()
     {
-
-
-        if (noOfAttacks == 1)
-        {
-            anim.SetBool("Attack1", true);
-        }/* 
-        if (noOfAttacks >= 2 && anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
-        {
-            anim.SetBool("Attack1", false);
-            anim.SetBool("Attack2", true);
-        } */
-
         if (anim.GetCurrentAnimatorStateInfo(1).IsName("-"))
         {
             isAttacking = false;
         }
-    }
 
-    public void AttackAnimUpdate()
-    {
-        if (anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
+        if (anim.GetBool("StrongAttack"))
         {
-            anim.SetBool("Attack1", false);
-        }/* 
-        if (anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack2"))
+            //Sonido ataque fuerte
+        }
+        else
         {
-            anim.SetBool("Attack2", false);
-            noOfAttacks = 0;
-        } */
-
-        if (Time.time - attackInputTime > maxComboDelay)
-        {
-            noOfAttacks = 0;
+            //Sonido ataque normal
         }
     }
 
     public void ElementControll()
     {
+        int weapon = 0;
+        if (rangeCharacter) weapon = 1;
 
-        ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
-        ColorUtility.TryParseHtmlString("#B07C66", out marronPersonalizado);
-        ColorUtility.TryParseHtmlString("#BDBB6C", out amarilloPersonalizado);
-        ColorUtility.TryParseHtmlString("#525FEF", out azulPersonalizado);
+            switch (element)
+            {
+                case 0:
+                    cutEffect.GetComponent<MeshRenderer>().material = cutEffects[0];
+                    Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[weapon];
+                    break;
 
-        switch (element)
-        {
-            case 0:
-                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[0];
-                elementSpark.SetActive(false);
-                break;
+                case 1:
+                    cutEffect.GetComponent<MeshRenderer>().material = cutEffects[1];
+                    Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[2];
+                    break;
 
-            case 1:
-                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[1];
-                elementSpark.SetActive(true);
-                var main1 = elementSpark.GetComponent<ParticleSystem>().main;
-                main1.startColor = rojoPersonalizado;
-                break;
+                case 2:
+                    cutEffect.GetComponent<MeshRenderer>().material = cutEffects[2];
+                    Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[3];
+                    break;
 
-            case 2:
-                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[2];
-                elementSpark.SetActive(true);
-                var main2 = elementSpark.GetComponent<ParticleSystem>().main;
-                main2.startColor = marronPersonalizado;
-                break;
+                case 3:
+                    cutEffect.GetComponent<MeshRenderer>().material = cutEffects[3];
+                    Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[4];
+                    break;
 
-            case 3:
-                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[3];
-                elementSpark.SetActive(true);
-                var main3 = elementSpark.GetComponent<ParticleSystem>().main;
-                main3.startColor = amarilloPersonalizado;
-                break;
-
-            case 4:
-                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[4];
-                elementSpark.SetActive(true);
-                var main4 = elementSpark.GetComponent<ParticleSystem>().main;
-                main4.startColor = azulPersonalizado;
-                break;
-        }
+                case 4:
+                    cutEffect.GetComponent<MeshRenderer>().material = cutEffects[4];
+                    Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[5];
+                    break;
+            }
     }
 
     public float DamageOutput()
