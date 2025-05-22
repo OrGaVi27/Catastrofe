@@ -19,8 +19,11 @@ public class BossBehaviour : MonoBehaviour
     private Color azulPersonalizado;
     private Color amarilloPersonalizado;
 
-    public List<string> activeElements = new List<string>();
-    public List<string> allElements = new List<string>();
+    public Image Vida;
+    public Image Vida2;
+
+    /*public List<string> activeElements = new List<string>();
+    public List<string> allElements = new List<string>();*/
     [Space]
 
     [Header("Life")]
@@ -82,6 +85,9 @@ public class BossBehaviour : MonoBehaviour
         move = GetComponent<BossMovement>();
 
         deathBoss = false;
+
+        Vida.color = rojoPersonalizado;
+        Vida2.color = rojoPersonalizado;
     }
 
     public void Update()
@@ -152,41 +158,65 @@ public class BossBehaviour : MonoBehaviour
     {
         lifesCount++;
 
-        //pasar al siguiente elemnento de la lista de activeElements
         Debug.Log("a");
+
+        //Cambio de color menos fuego
+        if(lifesCount == 0)
+        {
+            Vida.color = rojoPersonalizado;
+            Vida2.color = rojoPersonalizado;
+        }
+        else if(lifesCount == 1)
+        {
+            Vida.color = azulPersonalizado;
+            Vida2.color = azulPersonalizado;
+        }
+        else if(lifesCount == 2)
+        {
+            Vida.color = amarilloPersonalizado;
+            Vida2.color = amarilloPersonalizado;
+        }
+        else if (lifesCount == 3)
+        {
+            Vida.color = marronPersonalizado;
+            Vida2.color = marronPersonalizado;
+        }
+
     }
 
-    public void UpdateActiveElements()
+    #region PARA LAS MEJORAS RANDOMIZAR LOS ELEMENTOS EN QUE PELEAR
+    /*public void UpdateActiveElements()
     {
-        if(fire /* && no esta en activeElements el fuego*/)
+        if (fire && no esta en activeElements el fuego)
         {
             //añadir al ultimo puesto de activeElemets el fuego
 
             //eliminar el fuego de allElements
         }
 
-        if (water /* && no esta en activeElements el water*/)
+        if (water && no esta en activeElements el water)
         {
             //añadir al ultimo puesto de activeElemets el water
 
             //eliminar el water de allElements
         }
 
-        if (electricity /* && no esta en activeElements el electricity*/)
+        if (electricity && no esta en activeElements el electricity)
         {
             //añadir al ultimo puesto de activeElemets el electricity
 
             //eliminar el electricity de allElements
         }
 
-        if (rock /* && no esta en activeElements el rock*/)
+        if (rock && no esta en activeElements el rock)
         {
             //añadir al ultimo puesto de activeElemets el rock
 
             //eliminar el rock de allElements
         }
+    }*/
+    #endregion
 
-    }
 #endregion
 
 #region Ataques
@@ -332,11 +362,16 @@ public class BossBehaviour : MonoBehaviour
     
     public void OnEnable()
     {
-        UpdateActiveElements();
+        /*UpdateActiveElements();*/
 
         currentLiife = maxLiife;
+        lifesCount = 0;
 
         rayo.SetActive(false); 
         preRayo.SetActive(false);
+
+        //Cambio de color fuego
+        Vida.color = rojoPersonalizado;
+        Vida2.color = rojoPersonalizado;
     }
 }
