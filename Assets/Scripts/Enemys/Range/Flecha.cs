@@ -46,11 +46,11 @@ public class Flecha : MonoBehaviour
         {
             if (other.tag == "Player")
             {
-                Debug.Log("Impacto Jugador");
+                //Debug.Log("Impacto Jugador");
                 player.GetComponent<BasePlayerStats>().TakeDamage(damage); // Llama a la función de daño del jugador
 
             }
-            Debug.Log("Flecha colisiona con " + other.tag);
+            //Debug.Log("Flecha colisiona con " + other.tag);
             Destroy(gameObject);
         }
 

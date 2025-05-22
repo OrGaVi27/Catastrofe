@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlechaPlayer : MonoBehaviour
@@ -11,8 +12,7 @@ public class FlechaPlayer : MonoBehaviour
     public GameObject[] Flechas;
 
     public float damage;
-    private float currentDeleteTime;
-    private Vector3 direccion;
+    private float currentDeleteTime = 0f;
     private Rigidbody rb;
 
     int playerElement;
@@ -21,6 +21,8 @@ public class FlechaPlayer : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+
         currentDeleteTime = 0;
 
 
@@ -47,25 +49,35 @@ public class FlechaPlayer : MonoBehaviour
         }
 
         //Velocidad hacia el jugador
-        rb.velocity = direccion * velocidadFlecha;
+        rb.velocity = transform.forward * velocidadFlecha;
 
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<BaseEnemyStats>() != null || other.tag == "Ground" || other.tag == "Wall")
+        if (other.gameObject.GetComponent<BaseEnemyStats>() != null || other.tag == "Ground" || other.tag == "Wall")
         {
-            if (other.GetComponent<BaseEnemyStats>() != null)
+            if (other.gameObject.GetComponent<BaseEnemyStats>() != null)
             {
                 if (flechaEspecial)
                 {
                     GameObject explosion = Instantiate(ExplosionPrefab, transform.position, Quaternion.identity); // Instancia la explosion Elemental
-                    explosion.GetComponent<DamageTrigger>().SetDamage(damage, playerElement, elementMult);
-                    explosion.GetComponent<Explosion>().SetElement(playerElement);
+
+                    DamageTrigger dt = explosion.GetComponent<DamageTrigger>();
+                    if (dt != null) dt.SetDamage(damage, playerElement, elementMult);
+
+
+                    Explosion boom = explosion.GetComponent<Explosion>();
+                    if (boom != null) boom.SetElement(playerElement);
                 }
                 else
                 {
-                    other.GetComponent<BaseEnemyStats>().TakeDamage(damage, playerElement, elementMult); // Llama a la función de daño del enemigo
+                    other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(damage, playerElement, elementMult); // Llama a la función de daño del enemigo
+                }
+                
+                if (player.GetComponent<BasePlayerStats>().currentMana < player.GetComponent<BasePlayerStats>().maxMana && player.GetComponent<PlayerStateManager>().element == 0)
+                {
+                    player.GetComponent<BasePlayerStats>().currentMana++;
                 }
 
             }

@@ -299,7 +299,7 @@ public class MageBehaviour : BaseEnemyStats
         switch (element)
         {
             case 0:
-                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(191, 191, 191));
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(191, 191, 191) * colorMult);
                 break;
 
             case 1:

@@ -11,15 +11,24 @@ public class DamageTrigger : MonoBehaviour
 
     void Start()
     {
-
+        attaker = GameObject.FindGameObjectWithTag("Player");
+        if (attaker.GetComponent<PlayerStateManager>().rangeCharacter)
+        {
+            element = attaker.GetComponent<PlayerStateManager>().element;
+            elementMultiplier = attaker.GetComponent<BasePlayerStats>().elementMultiplier;
+            damageAmount = attaker.GetComponent<PlayerStateManager>().DamageOutput();
+        }
     }
 
 
     void Update()
     {
-        element = attaker.GetComponent<PlayerStateManager>().element;
-        elementMultiplier = attaker.GetComponent<BasePlayerStats>().elementMultiplier;
-        damageAmount = attaker.GetComponent<PlayerStateManager>().DamageOutput();
+        if (!attaker.GetComponent<PlayerStateManager>().rangeCharacter)
+        {
+            element = attaker.GetComponent<PlayerStateManager>().element;
+            elementMultiplier = attaker.GetComponent<BasePlayerStats>().elementMultiplier;
+            damageAmount = attaker.GetComponent<PlayerStateManager>().DamageOutput();
+        }
     }
 
 
@@ -38,7 +47,7 @@ public class DamageTrigger : MonoBehaviour
             }
         }
     }
-    
+
     public void SetDamage(float damageAmount, int element, float elementMultiplier)
     {
         this.damageAmount = damageAmount;
