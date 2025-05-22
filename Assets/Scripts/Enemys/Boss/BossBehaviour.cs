@@ -47,8 +47,14 @@ public class BossBehaviour : MonoBehaviour
     private int DA;
     [Space]
 
+    [Header("MelleCollider")]
+    public GameObject SwordDamage1;
+    public GameObject SwordDamage2;
+    [Space]
+
     [Header("PuntosDisparo")]
     public GameObject bola;
+    public GameObject preRayo;
     public GameObject rayo;
     [Space]
     public Transform point01;
@@ -220,6 +226,16 @@ public class BossBehaviour : MonoBehaviour
         inAttack = false;
     }
 
+    public void MeleeSwordDamage1()
+    {
+        SwordDamage1.SetActive(!SwordDamage1.activeSelf);
+    }
+
+    public void MeleeSwordDamage2()
+    {
+        SwordDamage2.SetActive(!SwordDamage2.activeSelf);
+    }
+
     public void Distance()
     {
         if (DA <= 50 && currentTimeAttack >= timeAttack)
@@ -256,9 +272,14 @@ public class BossBehaviour : MonoBehaviour
         Debug.Log("Bolas");
     }
 
+    public void InstancePreRayo()
+    {
+        preRayo.SetActive(!preRayo.activeSelf);
+    }
+
     public void InstanceRayo()
     {
-        Debug.Log("Rayo");
+        rayo.SetActive(!rayo.activeSelf);
     }
 
     private void TimeAttack()
@@ -274,6 +295,26 @@ public class BossBehaviour : MonoBehaviour
         DA = Random.Range(0, 101);
     }
 #endregion
+
+    public void TakeDamage(float damageAmount)
+    {
+        if(currentLiife >= maxLiife * 0.75f && fire == true)
+        {
+            currentLiife -= damageAmount;
+        }
+        else if(currentLiife < maxLiife * 0.75f && currentLiife >= maxLiife * 0.5f && water == true)
+        {
+            currentLiife -= damageAmount;
+        }
+        else if (currentLiife < maxLiife * 0.5f && currentLiife >= maxLiife * 0.25f && electricity == true)
+        {
+            currentLiife -= damageAmount;
+        }
+        else if (currentLiife < maxLiife * 0.25f && rock == true)
+        {
+            currentLiife -= damageAmount;
+        }
+    }
 
     public void BossDeath()
     {
@@ -294,5 +335,8 @@ public class BossBehaviour : MonoBehaviour
         UpdateActiveElements();
 
         currentLiife = maxLiife;
+
+        rayo.SetActive(false); 
+        preRayo.SetActive(false);
     }
 }

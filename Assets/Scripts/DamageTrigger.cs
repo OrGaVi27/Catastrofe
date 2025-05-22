@@ -21,6 +21,11 @@ public class DamageTrigger : MonoBehaviour
         {
             other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(damageAmount);
         }
+
+        if (other.gameObject.GetComponent<BossBehaviour>() != null)
+        {
+            other.gameObject.GetComponent<BossBehaviour>().TakeDamage(damageAmount);
+        }
     }
 
 }

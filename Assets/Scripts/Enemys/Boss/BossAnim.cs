@@ -5,7 +5,6 @@ using UnityEngine;
 public class BossAnim : MonoBehaviour
 {
     public BossBehaviour boss;
-    public DamagePlayer damage;
 
     public void MeleeIdle()
     {
@@ -32,13 +31,23 @@ public class BossAnim : MonoBehaviour
         boss.InstanceBolas();
     }
 
+    public void InstancePreRayo()
+    {
+        boss.InstancePreRayo();
+    }
+
     public void InstanceRayo()
     {
         boss.InstanceRayo();
     }
 
-    public void Damage()
+    public void MeleeSwordDamage1()
     {
-        damage.ActiveDamage();
+        boss.MeleeSwordDamage1();
+    }
+
+    public void MeleeSwordDamage2()
+    {
+        boss.MeleeSwordDamage2();
     }
 }

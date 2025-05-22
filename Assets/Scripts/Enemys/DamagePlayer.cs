@@ -11,13 +11,6 @@ public class DamagePlayer : MonoBehaviour
     public void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-
-        gameObject.SetActive(false);
-    }
-
-    public void ActiveDamage()
-    {
-        gameObject.SetActive(!gameObject.activeSelf);
     }
 
     public void OnTriggerEnter(Collider other)
