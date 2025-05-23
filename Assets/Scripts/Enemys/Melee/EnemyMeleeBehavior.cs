@@ -17,6 +17,8 @@ public class EnemyMeleeBehavior : BaseEnemyStats
     public bool estoyEnUnEquipo = false;
 
     private bool alreadyAttacked;
+    private float engagementRange = 4f;
+    private float followRange = 5f;
 
     void Start()
     {
@@ -27,12 +29,28 @@ public class EnemyMeleeBehavior : BaseEnemyStats
 
     void Update()
     {
+        if (dead)
+        {
+            GameObject[] team = targetToFollow.gameObject.GetComponent<MageBehaviour>().teamMembers;
+            for (int i = 0; i < team.Length; i++)
+            {
+                if (team[i] == gameObject)
+                {
+                    team[i] = null;
+                    break;
+                }
+            }
+            return;
+        }
+
+        element = gameObject.GetComponent<ElementoMinion>().elemento;
+
         if (estoyEnUnEquipo)
         {
-            nmAgent.stoppingDistance = 3f;
+            nmAgent.stoppingDistance = followRange;
             if (PlayerEnRangoVision())
             {
-                nmAgent.stoppingDistance = 1f;
+                nmAgent.stoppingDistance = engagementRange;
                 if (PlayerEnRangoDePegar())
                 {
                     Pegar();
@@ -51,7 +69,7 @@ public class EnemyMeleeBehavior : BaseEnemyStats
         }
         else
         {
-            nmAgent.stoppingDistance = 1f;
+            nmAgent.stoppingDistance = engagementRange;
             if (HayMagoDisponibleCercano())
             {
                 AsignarseAMagoConMenosAliados();
@@ -62,6 +80,7 @@ public class EnemyMeleeBehavior : BaseEnemyStats
                 {
                     if (PlayerEnRangoDePegar())
                     {
+                        Perseguir();
                         Pegar();
                     }
                     else
@@ -170,15 +189,17 @@ public class EnemyMeleeBehavior : BaseEnemyStats
 
     void Pegar()
     {
-        minionMele.SetDestination(transform.position);
+        //minionMele.SetDestination(transform.position);
         //transform.LookAt(player);
+        Quaternion targetRotation = Quaternion.LookRotation(player.transform.position - transform.position);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * movementSpeed);
 
         if (!alreadyAttacked)
         {
             alreadyAttacked = true;
             Debug.Log("¡Atacando al jugador!");
             animator.SetTrigger("Attacking");
-            Invoke(nameof(ResetAttack), 1.5f);
+            Invoke(nameof(ResetAttack), 2f);
         }
     }
 
