@@ -1,39 +1,51 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
     
     public GameObject explosionPrefab;
+    private float explosionTime = 1f;
+    private float explosionStartTime;
+
+    void Start()
+    {
+        explosionStartTime = Time.time;
+    }
+
+    void Update()
+    {
+        if (explosionStartTime + explosionTime < Time.time)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void SetElement(int element)
     {
-        var baseNum = 255;
+        var colorMult = 0.02f;
         switch (element)
         {
             case 0:
-                var main = explosionPrefab.GetComponent<ParticleSystem>().main;
-                main.startColor = new Color(255 /baseNum, 255/baseNum, 255/baseNum, 30/baseNum);
+                explosionPrefab.GetComponent<Renderer>().material.color = new Color(191, 191, 191, 0) * colorMult;
                 break;
 
             case 1:
-                var main1 = explosionPrefab.GetComponent<ParticleSystem>().main;
-                main1.startColor = new Color(255/baseNum, 0, 0, 5/baseNum);
+                explosionPrefab.GetComponent<Renderer>().material.color = new Color(255, 0, 0, 0) * colorMult;
                 break;
 
             case 2:
-                var main2 = explosionPrefab.GetComponent<ParticleSystem>().main;
-                main2.startColor = new Color(214/baseNum, 69/baseNum, 12/baseNum, 5/baseNum);
+                explosionPrefab.GetComponent<Renderer>().material.color = new Color(214, 69, 12, 0) * colorMult;
                 break;
 
             case 3:
-                var main3 = explosionPrefab.GetComponent<ParticleSystem>().main;
-                main3.startColor = new Color(255/baseNum, 251/baseNum, 0, 5/baseNum);
+                explosionPrefab.GetComponent<Renderer>().material.color = new Color(255, 251, 0, 0) * colorMult;
                 break;
 
             case 4:
-                var main4 = explosionPrefab.GetComponent<ParticleSystem>().main;
-                main4.startColor = new Color(0, 21/baseNum, 255/baseNum, 5/baseNum);
+                explosionPrefab.GetComponent<Renderer>().material.color = new Color(0, 21, 255, 0) * colorMult;
                 break;
         }
-        
+
     }
 }

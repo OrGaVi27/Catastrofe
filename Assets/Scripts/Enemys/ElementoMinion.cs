@@ -90,6 +90,14 @@ public class ElementoMinion : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+
+        if (transform.parent.gameObject.GetComponent<ComportamientoArquero>() != null)
+        {
+            elemento = 0;
+            //if (transform.parent.gameObject.GetComponent<ComportamientoArquero>().dead) return;
+        }
+
+
         if (elemento == 0 && other.gameObject.tag == "EnemigoElemental")
         {
             // Debug.Log("El Minion ha tocado a un enemigo elemental");
@@ -120,6 +128,12 @@ public class ElementoMinion : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        
+        if (transform.parent.gameObject.GetComponent<ComportamientoArquero>() != null)
+        {
+            //if (transform.parent.gameObject.GetComponent<ComportamientoArquero>().dead) return;
+        }
+
         if (other.gameObject.tag == "EnemigoElemental")
         {
             elemento = 0;

@@ -1000,6 +1000,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7ed7c53e8c544234b92dbe2a738e7b9a, type: 2}
   - {fileID: 2100000, guid: 51f4c59772f21044e9c8891d92fa36f8, type: 2}
   RangedProjectiles: []
+  aimAid: {fileID: 7200626506559387565}
+  aimPoint: {fileID: 1139064138563019402}
   isAttacking: 0
   attackIsCharging: 0
   attackChargeTime: 1
@@ -1007,6 +1009,7 @@ MonoBehaviour:
   chargedAttack: 0
   attackMovSpeed: 5
   maxComboDelay: 1
+  virtualCamera: {fileID: 0}
   anim: {fileID: 6083586929133468098}
   baseStats: {fileID: 0}
   element: 0
@@ -14494,8 +14497,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c192b0431b386047966da1fab09194f, type: 3}
+--- !u!1 &1139064138563019402 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9082817856946694493, guid: 2c192b0431b386047966da1fab09194f, type: 3}
+  m_PrefabInstance: {fileID: 8197222553690737623}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2877525630209561348 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6209729600368908499, guid: 2c192b0431b386047966da1fab09194f, type: 3}
+  m_PrefabInstance: {fileID: 8197222553690737623}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7200626506559387565 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1310443945845947514, guid: 2c192b0431b386047966da1fab09194f, type: 3}
   m_PrefabInstance: {fileID: 8197222553690737623}
   m_PrefabAsset: {fileID: 0}

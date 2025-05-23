@@ -23,7 +23,7 @@ public partial class PlayerStateManager : MonoBehaviour
             Weapons[0].SetActive(false);
             Weapons[1].SetActive(true);
             anim.SetBool("IsRanged", true);
-            attackMovSpeed = 0.5f;
+            attackMovSpeed = 0f;
         }
         else
         {
@@ -83,7 +83,7 @@ public partial class PlayerStateManager : MonoBehaviour
 
         if (rangeCharacter)
         {
-            anim.SetFloat("RunMultiplier", moveVector.magnitude * 0.01f);
+            anim.SetFloat("RunMultiplier", moveVector.magnitude * 0f);
         }
         else
         {

@@ -62,7 +62,13 @@ public class MageBehaviour : BaseEnemyStats
     // Update is called once per frame
     void Update()
     {
-        if (dead) return;
+        if (dead)
+        {
+            elemento.particulas.SetActive(false);
+            elemento.particulasExterior.SetActive(false);
+            defenseRange.gameObject.SetActive(false);
+            return;
+        }
         //Se usa para calcular el daño de los ataques
         if (elemento.elementoAleatorio == 4)
         {

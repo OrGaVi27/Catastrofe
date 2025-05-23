@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public partial class PlayerStateManager
@@ -40,6 +41,8 @@ public partial class PlayerStateManager
     public GameObject[] Weapons;
     public Material[] weaponMaterials;
     public GameObject[] RangedProjectiles;
+    public GameObject aimAid;
+    public GameObject aimPoint;
     public bool isAttacking = false;
     public bool attackIsCharging = false;
     public float attackChargeTime;
@@ -47,6 +50,7 @@ public partial class PlayerStateManager
     [HideInInspector] public bool chargedAttack = false;
     public float attackMovSpeed;
     public float maxComboDelay = 0;
+    public CinemachineVirtualCamera virtualCamera;
     [HideInInspector] public static int noOfAttacks;
 
     [Space]
