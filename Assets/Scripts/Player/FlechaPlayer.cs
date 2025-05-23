@@ -14,6 +14,7 @@ public class FlechaPlayer : MonoBehaviour
     public float damage;
     private float currentDeleteTime = 0f;
     private Rigidbody rb;
+    private int hits = 0;
 
     int playerElement;
     float elementMult;
@@ -57,8 +58,9 @@ public class FlechaPlayer : MonoBehaviour
     {
         if (other.gameObject.GetComponent<BaseEnemyStats>() != null || other.tag == "Ground" || other.tag == "Wall")
         {
-            if (other.gameObject.GetComponent<BaseEnemyStats>() != null)
+            if (other.gameObject.GetComponent<BaseEnemyStats>() != null && hits == 0)
             {
+                hits++;
                 if (flechaEspecial)
                 {
                     GameObject explosion = Instantiate(ExplosionPrefab, transform.position, Quaternion.identity); // Instancia la explosion Elemental

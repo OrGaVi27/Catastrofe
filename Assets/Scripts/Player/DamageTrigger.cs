@@ -39,8 +39,6 @@ public class DamageTrigger : MonoBehaviour
         {
             other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(damageAmount, element, elementMultiplier);
 
-
-
             if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0)
             {
                 attaker.GetComponent<BasePlayerStats>().currentMana++;

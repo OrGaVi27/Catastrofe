@@ -73,6 +73,7 @@ public class BaseEnemyStats : MonoBehaviour
 
     public void Heal(float healAmount)
     {
+        if (dead) return;
         animator.SetTrigger("Heal");
         currentHealth += healAmount;
         if (currentHealth > maxHealth)

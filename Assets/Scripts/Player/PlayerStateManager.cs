@@ -41,6 +41,15 @@ public partial class PlayerStateManager : MonoBehaviour
             SwitchState(fallState);
         }
 
+        if(anim.GetCurrentAnimatorStateInfo(2).IsName("INVENCIBLE") || anim.GetCurrentAnimatorStateInfo(2).IsName("TakeDamage"))
+        {
+            baseStats.isInvencible = true;
+        }
+        else
+        {
+            baseStats.isInvencible = false;
+        }
+
         currentState.UpdateState(this);
 
         if (baseStats.currentMana <= 0 && currentState != attackState) element = 0;
@@ -56,7 +65,8 @@ public partial class PlayerStateManager : MonoBehaviour
         currentState.EnterState(this);
     }
 
-    #region Movement
+    #region Functions
+
 
     public void ApplyGravity()
     {

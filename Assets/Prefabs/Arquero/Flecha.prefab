@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 1232896713526230226}
   - component: {fileID: 4135962355570340524}
   - component: {fileID: 7259414645643245064}
-  - component: {fileID: 311028824302387041}
+  - component: {fileID: 1591018414867694322}
   m_Layer: 0
   m_Name: Flecha
   m_TagString: Untagged
@@ -185,8 +185,8 @@ MonoBehaviour:
   damage: 10
   tiempoDeVidaTotal: 5
   velocidadFlecha: 17
---- !u!65 &311028824302387041
-BoxCollider:
+--- !u!136 &1591018414867694322
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -203,9 +203,11 @@ BoxCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.20000377, y: 0.20000377, z: 1.2189637}
-  m_Center: {x: 0, y: 0, z: -0.50948185}
+  serializedVersion: 2
+  m_Radius: 0.08
+  m_Height: 1.2
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -0.5}
 --- !u!1001 &1752012854923302065
 PrefabInstance:
   m_ObjectHideFlags: 0

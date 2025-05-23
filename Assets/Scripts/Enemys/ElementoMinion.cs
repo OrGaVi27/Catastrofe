@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 public class ElementoMinion : MonoBehaviour
 {
+    public GameObject minion;
+
     public int elemento = 0;
 
     public GameObject parte1;
     public GameObject parte2;
     public Material[] materialesElementos;
-    private new Renderer renderer;
+
 
     public Sprite[] iconosElementos;
     public Image iconoElemento;
@@ -90,11 +92,10 @@ public class ElementoMinion : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-
-        if (transform.parent.gameObject.GetComponent<ComportamientoArquero>() != null)
+        
+        if (minion.GetComponent<BaseEnemyStats>() != null)
         {
-            elemento = 0;
-            //if (transform.parent.gameObject.GetComponent<ComportamientoArquero>().dead) return;
+            if(minion.GetComponent<BaseEnemyStats>().dead) elemento = 0;
         }
 
 
@@ -128,12 +129,6 @@ public class ElementoMinion : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        
-        if (transform.parent.gameObject.GetComponent<ComportamientoArquero>() != null)
-        {
-            //if (transform.parent.gameObject.GetComponent<ComportamientoArquero>().dead) return;
-        }
-
         if (other.gameObject.tag == "EnemigoElemental")
         {
             elemento = 0;
