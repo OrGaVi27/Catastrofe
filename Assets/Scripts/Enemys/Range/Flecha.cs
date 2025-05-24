@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Flecha : MonoBehaviour
@@ -11,6 +9,7 @@ public class Flecha : MonoBehaviour
     public float velocidadFlecha;
     private Vector3 direccion;
     private Rigidbody rb;
+    protected int hits = 0;
 
     void Start()
     {
@@ -44,13 +43,20 @@ public class Flecha : MonoBehaviour
     {
         if (other.tag == "Player" || other.tag == "Ground" || other.tag == "Wall")
         {
-            if (other.tag == "Player")
+            if (other.tag == "Player"   && hits == 0)
             {
-                Debug.Log("Impacto Jugador");
+                hits++;
+                //Debug.Log("Flecha colisiona con " + other.tag);
+                //Debug.Log("Impacto Jugador");
+                player.GetComponent<BasePlayerStats>().TakeDamage(damage); // Llama a la función de daño del jugador
+            }
+            else if (other.tag == "Ground" || other.tag == "Wall")
+            {
+                //Debug.Log("Impacto Jugador");
                 player.GetComponent<BasePlayerStats>().TakeDamage(damage); // Llama a la función de daño del jugador
 
             }
-            Debug.Log("Flecha colisiona con " + other.tag);
+            //Debug.Log("Flecha colisiona con " + other.tag);
             Destroy(gameObject);
         }
 

@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class EnemigoElemental : MonoBehaviour
 {
@@ -17,6 +17,10 @@ public class EnemigoElemental : MonoBehaviour
     public bool agua = false;
     public bool roca = false;
     public bool electricidad = false;
+
+    [Header("Vida")]
+    public Image Vida;
+    public Image Vida2;
 
     public Material[] materialesElementos;
     public Material[] materialesOjos;
@@ -69,27 +73,48 @@ public class EnemigoElemental : MonoBehaviour
                 ojosMago[1].GetComponent<Renderer>().material = materialesOjos[0];
 
                 colorElemento = rojoPersonalizado;
+                Vida.color = rojoPersonalizado;
+                Vida2.color = rojoPersonalizado;
+                particulas.SetActive(true);
+                particulasExterior.SetActive(true);
+
+                break;
+
+            case 3:
+                agua = true;
+                foreach (GameObject parte in partesMago)
+                {
+                    parte.GetComponent<Renderer>().material = materialesElementos[3];
+                }
+                ojosMago[0].GetComponent<Renderer>().material = materialesOjos[3];
+                ojosMago[1].GetComponent<Renderer>().material = materialesOjos[3];
+                colorElemento = azulPersonalizado;
+                Vida.color = azulPersonalizado;
+                Vida2.color = azulPersonalizado;
                 particulas.SetActive(true);
                 particulasExterior.SetActive(true);
 
                 break;
 
             case 1:
-                agua = true;
+                roca = true;
                 foreach (GameObject parte in partesMago)
                 {
                     parte.GetComponent<Renderer>().material = materialesElementos[1];
                 }
                 ojosMago[0].GetComponent<Renderer>().material = materialesOjos[1];
                 ojosMago[1].GetComponent<Renderer>().material = materialesOjos[1];
-                colorElemento = azulPersonalizado;
+
+                colorElemento = marronPersonalizado;
+                Vida.color = marronPersonalizado;
+                Vida2.color = marronPersonalizado;
                 particulas.SetActive(true);
                 particulasExterior.SetActive(true);
 
                 break;
 
             case 2:
-                roca = true;
+                electricidad = true;
                 foreach (GameObject parte in partesMago)
                 {
                     parte.GetComponent<Renderer>().material = materialesElementos[2];
@@ -97,22 +122,9 @@ public class EnemigoElemental : MonoBehaviour
                 ojosMago[0].GetComponent<Renderer>().material = materialesOjos[2];
                 ojosMago[1].GetComponent<Renderer>().material = materialesOjos[2];
 
-                colorElemento = marronPersonalizado;
-                particulas.SetActive(true);
-                particulasExterior.SetActive(true);
-
-                break;
-
-            case 3:
-                electricidad = true;
-                foreach (GameObject parte in partesMago)
-                {
-                    parte.GetComponent<Renderer>().material = materialesElementos[3];
-                }
-                ojosMago[0].GetComponent<Renderer>().material = materialesOjos[3];
-                ojosMago[1].GetComponent<Renderer>().material = materialesOjos[3];
-
                 colorElemento = amarilloPersonalizado;
+                Vida.color = amarilloPersonalizado;
+                Vida2.color = amarilloPersonalizado;
                 particulas.SetActive(true);
                 particulasExterior.SetActive(true);
 
@@ -121,7 +133,7 @@ public class EnemigoElemental : MonoBehaviour
                 fuego = false;
                 agua = false;
                 roca = false;
-                electricidad = true;
+                electricidad = false;
 
                 foreach (GameObject parte in partesMago)
                 {
@@ -129,6 +141,9 @@ public class EnemigoElemental : MonoBehaviour
                 }
                 ojosMago[0].GetComponent<Renderer>().material = materialesOjos[4];
                 ojosMago[1].GetComponent<Renderer>().material = materialesOjos[4];
+
+                colorElemento = Color.white;
+                Vida.color = Color.white;
 
                 particulas.SetActive(false);
                 particulasExterior.SetActive(false);

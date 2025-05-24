@@ -8,6 +8,9 @@ public class MageBehaviour : BaseEnemyStats
     public Transform[] patrollPoints;
     Vector3 patrollTarget;
     int patrollIndex;
+    public float patrollTargetReached = 0f;
+    int waitTime = 0;
+    bool waiting = false;
 
     [Space]
     [Header("Team")]
@@ -24,11 +27,14 @@ public class MageBehaviour : BaseEnemyStats
     [Header("Healing")]
     public float healCooldown = 5f;
     public float healAmount = 15f;
-    private bool healReady = true;
+    private bool healReady = false;
+    private float lastTimeHealed = 0f;
+    public float fleeSpeedMult;
 
     [Space]
     [Header("Animation")]
     public Animator anim;
+    public GameObject staff;
 
     private GameObject player;
 
@@ -38,7 +44,7 @@ public class MageBehaviour : BaseEnemyStats
 
     void Start()
     {
-        currentHealth = maxHealth - 50f;
+        //currentHealth = maxHealth - 50f;
 
         nmAgent = GetComponent<NavMeshAgent>();
 
@@ -59,6 +65,28 @@ public class MageBehaviour : BaseEnemyStats
     // Update is called once per frame
     void Update()
     {
+        if (dead)
+        {
+            elemento.particulas.SetActive(false);
+            elemento.particulasExterior.SetActive(false);
+            elemento.elementoAleatorio = 4;
+            //defenseRange.gameObject.SetActive(false);
+            return;
+        }
+        //Se usa para calcular el daño de los ataques
+        if (elemento.elementoAleatorio == 4)
+        {
+            element = 0;
+        }
+        else
+        {
+            element = elemento.elementoAleatorio + 1;
+        }
+
+        StaffColor();
+
+        if (!defenseRange.playerInRange) nmAgent.speed = movementSpeed;
+
         if (visionRange.playerInRange && PlayerInLOS())
         {
             if (CheckTeam())
@@ -75,11 +103,9 @@ public class MageBehaviour : BaseEnemyStats
                     }
                     else
                     {
-                        if (healReady)
+                        if (lastTimeHealed + healCooldown < Time.time)
                         {
-                            // Heals the mage and all its team members
-                            HealTeam(healAmount);
-                            StartCoroutine(AbilityCooldown(healCooldown, healReady));
+                            healReady = true;
                         }
                     }
                 }
@@ -113,7 +139,14 @@ public class MageBehaviour : BaseEnemyStats
         }
 
 
-        if (nmAgent.velocity != Vector3.zero)
+        if (healReady)
+        {
+            anim.SetInteger("State", 4);
+            nmAgent.SetDestination(transform.position);
+            lastTimeHealed = Time.time;
+            healReady = false;
+        }
+        else if (nmAgent.velocity != Vector3.zero)
         {
             anim.SetInteger("State", 2);
         }
@@ -159,8 +192,6 @@ public class MageBehaviour : BaseEnemyStats
     /// <param name="healAmount"></param>
     public void HealTeam(float healAmount)
     {
-        anim.SetInteger("State", 4);
-
         Heal(healAmount);
         foreach (GameObject teamMember in teamMembers)
         {
@@ -203,6 +234,7 @@ public class MageBehaviour : BaseEnemyStats
     void Fleeing()
     {
         nmAgent.stoppingDistance = 0;
+        nmAgent.speed = movementSpeed * fleeSpeedMult;
 
         Vector3 direction = (transform.position - player.transform.position).normalized;
         Vector3 newPosition = transform.position + direction * 10f;
@@ -251,8 +283,20 @@ public class MageBehaviour : BaseEnemyStats
     {
         if (Vector3.Distance(transform.position, patrollTarget) < 3f)
         {
-            IteratePatrollPointIndex();
-            UpdateDestination();
+
+            if (!waiting)
+            {
+                waiting = true;
+                patrollTargetReached = Time.time;
+                waitTime = Random.Range(4, 8);
+            }
+
+            if (patrollTargetReached + waitTime < Time.time)
+            {
+                waiting = false;
+                IteratePatrollPointIndex();
+                UpdateDestination();
+            }
         }
     }
 
@@ -270,17 +314,34 @@ public class MageBehaviour : BaseEnemyStats
             patrollIndex = 0;
         }
     }
-    #endregion
 
-
-    #region Coroutines
-    IEnumerator AbilityCooldown(float cooldown, bool AbilityReady)
+    void StaffColor()
     {
-        AbilityReady = false;
+        var colorMult = 0.02f;
+        switch (element)
+        {
+            case 0:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(191, 191, 191) * colorMult);
+                break;
 
-        yield return new WaitForSeconds(cooldown);
+            case 1:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(255, 0, 0) * colorMult); ;
+                break;
 
-        AbilityReady = true;
+            case 2:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(214, 69, 12) * colorMult);
+                break;
+
+            case 3:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(255, 251, 0) * colorMult);
+                break;
+
+            case 4:
+                staff.GetComponent<Renderer>().material.SetColor("_EmissionColor", new Color(0, 21, 255) * colorMult);
+                break;
+        }
     }
     #endregion
+
+
 }

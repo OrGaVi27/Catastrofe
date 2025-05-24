@@ -1,8 +1,8 @@
-
 public class IdleState : PlayerBaseState
 {
     public override void EnterState(PlayerStateManager player)
     {
+        //Debug.Log("Entering Idle");
         player.anim.SetInteger("State", 0);
     }
     public override void ExitState(PlayerStateManager player) { }

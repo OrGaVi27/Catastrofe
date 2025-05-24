@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Palmmedia.ReportGenerator.Core.Reporting.Builders;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -55,6 +57,36 @@ public class ComportamientoArquero : BaseEnemyStats
     // Update is called once per frame
     void Update()
     {
+        if (dead)
+        {
+            if (estoyEnUnEquipo)
+            {
+                GameObject[] team = targetToFollow.gameObject.GetComponent<MageBehaviour>().teamMembers;
+                for (int i = 0; i < team.Length; i++)
+                {
+                    if (team[i] == gameObject)
+                    {
+                        team[i] = null;
+                        break;
+                    }
+                }
+            }
+            return;
+        }
+
+        //Si el mago al que sigue el arquero muere, se desactiva el equipo
+        if (estoyEnUnEquipo)
+        {
+            if (targetToFollow.GetComponent<BaseEnemyStats>().dead)
+            {
+                elementoMinion.elemento = 0;
+                estoyEnUnEquipo = false;
+            }
+        }
+        
+
+        //Se usa para calcular el daño de los ataques
+        element =  elementoMinion.elemento;
 
 
         tiempoIdle += Time.deltaTime;

@@ -1098,6 +1098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elemento: 0
+  playerStateManager: {fileID: 0}
   elementoSprite:
   - {fileID: 21300000, guid: ad56d49a591f889498ded13717a4eca3, type: 3}
   - {fileID: 21300000, guid: 01b0a4a11d13a6148aa842c3bbf5fd82, type: 3}
@@ -4245,10 +4246,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

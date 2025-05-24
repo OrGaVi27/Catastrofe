@@ -1,4 +1,3 @@
-
 public class DashState : PlayerBaseState
 {
     public override void EnterState(PlayerStateManager player)

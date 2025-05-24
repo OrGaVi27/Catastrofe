@@ -8,12 +8,16 @@ public class BasePlayerStats : MonoBehaviour
     public int maxMana = 5;
     public int currentMana;
     public float damage = 0f;
+    public float DamageMultiplier = 1f;
+    public float elementMultiplier = 0;
     public bool isInvencible = false;
 
     public void TakeDamage(float damageAmount)
     {
         if (!isInvencible)
         {
+            GetComponent<PlayerStateManager>().anim.SetTrigger("Hit");
+            CameraShakeManager.instance.ShakeCamera(GetComponent<PlayerStateManager>().GetComponent<Cinemachine.CinemachineImpulseSource>(), 1f);
             currentHealth -= damageAmount;
 
             if (currentHealth <= 0f)
