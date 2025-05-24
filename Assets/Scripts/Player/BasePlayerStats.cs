@@ -4,6 +4,7 @@ public class BasePlayerStats : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
+    [SerializeField] private AudioClip Hit;
 
     public int maxMana = 5;
     public int currentMana;
@@ -14,6 +15,8 @@ public class BasePlayerStats : MonoBehaviour
     {
         if (!isInvencible)
         {
+            ControladorSonido.Instance.EjecutarSonido(Hit);
+
             currentHealth -= damageAmount;
 
             if (currentHealth <= 0f)

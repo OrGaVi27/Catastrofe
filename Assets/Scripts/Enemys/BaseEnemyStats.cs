@@ -15,6 +15,8 @@ public class BaseEnemyStats : MonoBehaviour
     public float movementSpeed = 1f;
 
     public bool dead = false;
+    [Header("Sonidos")]
+    [SerializeField] private AudioClip Hit;
 
     [Header("Animaciones")]
     public Animator animator;
@@ -28,6 +30,8 @@ public class BaseEnemyStats : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+        ControladorSonido.Instance.EjecutarSonido(Hit);
+
         currentHealth -= damageAmount;
         if (currentHealth <= 0f)
         {

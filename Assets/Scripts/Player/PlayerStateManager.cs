@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 
 public partial class PlayerStateManager : MonoBehaviour
 {
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip ChargeAttackSound;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -88,39 +91,57 @@ public partial class PlayerStateManager : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, playerRotateSpeed * Time.deltaTime);
     }
 
-    public void Attack()
+    private float lastAttackSoundTime = 0f;
+public float attackSoundCooldown = 0.3f; // Tiempo mínimo entre sonidos (ajustable)
+
+public void Attack()
+{
+    if (noOfAttacks == 1)
     {
+        anim.SetBool("Attack1", true);
 
-        if(noOfAttacks == 1)
-        {
-            anim.SetBool("Attack1", true);
-        }
-        if (noOfAttacks >= 2 && anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.5f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
-        {
-            anim.SetBool("Attack1", false);
-            anim.SetBool("Attack2", true);
-        }
         
-
-        if (attackChargeTime + attackStartTime > Time.time)
+        if (Time.time - lastAttackSoundTime >= attackSoundCooldown)
         {
-            //Debug.Log("normal attack");
-            anim.SetBool("StrongAttack", false);
-        }
-        else
-        {
-            //Debug.Log("STRONG ATTACK!");
-            anim.SetBool("StrongAttack", true);
-        }
-
-        if (anim.GetCurrentAnimatorStateInfo(1).IsName("-"))
-        {
-            isAttacking = false;
+            Debug.Log("Reproduciendo sonido de ataque");
+            ControladorSonido.Instance.EjecutarSonido(attackSound);
+            lastAttackSoundTime = Time.time;
         }
     }
 
+        if (noOfAttacks >= 2 &&
+            anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.5f &&
+            anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
+        {
+            anim.SetBool("Attack1", false);
+            anim.SetBool("Attack2", true);
+        
+    }
+
+        if (attackChargeTime + attackStartTime > Time.time)
+        {
+            anim.SetBool("StrongAttack", false);
+
+
+        }
+        else
+        {
+            anim.SetBool("StrongAttack", true);
+            ControladorSonido.Instance.EjecutarSonido(ChargeAttackSound);
+            
+
+        }   
+
+    if (anim.GetCurrentAnimatorStateInfo(1).IsName("-"))
+    {
+        isAttacking = false;
+    }
+}
+
+
     public void AttackAnimUpdate()
     {
+
         if (anim.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && anim.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
         {
             anim.SetBool("Attack1", false);

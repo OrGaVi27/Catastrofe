@@ -18,6 +18,7 @@ public class AttackState : PlayerBaseState
         }else
         {
             player.anim.SetBool("IsCharging", false);
+            
             player.Attack();
         }
         
