@@ -222,7 +222,7 @@ public class EnemyMeleeBehavior : BaseEnemyStats
     {
         if (targetToFollow != null)
         {
-            Debug.Log("Acompañando Aliado");
+            //Debug.Log("Acompañando Aliado");
             minionMele.SetDestination(targetToFollow.position);
         }
     }

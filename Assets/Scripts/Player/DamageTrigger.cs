@@ -51,16 +51,27 @@ public class DamageTrigger : MonoBehaviour
             }
         }
 
-        if (other.GetComponent<PuzleActivator>() != null)
+        if (other.gameObject.GetComponent<BossBehaviour>() != null)
+        {
+            other.gameObject.GetComponent<BossBehaviour>().TakeDamage(damageAmount/* , element, elementMultiplier */);
+
+            if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0)
             {
-                if (hits == 0)
-                {
-                    hits++;
-                    PuzleActivator pa = other.GetComponent<PuzleActivator>();
-                    pa.wasActivated = true;
-                    pa.SetAttackElement(element);
-                }
+                attaker.GetComponent<BasePlayerStats>().currentMana++;
             }
+        }
+
+        if (other.GetComponent<PuzleActivator>() != null)
+        {
+            if (hits == 0)
+            {
+                hits++;
+                PuzleActivator pa = other.GetComponent<PuzleActivator>();
+                pa.wasActivated = true;
+                pa.SetAttackElement(element);
+            }
+        }
+    
     }
 
     public void SetDamage(float damageAmount, int element, float elementMultiplier)
