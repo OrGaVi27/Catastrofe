@@ -86,6 +86,17 @@ public class FlechaPlayer : MonoBehaviour
 
             }
 
+            if (other.GetComponent<PuzleActivator>() != null)
+            {
+                if (hits == 0)
+                {
+                    hits++;
+                    PuzleActivator pa = other.GetComponent<PuzleActivator>();
+                    pa.wasActivated = true;
+                    pa.SetAttackElement(playerElement);
+                }
+            }
+
 
             Destroy(gameObject);
         }

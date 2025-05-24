@@ -7,6 +7,7 @@ public class DamageTrigger : MonoBehaviour
     public float damageAmount = 0f;
     public int element = 0;
     public float elementMultiplier = 1;
+    int hits = 0;
 
 
     void Start()
@@ -31,6 +32,11 @@ public class DamageTrigger : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        hits = 0;
+    }
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -44,6 +50,17 @@ public class DamageTrigger : MonoBehaviour
                 attaker.GetComponent<BasePlayerStats>().currentMana++;
             }
         }
+
+        if (other.GetComponent<PuzleActivator>() != null)
+            {
+                if (hits == 0)
+                {
+                    hits++;
+                    PuzleActivator pa = other.GetComponent<PuzleActivator>();
+                    pa.wasActivated = true;
+                    pa.SetAttackElement(element);
+                }
+            }
     }
 
     public void SetDamage(float damageAmount, int element, float elementMultiplier)
