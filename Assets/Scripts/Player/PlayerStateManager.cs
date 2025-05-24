@@ -3,6 +3,12 @@ using UnityEngine.InputSystem;
 
 public partial class PlayerStateManager : MonoBehaviour
 {
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip ChargeAttackSound;
+    [SerializeField] private AudioClip ChargingAttack;
+    [SerializeField] private AudioClip DashSound;
+    private bool dashSoundPlayed = false;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -107,16 +113,21 @@ public partial class PlayerStateManager : MonoBehaviour
     }
 
     public void Dash()
+{
+    if (Time.time < dashStartTime + dashTime)
     {
         if (Time.time <= dashStartTime + dashTime)
         {
-            controller.Move(transform.forward * dashSpeed * Time.deltaTime);
-        }
-        else
-        {
-            dashIsOn = false;
+            ControladorSonido.Instance.EjecutarSonido(DashSound);
+            dashSoundPlayed = true; 
         }
     }
+    else
+    {
+        dashIsOn = false;
+        dashSoundPlayed = false; 
+    }
+}
 
     public void Rotate()
     {
@@ -126,7 +137,12 @@ public partial class PlayerStateManager : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, playerRotateSpeed * Time.deltaTime);
     }
 
-    public void Attack()
+    private float lastAttackSoundTime = 0f;
+public float attackSoundCooldown = 0.3f; // Tiempo mínimo entre sonidos (ajustable)
+
+public void Attack()
+{
+    if (noOfAttacks == 1)
     {
         if (anim.GetCurrentAnimatorStateInfo(1).IsName("-"))
         {
@@ -176,6 +192,7 @@ public partial class PlayerStateManager : MonoBehaviour
                     break;
             }
     }
+}
 
     public float DamageOutput()
     {
