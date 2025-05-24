@@ -6,6 +6,9 @@ public partial class PlayerStateManager : MonoBehaviour
 {
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip ChargeAttackSound;
+    [SerializeField] private AudioClip ChargingAttack;
+    [SerializeField] private AudioClip DashSound;
+    private bool dashSoundPlayed = false;
 
     void Awake()
     {
@@ -72,16 +75,23 @@ public partial class PlayerStateManager : MonoBehaviour
     }
 
     public void Dash()
+{
+    if (Time.time < dashStartTime + dashTime)
     {
-        if (Time.time < dashStartTime + dashTime)
+        controller.Move(transform.forward * dashSpeed * Time.deltaTime);
+
+        if (!dashSoundPlayed) 
         {
-            controller.Move(transform.forward * dashSpeed * Time.deltaTime);
-        }
-        else
-        {
-            dashIsOn = false;
+            ControladorSonido.Instance.EjecutarSonido(DashSound);
+            dashSoundPlayed = true; 
         }
     }
+    else
+    {
+        dashIsOn = false;
+        dashSoundPlayed = false; 
+    }
+}
 
     public void Rotate()
     {
@@ -121,13 +131,13 @@ public void Attack()
         if (attackChargeTime + attackStartTime > Time.time)
         {
             anim.SetBool("StrongAttack", false);
-
+    
 
         }
         else
         {
             anim.SetBool("StrongAttack", true);
-            ControladorSonido.Instance.EjecutarSonido(ChargeAttackSound);
+            ControladorSonido.Instance.EjecutarSonido(ChargingAttack);
             
 
         }   

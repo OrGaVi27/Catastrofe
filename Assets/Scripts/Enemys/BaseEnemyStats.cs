@@ -17,6 +17,8 @@ public class BaseEnemyStats : MonoBehaviour
     public bool dead = false;
     [Header("Sonidos")]
     [SerializeField] private AudioClip Hit;
+    [SerializeField] private AudioClip Dead;
+    
 
     [Header("Animaciones")]
     public Animator animator;
@@ -29,16 +31,19 @@ public class BaseEnemyStats : MonoBehaviour
 
 
     public void TakeDamage(float damageAmount)
+{
+    currentHealth -= damageAmount;
+
+    if (currentHealth <= 0f)
+    {
+        dead = true;
+        Die(); // Suena Dead (no suena Hit)
+    }
+    else
     {
         ControladorSonido.Instance.EjecutarSonido(Hit);
-
-        currentHealth -= damageAmount;
-        if (currentHealth <= 0f)
-        {
-            dead = true;
-            Die();
-        }
     }
+}
 
     public void Heal(float healAmount)
     {
@@ -54,6 +59,7 @@ public class BaseEnemyStats : MonoBehaviour
         Debug.Log("Muerto");
 
         animator.SetBool("Death", true);
+        ControladorSonido.Instance.EjecutarSonido(Dead);
 
         dead = true;
 
