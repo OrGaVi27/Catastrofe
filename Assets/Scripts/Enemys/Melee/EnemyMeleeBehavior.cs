@@ -31,6 +31,7 @@ public class EnemyMeleeBehavior : BaseEnemyStats
     {
         if (dead)
         {
+            GetComponent<Collider>().enabled = false;
             if (estoyEnUnEquipo)
             {
                 GameObject[] team = targetToFollow.gameObject.GetComponent<MageBehaviour>().teamMembers;

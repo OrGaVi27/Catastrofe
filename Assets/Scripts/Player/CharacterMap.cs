@@ -33,6 +33,7 @@ public partial class PlayerStateManager
         {
             if (element != 0 && baseStats.currentMana > 0) baseStats.currentMana--;
             attackIsCharging = false;
+            anim.SetBool("IsCharging", false);
         }
     }
 

@@ -25,7 +25,7 @@ public class AttackState : PlayerBaseState
 
         if (player.attackIsCharging)
         {
-            player.anim.SetBool("IsCharging", true);
+
             if (player.rangeCharacter)
             {
                 player.aimAid.SetActive(true);
@@ -45,7 +45,6 @@ public class AttackState : PlayerBaseState
         }
         else
         {
-            player.anim.SetBool("IsCharging", false);
             if (player.rangeCharacter)
             {
                 player.aimAid.SetActive(false);

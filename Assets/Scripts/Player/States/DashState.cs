@@ -9,6 +9,7 @@ public class DashState : PlayerBaseState
     {
         player.baseStats.isInvencible = false;
     }
+    
     public override void UpdateState(PlayerStateManager player)
     {
         player.Dash();

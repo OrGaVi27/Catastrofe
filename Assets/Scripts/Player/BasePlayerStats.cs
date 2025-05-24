@@ -19,7 +19,7 @@ public class BasePlayerStats : MonoBehaviour
         {
             GetComponent<PlayerStateManager>().anim.SetTrigger("Hit");
             CameraShakeManager.instance.ShakeCamera(GetComponent<PlayerStateManager>().GetComponent<Cinemachine.CinemachineImpulseSource>(), 1f);
-            ControladorSonido.Instance.EjecutarSonido(Hit);
+            //ControladorSonido.Instance.EjecutarSonido(Hit);
             currentHealth -= damageAmount;
 
             if (currentHealth <= 0f)

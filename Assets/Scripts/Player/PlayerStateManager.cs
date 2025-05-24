@@ -3,11 +3,6 @@ using UnityEngine.InputSystem;
 
 public partial class PlayerStateManager : MonoBehaviour
 {
-    [SerializeField] private AudioClip attackSound;
-    [SerializeField] private AudioClip ChargeAttackSound;
-    [SerializeField] private AudioClip ChargingAttack;
-    [SerializeField] private AudioClip DashSound;
-    private bool dashSoundPlayed = false;
 
     void Awake()
     {
@@ -36,7 +31,7 @@ public partial class PlayerStateManager : MonoBehaviour
             Weapons[0].SetActive(true);
             Weapons[1].SetActive(false);
             anim.SetBool("IsRanged", false);
-        } 
+        }
     }
 
     // Update is called once per frame
@@ -47,7 +42,7 @@ public partial class PlayerStateManager : MonoBehaviour
             SwitchState(fallState);
         }
 
-        if(anim.GetCurrentAnimatorStateInfo(2).IsName("INVENCIBLE") || anim.GetCurrentAnimatorStateInfo(2).IsName("TakeDamage"))
+        if (anim.GetCurrentAnimatorStateInfo(2).IsName("INVENCIBLE") || anim.GetCurrentAnimatorStateInfo(2).IsName("TakeDamage"))
         {
             baseStats.isInvencible = true;
         }
@@ -105,7 +100,7 @@ public partial class PlayerStateManager : MonoBehaviour
         {
             anim.SetFloat("RunMultiplier", moveVector.magnitude);
         }
-        
+
 
         controller.Move(isometricImput * speed * Time.deltaTime);
 
@@ -113,21 +108,23 @@ public partial class PlayerStateManager : MonoBehaviour
     }
 
     public void Dash()
-{
-    if (Time.time < dashStartTime + dashTime)
     {
         if (Time.time <= dashStartTime + dashTime)
         {
-            ControladorSonido.Instance.EjecutarSonido(DashSound);
-            dashSoundPlayed = true; 
+            controller.Move(isometricImput * dashSpeed * Time.deltaTime);
+            if (!dashSoundPlayed)
+            {
+                dashSoundPlayed = true;
+                //.instance.PlaySound(DashSound, transform.position);
+            }
+            
+        }
+        else
+        {
+            dashIsOn = false;
+            dashSoundPlayed = false;
         }
     }
-    else
-    {
-        dashIsOn = false;
-        dashSoundPlayed = false; 
-    }
-}
 
     public void Rotate()
     {
@@ -138,11 +135,9 @@ public partial class PlayerStateManager : MonoBehaviour
     }
 
     private float lastAttackSoundTime = 0f;
-public float attackSoundCooldown = 0.3f; // Tiempo mínimo entre sonidos (ajustable)
+    public float attackSoundCooldown = 0.3f; // Tiempo mínimo entre sonidos (ajustable)
 
-public void Attack()
-{
-    if (noOfAttacks == 1)
+    public void Attack()
     {
         if (anim.GetCurrentAnimatorStateInfo(1).IsName("-"))
         {
@@ -158,41 +153,40 @@ public void Attack()
             //Sonido ataque normal
         }
     }
-
     public void ElementControll()
     {
         int weapon = 0;
         if (rangeCharacter) weapon = 1;
 
-            switch (element)
-            {
-                case 0:
-                    cutEffect.GetComponent<MeshRenderer>().material = cutEffects[0];
-                    Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[weapon];
-                    break;
+        switch (element)
+        {
+            case 0:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[0];
+                Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[weapon];
+                break;
 
-                case 1:
-                    cutEffect.GetComponent<MeshRenderer>().material = cutEffects[1];
-                    Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[2];
-                    break;
+            case 1:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[1];
+                Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[2];
+                break;
 
-                case 2:
-                    cutEffect.GetComponent<MeshRenderer>().material = cutEffects[2];
-                    Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[3];
-                    break;
+            case 2:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[2];
+                Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[3];
+                break;
 
-                case 3:
-                    cutEffect.GetComponent<MeshRenderer>().material = cutEffects[3];
-                    Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[4];
-                    break;
+            case 3:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[3];
+                Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[4];
+                break;
 
-                case 4:
-                    cutEffect.GetComponent<MeshRenderer>().material = cutEffects[4];
-                    Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[5];
-                    break;
-            }
+            case 4:
+                cutEffect.GetComponent<MeshRenderer>().material = cutEffects[4];
+                Weapons[weapon].GetComponent<MeshRenderer>().material = weaponMaterials[5];
+                break;
+        }
     }
-}
+
 
     public float DamageOutput()
     {

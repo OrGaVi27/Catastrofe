@@ -57,6 +57,14 @@ public partial class PlayerStateManager
     [Header("Animation")]
     public Animator anim;
 
+    [Space]
+    [Header("Sound")]
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip ChargeAttackSound;
+    [SerializeField] private AudioClip ChargingAttack;
+    [SerializeField] private AudioClip DashSound;
+    private bool dashSoundPlayed = false;
+
 
     private Vector3 gravityVector;
     private Vector3 isometricImput;
