@@ -276,10 +276,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossAnim: {fileID: 5660306294180094861}
-  fire: 0
-  water: 0
-  electricity: 0
-  rock: 0
+  fire: 1
+  water: 1
+  electricity: 1
+  rock: 1
+  element: 0
   Vida: {fileID: 0}
   Vida2: {fileID: 0}
   lifesCount: 0
@@ -2710,7 +2711,6 @@ GameObject:
   - component: {fileID: 3213060431647948428}
   - component: {fileID: 9058562220594911458}
   - component: {fileID: 8250029153571267664}
-  - component: {fileID: 3715932681462053325}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -2804,20 +2804,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3715932681462053325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7447857915325701680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79ccd1ffc13700c4897e1daf0f194933, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  damage: 50
 --- !u!1 &7504749424159247989
 GameObject:
   m_ObjectHideFlags: 0

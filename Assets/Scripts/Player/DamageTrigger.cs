@@ -53,7 +53,7 @@ public class DamageTrigger : MonoBehaviour
 
         if (other.gameObject.GetComponent<BossBehaviour>() != null)
         {
-            other.gameObject.GetComponent<BossBehaviour>().TakeDamage(damageAmount/* , element, elementMultiplier */);
+            other.gameObject.GetComponent<BossBehaviour>().TakeDamage(damageAmount, element, elementMultiplier);
 
             if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0)
             {

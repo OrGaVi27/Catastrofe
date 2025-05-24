@@ -41,6 +41,8 @@ public class BasePlayerStats : MonoBehaviour
 
     public void Die()
     {
+        gameObject.GetComponent<SpawnPointsPlayer>().Spawn();
+        
         Debug.Log("Player has died.");
     }
 }

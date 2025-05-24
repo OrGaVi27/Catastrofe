@@ -1,78 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class BossBehaviour : MonoBehaviour
+public partial class BossBehaviour : MonoBehaviour
 {
-    [Header("Boss")]
-    public Animator bossAnim;
-    [Space]
-
-    [Header("Elements")]
-    public bool fire;
-    public bool water;
-    public bool electricity;
-    public bool rock;
-
-    private Color rojoPersonalizado;
-    private Color marronPersonalizado;
-    private Color azulPersonalizado;
-    private Color amarilloPersonalizado;
-
-    public Image Vida;
-    public Image Vida2;
-
-    /*public List<string> activeElements = new List<string>();
-    public List<string> allElements = new List<string>();*/
-    [Space]
-
-    [Header("Life")]
-    public int lifesCount;
-    public Slider lifeSlider;
-
-    public Image lifeColor;
-
-    public float maxLiife;
-    public float currentLiife;
-    [Space]
-
-    [Header("Pelea")]
-    public float timeAttack;
-    private float currentTimeAttack;
-    public MeleeAtack melee;
-    public DistanceAttack distance;
-
-    private bool inAttack;
-
-    public BossMovement move;
-
-    private int MA;
-    private int DA;
-    [Space]
-
-    [Header("MelleCollider")]
-    public GameObject SwordDamage1;
-    public GameObject SwordDamage2;
-    [Space]
-
-    [Header("PuntosDisparo")]
-    public GameObject bola;
-    public GameObject preRayo;
-    public GameObject rayo;
-    [Space]
-    public Transform point01;
-    public Transform point02;
-    public Transform point03;
-    public Transform point04;
-    public Transform point05;
-    public Transform point06;
-    public Transform point07;
-    public Transform point08;
-    [Space]
-
-    [Header("Muerte")]
-    public bool deathBoss;
-
     public void Start()
     {
         ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
@@ -88,6 +17,8 @@ public class BossBehaviour : MonoBehaviour
 
         Vida.color = rojoPersonalizado;
         Vida2.color = rojoPersonalizado;
+
+        element = 1;
     }
 
     public void Update()
@@ -158,28 +89,54 @@ public class BossBehaviour : MonoBehaviour
     {
         lifesCount++;
 
-        Debug.Log("a");
-
         //Cambio de color menos fuego
-        if(lifesCount == 0)
+        if (lifesCount == 0)
         {
             Vida.color = rojoPersonalizado;
             Vida2.color = rojoPersonalizado;
+
+            element = 1;
+
+            foreach (var effect in vfx)
+            {
+                effect.GetComponent<Renderer>().material = materials[element];
+            }
         }
-        else if(lifesCount == 1)
+        else if (lifesCount == 1)
         {
             Vida.color = azulPersonalizado;
             Vida2.color = azulPersonalizado;
+
+            element = 4;
+
+            foreach (var effect in vfx)
+            {
+                effect.GetComponent<Renderer>().material = materials[element];
+            }
         }
-        else if(lifesCount == 2)
+        else if (lifesCount == 2)
         {
             Vida.color = amarilloPersonalizado;
             Vida2.color = amarilloPersonalizado;
+
+            element = 3;
+
+            foreach (var effect in vfx)
+            {
+                effect.GetComponent<Renderer>().material = materials[element];
+            }
         }
         else if (lifesCount == 3)
         {
             Vida.color = marronPersonalizado;
             Vida2.color = marronPersonalizado;
+
+            element = 2;
+
+            foreach (var effect in vfx)
+            {
+                effect.GetComponent<Renderer>().material = materials[element];
+            }
         }
 
     }
@@ -324,27 +281,145 @@ public class BossBehaviour : MonoBehaviour
         MA = Random.Range(0, 101);
         DA = Random.Range(0, 101);
     }
-#endregion
+    #endregion
 
-    public void TakeDamage(float damageAmount)
+#region Damage
+    public void TakeDamage(float damageAmount, int attackElement, float elementMultiplier)
     {
-        if(currentLiife >= maxLiife * 0.75f && fire == true)
+        if (currentLiife >= maxLiife * 0.75f && fire == true)
         {
-            currentLiife -= damageAmount;
+            if (attackElement == 0)
+            {
+                currentLiife -= damageAmount;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement == 1 && element == 4)
+            {
+                currentLiife -= damageAmount * 0.5f;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement == 4 && element == 1)
+            {
+                currentLiife -= damageAmount * elementMultiplier;
+                bossAnim.SetTrigger("BigHit");
+            }
+            else if (attackElement - 1 == element)
+            {
+                currentLiife -= damageAmount * 0.5f;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement + 1 == element)
+            {
+                currentLiife -= damageAmount * elementMultiplier;
+                bossAnim.SetTrigger("BigHit");
+            }
+            else
+            {
+                currentLiife -= damageAmount;
+                bossAnim.SetTrigger("Hit");
+            }
         }
-        else if(currentLiife < maxLiife * 0.75f && currentLiife >= maxLiife * 0.5f && water == true)
+        else if (currentLiife < maxLiife * 0.75f && currentLiife >= maxLiife * 0.5f && water == true)
         {
-            currentLiife -= damageAmount;
+            if (attackElement == 0)
+            {
+                currentLiife -= damageAmount;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement == 1 && element == 4)
+            {
+                currentLiife -= damageAmount * 0.5f;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement == 4 && element == 1)
+            {
+                currentLiife -= damageAmount * elementMultiplier;
+                bossAnim.SetTrigger("BigHit");
+            }
+            else if (attackElement - 1 == element)
+            {
+                currentLiife -= damageAmount * 0.5f;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement + 1 == element)
+            {
+                currentLiife -= damageAmount * elementMultiplier;
+                bossAnim.SetTrigger("BigHit");
+            }
+            else
+            {
+                currentLiife -= damageAmount;
+                bossAnim.SetTrigger("Hit");
+            }
         }
         else if (currentLiife < maxLiife * 0.5f && currentLiife >= maxLiife * 0.25f && electricity == true)
         {
-            currentLiife -= damageAmount;
+            if (attackElement == 0)
+            {
+                currentLiife -= damageAmount;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement == 1 && element == 4)
+            {
+                currentLiife -= damageAmount * 0.5f;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement == 4 && element == 1)
+            {
+                currentLiife -= damageAmount * elementMultiplier;
+                bossAnim.SetTrigger("BigHit");
+            }
+            else if (attackElement - 1 == element)
+            {
+                currentLiife -= damageAmount * 0.5f;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement + 1 == element)
+            {
+                currentLiife -= damageAmount * elementMultiplier;
+                bossAnim.SetTrigger("BigHit");
+            }
+            else
+            {
+                currentLiife -= damageAmount;
+                bossAnim.SetTrigger("Hit");
+            }
         }
         else if (currentLiife < maxLiife * 0.25f && rock == true)
         {
-            currentLiife -= damageAmount;
+            if (attackElement == 0)
+            {
+                currentLiife -= damageAmount;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement == 1 && element == 4)
+            {
+                currentLiife -= damageAmount * 0.5f;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement == 4 && element == 1)
+            {
+                currentLiife -= damageAmount * elementMultiplier;
+                bossAnim.SetTrigger("BigHit");
+            }
+            else if (attackElement - 1 == element)
+            {
+                currentLiife -= damageAmount * 0.5f;
+                bossAnim.SetTrigger("Hit");
+            }
+            else if (attackElement + 1 == element)
+            {
+                currentLiife -= damageAmount * elementMultiplier;
+                bossAnim.SetTrigger("BigHit");
+            }
+            else
+            {
+                currentLiife -= damageAmount;
+                bossAnim.SetTrigger("Hit");
+            }
         }
     }
+#endregion
 
     public void BossDeath()
     {
@@ -359,19 +434,30 @@ public class BossBehaviour : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    
-    public void OnEnable()
+
+    public void StartBattle()
     {
-        /*UpdateActiveElements();*/
-
-        currentLiife = maxLiife;
         lifesCount = 0;
+        currentLiife = maxLiife;
 
-        rayo.SetActive(false); 
+        element = 1;
+
+        rayo.SetActive(false);
         preRayo.SetActive(false);
 
-        //Cambio de color fuego
         Vida.color = rojoPersonalizado;
         Vida2.color = rojoPersonalizado;
+
+        element = 1;
+
+        foreach (var effect in vfx)
+        {
+            effect.GetComponent<Renderer>().material = materials[element];
+        }
+    }
+
+    public void OnEnable()
+    {
+        StartBattle();
     }
 }
