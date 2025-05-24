@@ -59,19 +59,36 @@ public class ComportamientoArquero : BaseEnemyStats
     {
         if (dead)
         {
-            GameObject[] team = targetToFollow.gameObject.GetComponent<MageBehaviour>().teamMembers;
-            for (int i = 0; i < team.Length; i++)
+            if (estoyEnUnEquipo)
             {
-                if (team[i] == gameObject)
+                GameObject[] team = targetToFollow.gameObject.GetComponent<MageBehaviour>().teamMembers;
+                for (int i = 0; i < team.Length; i++)
                 {
-                    team[i] = null;
-                    break;
+                    if (team[i] == gameObject)
+                    {
+                        team[i] = null;
+                        break;
+                    }
                 }
             }
             return;
         }
+
+        //Si el mago al que sigue el arquero muere, se desactiva el equipo
+        if (estoyEnUnEquipo)
+        {
+            if (targetToFollow.GetComponent<BaseEnemyStats>().dead)
+            {
+                elementoMinion.elemento = 0;
+                estoyEnUnEquipo = false;
+            }
+        }
+        
+
         //Se usa para calcular el daño de los ataques
         element =  elementoMinion.elemento;
+
+
         tiempoIdle += Time.deltaTime;
 
         if (tiempoIdle >= 5f)

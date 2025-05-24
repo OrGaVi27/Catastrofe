@@ -1326,7 +1326,7 @@ NavMeshAgent:
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 100
-  avoidancePriority: 60
+  avoidancePriority: 10
   m_AngularSpeed: 12000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -1363,6 +1363,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  patrollTargetReached: 0
+  waitTime: 0
+  waiting: 0
   teamMembers:
   - {fileID: 0}
   - {fileID: 0}

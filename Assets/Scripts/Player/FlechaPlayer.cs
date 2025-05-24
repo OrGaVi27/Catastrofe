@@ -75,12 +75,14 @@ public class FlechaPlayer : MonoBehaviour
                 else
                 {
                     other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(damage, playerElement, elementMult); // Llama a la función de daño del enemigo
+
+                    
+                    if (player.GetComponent<BasePlayerStats>().currentMana < player.GetComponent<BasePlayerStats>().maxMana && player.GetComponent<PlayerStateManager>().element == 0)
+                    {
+                        player.GetComponent<BasePlayerStats>().currentMana++;
+                    }
                 }
                 
-                if (player.GetComponent<BasePlayerStats>().currentMana < player.GetComponent<BasePlayerStats>().maxMana && player.GetComponent<PlayerStateManager>().element == 0)
-                {
-                    player.GetComponent<BasePlayerStats>().currentMana++;
-                }
 
             }
 

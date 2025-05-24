@@ -447,7 +447,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.8
   m_Speed: 3
-  m_Acceleration: 5
+  m_Acceleration: 75
   avoidancePriority: 50
   m_AngularSpeed: 1200
   m_StoppingDistance: 3
@@ -492,7 +492,7 @@ MonoBehaviour:
   maxHealth: 250
   currentHealth: 0
   damage: 0
-  movementSpeed: 4
+  movementSpeed: 4.5
   element: 0
   dead: 0
   animator: {fileID: 1186439172691614758}

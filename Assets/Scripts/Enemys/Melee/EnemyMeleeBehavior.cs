@@ -17,8 +17,8 @@ public class EnemyMeleeBehavior : BaseEnemyStats
     public bool estoyEnUnEquipo = false;
 
     private bool alreadyAttacked;
-    private float engagementRange = 4f;
-    private float followRange = 5f;
+    private float engagementRange = 1f;
+    private float followRange = 2f;
 
     void Start()
     {
@@ -31,19 +31,33 @@ public class EnemyMeleeBehavior : BaseEnemyStats
     {
         if (dead)
         {
-            GameObject[] team = targetToFollow.gameObject.GetComponent<MageBehaviour>().teamMembers;
-            for (int i = 0; i < team.Length; i++)
+            if (estoyEnUnEquipo)
             {
-                if (team[i] == gameObject)
+                GameObject[] team = targetToFollow.gameObject.GetComponent<MageBehaviour>().teamMembers;
+                for (int i = 0; i < team.Length; i++)
                 {
-                    team[i] = null;
-                    break;
+                    if (team[i] == gameObject)
+                    {
+                        team[i] = null;
+                        break;
+                    }
                 }
             }
             return;
         }
 
-        element = gameObject.GetComponent<ElementoMinion>().elemento;
+        if (estoyEnUnEquipo)
+        {
+            if (targetToFollow.GetComponent<BaseEnemyStats>().dead)
+            {
+                GetComponent<ElementoMinion>().elemento = 0;
+                estoyEnUnEquipo = false;
+            }
+        }
+
+
+        //Se usa para calcular el daño de los ataques
+        element = GetComponent<ElementoMinion>().elemento;
 
         if (estoyEnUnEquipo)
         {

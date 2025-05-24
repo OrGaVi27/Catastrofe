@@ -92,10 +92,10 @@ public class ElementoMinion : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        
+
         if (minion.GetComponent<BaseEnemyStats>() != null)
         {
-            if(minion.GetComponent<BaseEnemyStats>().dead) elemento = 0;
+            if (minion.GetComponent<BaseEnemyStats>().dead) elemento = 0;
         }
 
 
@@ -123,7 +123,6 @@ public class ElementoMinion : MonoBehaviour
 
             parte1.GetComponent<Renderer>().material = materialesElementos[elemento];
             parte2.GetComponent<Renderer>().material = materialesElementos[elemento];
-
         }
     }
 

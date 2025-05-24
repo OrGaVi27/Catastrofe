@@ -5,13 +5,11 @@ public class AttackState : PlayerBaseState
 {
     public override void EnterState(PlayerStateManager player)
     {
-        player.anim.SetBool("IsAttacking", true);
-        if (player.element != 0 && player.baseStats.currentMana > 0) player.baseStats.currentMana--;
 
     }
     public override void ExitState(PlayerStateManager player)
     {
-        player.anim.SetBool("IsAttacking", false);
+        
     }
     public override void UpdateState(PlayerStateManager player)
     {

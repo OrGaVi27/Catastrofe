@@ -8,6 +8,9 @@ public class MageBehaviour : BaseEnemyStats
     public Transform[] patrollPoints;
     Vector3 patrollTarget;
     int patrollIndex;
+    public float patrollTargetReached = 0f;
+    int waitTime = 0;
+    bool waiting = false;
 
     [Space]
     [Header("Team")]
@@ -66,7 +69,8 @@ public class MageBehaviour : BaseEnemyStats
         {
             elemento.particulas.SetActive(false);
             elemento.particulasExterior.SetActive(false);
-            defenseRange.gameObject.SetActive(false);
+            elemento.elementoAleatorio = 4;
+            //defenseRange.gameObject.SetActive(false);
             return;
         }
         //Se usa para calcular el daño de los ataques
@@ -76,9 +80,9 @@ public class MageBehaviour : BaseEnemyStats
         }
         else
         {
-            element = elemento.elementoAleatorio +1;
+            element = elemento.elementoAleatorio + 1;
         }
-        
+
         StaffColor();
 
         if (!defenseRange.playerInRange) nmAgent.speed = movementSpeed;
@@ -279,8 +283,20 @@ public class MageBehaviour : BaseEnemyStats
     {
         if (Vector3.Distance(transform.position, patrollTarget) < 3f)
         {
-            IteratePatrollPointIndex();
-            UpdateDestination();
+
+            if (!waiting)
+            {
+                waiting = true;
+                patrollTargetReached = Time.time;
+                waitTime = Random.Range(4, 8);
+            }
+
+            if (patrollTargetReached + waitTime < Time.time)
+            {
+                waiting = false;
+                IteratePatrollPointIndex();
+                UpdateDestination();
+            }
         }
     }
 
