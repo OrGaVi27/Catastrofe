@@ -44,6 +44,5 @@ public class Bola : MonoBehaviour
             Debug.Log("Flecha colisiona con " + other.tag);
             Destroy(gameObject);
         }
-
     }
 }
