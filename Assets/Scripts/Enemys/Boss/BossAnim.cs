@@ -25,4 +25,29 @@ public class BossAnim : MonoBehaviour
     {
         boss.DestoryBoss();
     }
+
+    public void InstanceBolas()
+    {
+        boss.InstanceBolas();
+    }
+
+    public void InstancePreRayo()
+    {
+        boss.InstancePreRayo();
+    }
+
+    public void InstanceRayo()
+    {
+        boss.InstanceRayo();
+    }
+
+    public void MeleeSwordDamage1()
+    {
+        boss.MeleeSwordDamage1();
+    }
+
+    public void MeleeSwordDamage2()
+    {
+        boss.MeleeSwordDamage2();
+    }
 }

@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,8 +14,16 @@ public class BossBehaviour : MonoBehaviour
     public bool electricity;
     public bool rock;
 
-    public List<string> activeElements = new List<string>();
-    public List<string> allElements = new List<string>();
+    private Color rojoPersonalizado;
+    private Color marronPersonalizado;
+    private Color azulPersonalizado;
+    private Color amarilloPersonalizado;
+
+    public Image Vida;
+    public Image Vida2;
+
+    /*public List<string> activeElements = new List<string>();
+    public List<string> allElements = new List<string>();*/
     [Space]
 
     [Header("Life")]
@@ -43,16 +48,46 @@ public class BossBehaviour : MonoBehaviour
 
     private int MA;
     private int DA;
+    [Space]
 
+    [Header("MelleCollider")]
+    public GameObject SwordDamage1;
+    public GameObject SwordDamage2;
+    [Space]
+
+    [Header("PuntosDisparo")]
+    public GameObject bola;
+    public GameObject preRayo;
+    public GameObject rayo;
+    [Space]
+    public Transform point01;
+    public Transform point02;
+    public Transform point03;
+    public Transform point04;
+    public Transform point05;
+    public Transform point06;
+    public Transform point07;
+    public Transform point08;
+    [Space]
+
+    [Header("Muerte")]
     public bool deathBoss;
 
     public void Start()
     {
+        ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
+        ColorUtility.TryParseHtmlString("#B07C66", out marronPersonalizado);
+        ColorUtility.TryParseHtmlString("#BDBB6C", out amarilloPersonalizado);
+        ColorUtility.TryParseHtmlString("#525FEF", out azulPersonalizado);
+
         melee = FindAnyObjectByType<MeleeAtack>();
         distance = FindAnyObjectByType<DistanceAttack>();
         move = GetComponent<BossMovement>();
 
         deathBoss = false;
+
+        Vida.color = rojoPersonalizado;
+        Vida2.color = rojoPersonalizado;
     }
 
     public void Update()
@@ -66,98 +101,138 @@ public class BossBehaviour : MonoBehaviour
             bossAnim.SetBool("move", false);
         }
 
-        if(melee.meleeAtack == true && inAttack == true || distance.distanceAttack == true && inAttack == true)
+        if(melee.meleeAtack == true && inAttack == true && !deathBoss || distance.distanceAttack == true && inAttack == true && !deathBoss)
         {
             move.Direccion();
         }
-        else if(melee.meleeAtack == false && inAttack == false || distance.distanceAttack == false && inAttack == false)
+        else if(!melee.meleeAtack && !inAttack && !deathBoss|| !distance.distanceAttack && !inAttack && !deathBoss)
         {
             move.PerseguirAlJugador();
         }
-        else if(deathBoss == true)
-        {
-            Debug.Log("a");
-        }
 
-        if (currentLiife <= 0)
+        if (currentLiife <= 1950)
         {
-            if (lifesCount <= 4)
+            if (lifesCount == 0)
             {
                 ChangeElement();
-
-                ResetLifes();
+            }
+            if (currentLiife <= 1300)
+            {
+                if (lifesCount == 1)
+                {
+                    ChangeElement();
+                }
+                if (currentLiife <= 650)
+                {
+                    if (lifesCount == 2)
+                    {
+                        ChangeElement();
+                    }
+                    if(currentLiife <= 0)
+                    {
+                        BossDeath();
+                    }
+                    else
+                    {
+                        Attack();
+                    }
+                }
+                else
+                {
+                    Attack();
+                }
             }
             else
             {
-                BossDeath();
+                Attack();
             }
         }
         else
         {
-            TimeAttack();
-
-            if (melee.meleeAtack == true && deathBoss == false)
-            {
-                Melee();
-
-                //move.Direccion();
-            }
-            else if (distance.distanceAttack == true && deathBoss == false)
-            {
-                Distance();
-
-                //move.PerseguirAlJugador();
-            }
+            Attack();
         }
     }
 
 #region Elementos
     public void ChangeElement()
     {
-        //pasar al siguiente elemnento de la lista de activeElements
+        lifesCount++;
+
+        Debug.Log("a");
+
+        //Cambio de color menos fuego
+        if(lifesCount == 0)
+        {
+            Vida.color = rojoPersonalizado;
+            Vida2.color = rojoPersonalizado;
+        }
+        else if(lifesCount == 1)
+        {
+            Vida.color = azulPersonalizado;
+            Vida2.color = azulPersonalizado;
+        }
+        else if(lifesCount == 2)
+        {
+            Vida.color = amarilloPersonalizado;
+            Vida2.color = amarilloPersonalizado;
+        }
+        else if (lifesCount == 3)
+        {
+            Vida.color = marronPersonalizado;
+            Vida2.color = marronPersonalizado;
+        }
+
     }
 
-    public void UpdateActiveElements()
+    #region PARA LAS MEJORAS RANDOMIZAR LOS ELEMENTOS EN QUE PELEAR
+    /*public void UpdateActiveElements()
     {
-        if(fire /* && no esta en activeElements el fuego*/)
+        if (fire && no esta en activeElements el fuego)
         {
             //añadir al ultimo puesto de activeElemets el fuego
 
             //eliminar el fuego de allElements
         }
 
-        if (water /* && no esta en activeElements el water*/)
+        if (water && no esta en activeElements el water)
         {
             //añadir al ultimo puesto de activeElemets el water
 
             //eliminar el water de allElements
         }
 
-        if (electricity /* && no esta en activeElements el electricity*/)
+        if (electricity && no esta en activeElements el electricity)
         {
             //añadir al ultimo puesto de activeElemets el electricity
 
             //eliminar el electricity de allElements
         }
 
-        if (rock /* && no esta en activeElements el rock*/)
+        if (rock && no esta en activeElements el rock)
         {
             //añadir al ultimo puesto de activeElemets el rock
 
             //eliminar el rock de allElements
         }
+    }*/
+    #endregion
 
-    }
-
-    public void ResetLifes()
-    {
-        lifesCount += 1;
-
-        currentLiife = maxLiife;
-    }
 #endregion
 
 #region Ataques
+    public void Attack()
+    {
+        TimeAttack();
+
+        if (melee.meleeAtack == true && deathBoss == false)
+        {
+            Melee();
+        }
+        else if (distance.distanceAttack == true && deathBoss == false)
+        {
+            Distance();
+        }
+    }
     public void Melee()
     {
         if(MA <= 50 && currentTimeAttack >= timeAttack)
@@ -165,16 +240,12 @@ public class BossBehaviour : MonoBehaviour
             bossAnim.SetInteger("meleeAttack", 1);
 
             inAttack = true;
-
-            Debug.Log("Giro");
         }
         else if (MA >= 51 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("meleeAttack", 2);
 
             inAttack = true;
-
-            Debug.Log("Pegar");
         }
     }
 
@@ -185,6 +256,16 @@ public class BossBehaviour : MonoBehaviour
         inAttack = false;
     }
 
+    public void MeleeSwordDamage1()
+    {
+        SwordDamage1.SetActive(!SwordDamage1.activeSelf);
+    }
+
+    public void MeleeSwordDamage2()
+    {
+        SwordDamage2.SetActive(!SwordDamage2.activeSelf);
+    }
+
     public void Distance()
     {
         if (DA <= 50 && currentTimeAttack >= timeAttack)
@@ -192,16 +273,12 @@ public class BossBehaviour : MonoBehaviour
             bossAnim.SetInteger("distanceAttack", 1);
 
             inAttack = true;
-
-            Debug.Log("Bola");
         }
         else if (DA >= 51 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("distanceAttack", 2);
 
             inAttack = true;
-
-            Debug.Log("Rayo");
         }
     }
 
@@ -210,6 +287,29 @@ public class BossBehaviour : MonoBehaviour
         bossAnim.SetInteger("distanceAttack", 0);
 
         inAttack = false;
+    }
+
+    public void InstanceBolas()
+    {
+        Instantiate(bola, point01.position, point01.rotation);
+        Instantiate(bola, point02.position, point02.rotation);
+        Instantiate(bola, point03.position, point03.rotation);
+        Instantiate(bola, point04.position, point04.rotation);
+        Instantiate(bola, point05.position, point05.rotation);
+        Instantiate(bola, point06.position, point06.rotation);
+        Instantiate(bola, point07.position, point07.rotation);
+        Instantiate(bola, point08.position, point08.rotation);
+        Debug.Log("Bolas");
+    }
+
+    public void InstancePreRayo()
+    {
+        preRayo.SetActive(!preRayo.activeSelf);
+    }
+
+    public void InstanceRayo()
+    {
+        rayo.SetActive(!rayo.activeSelf);
     }
 
     private void TimeAttack()
@@ -223,17 +323,36 @@ public class BossBehaviour : MonoBehaviour
 
         MA = Random.Range(0, 101);
         DA = Random.Range(0, 101);
-
-        Debug.Log(MA);
-        Debug.Log(DA);
     }
 #endregion
+
+    public void TakeDamage(float damageAmount)
+    {
+        if(currentLiife >= maxLiife * 0.75f && fire == true)
+        {
+            currentLiife -= damageAmount;
+        }
+        else if(currentLiife < maxLiife * 0.75f && currentLiife >= maxLiife * 0.5f && water == true)
+        {
+            currentLiife -= damageAmount;
+        }
+        else if (currentLiife < maxLiife * 0.5f && currentLiife >= maxLiife * 0.25f && electricity == true)
+        {
+            currentLiife -= damageAmount;
+        }
+        else if (currentLiife < maxLiife * 0.25f && rock == true)
+        {
+            currentLiife -= damageAmount;
+        }
+    }
 
     public void BossDeath()
     {
         bossAnim.SetBool("death", true);
 
         deathBoss = true;
+
+        Debug.Log("Muerto");
     }
 
     public void DestoryBoss()
@@ -243,8 +362,16 @@ public class BossBehaviour : MonoBehaviour
     
     public void OnEnable()
     {
-        UpdateActiveElements();
+        /*UpdateActiveElements();*/
 
         currentLiife = maxLiife;
+        lifesCount = 0;
+
+        rayo.SetActive(false); 
+        preRayo.SetActive(false);
+
+        //Cambio de color fuego
+        Vida.color = rojoPersonalizado;
+        Vida2.color = rojoPersonalizado;
     }
 }
