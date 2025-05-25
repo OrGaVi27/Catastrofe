@@ -8,8 +8,11 @@ public class ElementoMinion : MonoBehaviour
 
     public int elemento = 0;
 
+    public bool distancia = false;
+    public bool mele = false;
     public GameObject parte1;
     public GameObject parte2;
+    public GameObject parte3;
     public Material[] materialesElementos;
 
 
@@ -22,6 +25,7 @@ public class ElementoMinion : MonoBehaviour
     Color marronPersonalizado;
     Color azulPersonalizado;
     Color amarilloPersonalizado;
+
 
 
 
@@ -38,6 +42,15 @@ public class ElementoMinion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (distancia && minion.GetComponent<BaseEnemyStats>().dead == true)
+        {
+            Collider col = GetComponent<Collider>();
+            if (col != null)
+            {
+                col.enabled = false;
+            }
+        }
+
         if (elemento == 0)
         {
             // Debug.Log("El Minion no tiene elemento");
@@ -123,6 +136,12 @@ public class ElementoMinion : MonoBehaviour
 
             parte1.GetComponent<Renderer>().material = materialesElementos[elemento];
             parte2.GetComponent<Renderer>().material = materialesElementos[elemento];
+            if (mele)
+            {
+                parte3.GetComponent<Renderer>().material = materialesElementos[elemento + 5];
+            }
+
+
         }
     }
 
@@ -133,6 +152,13 @@ public class ElementoMinion : MonoBehaviour
             elemento = 0;
             parte1.GetComponent<Renderer>().material = materialesElementos[elemento];
             parte2.GetComponent<Renderer>().material = materialesElementos[elemento];
+            if (mele)
+            {
+                parte3.GetComponent<Renderer>().material = materialesElementos[elemento + 5];
+            }
         }
     }
+
+
+
 }

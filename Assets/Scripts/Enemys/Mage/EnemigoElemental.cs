@@ -18,6 +18,7 @@ public class EnemigoElemental : MonoBehaviour
     public bool roca = false;
     public bool electricidad = false;
 
+
     [Header("Vida")]
     public Image Vida;
     public Image Vida2;
@@ -28,6 +29,8 @@ public class EnemigoElemental : MonoBehaviour
     public GameObject[] ojosMago;
     public GameObject[] partesMago;
 
+    public Sprite[] iconosElementos;
+    public Image iconoElemento;
 
     // [Header("Materiales elementos")]
     // public Material[] materialesElementos;
@@ -77,6 +80,8 @@ public class EnemigoElemental : MonoBehaviour
                 Vida2.color = rojoPersonalizado;
                 particulas.SetActive(true);
                 particulasExterior.SetActive(true);
+                iconoElemento.sprite = iconosElementos[0];
+                iconoElemento.color = Color.white;
 
                 break;
 
@@ -93,6 +98,8 @@ public class EnemigoElemental : MonoBehaviour
                 Vida2.color = azulPersonalizado;
                 particulas.SetActive(true);
                 particulasExterior.SetActive(true);
+                iconoElemento.sprite = iconosElementos[3];
+                iconoElemento.color = Color.white;
 
                 break;
 
@@ -110,6 +117,8 @@ public class EnemigoElemental : MonoBehaviour
                 Vida2.color = marronPersonalizado;
                 particulas.SetActive(true);
                 particulasExterior.SetActive(true);
+                iconoElemento.sprite = iconosElementos[1];
+                iconoElemento.color = Color.white;
 
                 break;
 
@@ -127,7 +136,8 @@ public class EnemigoElemental : MonoBehaviour
                 Vida2.color = amarilloPersonalizado;
                 particulas.SetActive(true);
                 particulasExterior.SetActive(true);
-
+                iconoElemento.sprite = iconosElementos[2];
+                iconoElemento.color = Color.white;
                 break;
             case 4:
                 fuego = false;
@@ -147,6 +157,8 @@ public class EnemigoElemental : MonoBehaviour
 
                 particulas.SetActive(false);
                 particulasExterior.SetActive(false);
+                iconoElemento.sprite = null;
+                iconoElemento.color = Color.clear;
 
                 break;
 

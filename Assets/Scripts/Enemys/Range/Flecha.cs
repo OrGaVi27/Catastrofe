@@ -50,12 +50,6 @@ public class Flecha : MonoBehaviour
                 //Debug.Log("Impacto Jugador");
                 player.GetComponent<BasePlayerStats>().TakeDamage(damage); // Llama a la función de daño del jugador
             }
-            else if (other.tag == "Ground" || other.tag == "Wall")
-            {
-                //Debug.Log("Impacto Jugador");
-                player.GetComponent<BasePlayerStats>().TakeDamage(damage); // Llama a la función de daño del jugador
-
-            }
             //Debug.Log("Flecha colisiona con " + other.tag);
             Destroy(gameObject);
         }

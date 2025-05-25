@@ -12,6 +12,9 @@ public class BaseEnemyStats : MonoBehaviour
     public float movementSpeed = 1f;
     public int element;
     public bool dead = false;
+
+
+
     [Header("Sonidos")]
     [SerializeField] private AudioClip Hit;
     [SerializeField] private AudioClip Dead;
