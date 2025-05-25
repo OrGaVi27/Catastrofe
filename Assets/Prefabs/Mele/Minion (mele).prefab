@@ -232,6 +232,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aa7634b4dfc7849a9662b09771f2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  damage: 0
+  movementSpeed: 1
+  element: 0
+  dead: 0
+  Hit: {fileID: 0}
+  Dead: {fileID: 0}
+  animator: {fileID: 0}
+  nmAgent: {fileID: 0}
+  canvas: {fileID: 0}
   minionMele: {fileID: 0}
   player: {fileID: 0}
   targetToFollow: {fileID: 0}
@@ -241,7 +252,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
-  rangoDeVision: {fileID: 4799739773480411771}
-  rangoDeAtaque: 2.5
+  rangoDeVision: {fileID: 508825985921003228}
+  rangoDeAtaque: {fileID: 0}
   estaEnEquipo: 0
   estoyEnUnEquipo: 0
