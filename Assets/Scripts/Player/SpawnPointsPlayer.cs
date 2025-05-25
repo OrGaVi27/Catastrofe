@@ -5,10 +5,14 @@ public class SpawnPointsPlayer : MonoBehaviour
     public GameObject player;
 
     public Transform spawn;
+    public GameObject habitacionSpawn;
+    public GameObject habitacionActual;
+
 
     void Start()
     {
         //spawn.position = spawnGuardado.transform.position;
+        transform.position = spawn.position;
         
         Debug.Log(spawn.position);
     }
@@ -22,6 +26,9 @@ public class SpawnPointsPlayer : MonoBehaviour
     {
         if (player.GetComponent<BasePlayerStats>().currentHealth <= 0f)
         {
+            habitacionActual.SetActive(false);
+            habitacionSpawn.SetActive(true);
+
             transform.position = spawn.position;
             Physics.SyncTransforms();
         }
