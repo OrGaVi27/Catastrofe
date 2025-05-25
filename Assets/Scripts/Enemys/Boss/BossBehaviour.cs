@@ -2,6 +2,20 @@ using UnityEngine;
 
 public partial class BossBehaviour : MonoBehaviour
 {
+    [SerializeField] public AudioClip ataqueVertical;
+    [SerializeField] public AudioClip ataqueHorizontal;
+    [SerializeField] public AudioClip bolaFuego;
+    [SerializeField] public AudioClip rayoLaser;
+    [SerializeField] public AudioClip sonidoRecibirDanio;
+    [SerializeField] public AudioClip sonidoMuerte;
+
+    private bool sonidoAtaqueVerticalReproducido = false;
+    private bool sonidoAtaqueHorizontalReproducido = false;
+    private bool sonidoBolaFuegoReproducido = false;
+    private bool sonidoRayoLaserReproducido = false;
+    private bool sonidoDanioReproducido = false;
+    private bool sonidoMuerteReproducido = false;
+
     public void Start()
     {
         ColorUtility.TryParseHtmlString("#EF4A4A", out rojoPersonalizado);
@@ -32,11 +46,11 @@ public partial class BossBehaviour : MonoBehaviour
             bossAnim.SetBool("move", false);
         }
 
-        if(melee.meleeAtack == true && inAttack == true && !deathBoss || distance.distanceAttack == true && inAttack == true && !deathBoss)
+        if (melee.meleeAtack && inAttack && !deathBoss || distance.distanceAttack && inAttack && !deathBoss)
         {
             move.Direccion();
         }
-        else if(!melee.meleeAtack && !inAttack && !deathBoss|| !distance.distanceAttack && !inAttack && !deathBoss)
+        else if ((!melee.meleeAtack && !inAttack && !deathBoss) || (!distance.distanceAttack && !inAttack && !deathBoss))
         {
             move.PerseguirAlJugador();
         }
@@ -44,29 +58,22 @@ public partial class BossBehaviour : MonoBehaviour
         if (currentLiife <= 1950)
         {
             if (lifesCount == 0)
-            {
                 ChangeElement();
-            }
+
             if (currentLiife <= 1300)
             {
                 if (lifesCount == 1)
-                {
                     ChangeElement();
-                }
+
                 if (currentLiife <= 650)
                 {
                     if (lifesCount == 2)
-                    {
                         ChangeElement();
-                    }
-                    if(currentLiife <= 0)
-                    {
+
+                    if (currentLiife <= 0)
                         BossDeath();
-                    }
                     else
-                    {
                         Attack();
-                    }
                 }
                 else
                 {
@@ -84,124 +91,74 @@ public partial class BossBehaviour : MonoBehaviour
         }
     }
 
-#region Elementos
+    #region Elementos
     public void ChangeElement()
     {
         lifesCount++;
 
-        //Cambio de color menos fuego
         if (lifesCount == 0)
         {
             Vida.color = rojoPersonalizado;
             Vida2.color = rojoPersonalizado;
-
             element = 1;
-
-            foreach (var effect in vfx)
-            {
-                effect.GetComponent<Renderer>().material = materials[element];
-            }
         }
         else if (lifesCount == 1)
         {
             Vida.color = azulPersonalizado;
             Vida2.color = azulPersonalizado;
-
             element = 4;
-
-            foreach (var effect in vfx)
-            {
-                effect.GetComponent<Renderer>().material = materials[element];
-            }
         }
         else if (lifesCount == 2)
         {
             Vida.color = amarilloPersonalizado;
             Vida2.color = amarilloPersonalizado;
-
             element = 3;
-
-            foreach (var effect in vfx)
-            {
-                effect.GetComponent<Renderer>().material = materials[element];
-            }
         }
         else if (lifesCount == 3)
         {
             Vida.color = marronPersonalizado;
             Vida2.color = marronPersonalizado;
-
             element = 2;
-
-            foreach (var effect in vfx)
-            {
-                effect.GetComponent<Renderer>().material = materials[element];
-            }
         }
 
+        foreach (var effect in vfx)
+        {
+            effect.GetComponent<Renderer>().material = materials[element];
+        }
     }
-
-    #region PARA LAS MEJORAS RANDOMIZAR LOS ELEMENTOS EN QUE PELEAR
-    /*public void UpdateActiveElements()
-    {
-        if (fire && no esta en activeElements el fuego)
-        {
-            //añadir al ultimo puesto de activeElemets el fuego
-
-            //eliminar el fuego de allElements
-        }
-
-        if (water && no esta en activeElements el water)
-        {
-            //añadir al ultimo puesto de activeElemets el water
-
-            //eliminar el water de allElements
-        }
-
-        if (electricity && no esta en activeElements el electricity)
-        {
-            //añadir al ultimo puesto de activeElemets el electricity
-
-            //eliminar el electricity de allElements
-        }
-
-        if (rock && no esta en activeElements el rock)
-        {
-            //añadir al ultimo puesto de activeElemets el rock
-
-            //eliminar el rock de allElements
-        }
-    }*/
     #endregion
 
-#endregion
-
-#region Ataques
+    #region Ataques
     public void Attack()
     {
         TimeAttack();
 
-        if (melee.meleeAtack == true && deathBoss == false)
-        {
+        if (melee.meleeAtack && !deathBoss)
             Melee();
-        }
-        else if (distance.distanceAttack == true && deathBoss == false)
-        {
+        else if (distance.distanceAttack && !deathBoss)
             Distance();
-        }
     }
+
     public void Melee()
     {
-        if(MA <= 50 && currentTimeAttack >= timeAttack)
+        if (MA <= 50 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("meleeAttack", 1);
-
+            if (!sonidoAtaqueVerticalReproducido)
+            {
+                ControladorSonido.Instance.EjecutarSonido(ataqueVertical);
+                sonidoAtaqueVerticalReproducido = true;
+            }
             inAttack = true;
         }
         else if (MA >= 51 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("meleeAttack", 2);
-
+            if (!sonidoAtaqueHorizontalReproducido)
+            {
+                ControladorSonido.Instance.EjecutarSonido(ataqueHorizontal);
+                sonidoAtaqueHorizontalReproducido = true;
+            }
             inAttack = true;
         }
     }
@@ -209,7 +166,6 @@ public partial class BossBehaviour : MonoBehaviour
     public void MeleeIdle()
     {
         bossAnim.SetInteger("meleeAttack", 0);
-
         inAttack = false;
     }
 
@@ -228,13 +184,21 @@ public partial class BossBehaviour : MonoBehaviour
         if (DA <= 50 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("distanceAttack", 1);
-
+            if (!sonidoBolaFuegoReproducido)
+            {
+                ControladorSonido.Instance.EjecutarSonido(bolaFuego);
+                sonidoBolaFuegoReproducido = true;
+            }
             inAttack = true;
         }
         else if (DA >= 51 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("distanceAttack", 2);
-
+            if (!sonidoRayoLaserReproducido)
+            {
+                ControladorSonido.Instance.EjecutarSonido(rayoLaser);
+                sonidoRayoLaserReproducido = true;
+            }
             inAttack = true;
         }
     }
@@ -242,7 +206,6 @@ public partial class BossBehaviour : MonoBehaviour
     public void DsitanceIdle()
     {
         bossAnim.SetInteger("distanceAttack", 0);
-
         inAttack = false;
     }
 
@@ -277,156 +240,95 @@ public partial class BossBehaviour : MonoBehaviour
     public void ResetTimeAttack()
     {
         currentTimeAttack = 0;
-
         MA = Random.Range(0, 101);
         DA = Random.Range(0, 101);
     }
+
+    public void ResetSonidosAtaque()
+    {
+        sonidoAtaqueVerticalReproducido = false;
+        sonidoAtaqueHorizontalReproducido = false;
+        sonidoBolaFuegoReproducido = false;
+        sonidoRayoLaserReproducido = false;
+    }
+
+    public void ResetSonidoDanio()
+    {
+        sonidoDanioReproducido = false;
+    }
     #endregion
 
-#region Damage
+    #region Damage
     public void TakeDamage(float damageAmount, int attackElement, float elementMultiplier)
     {
+        if (!sonidoDanioReproducido)
+        {
+            ControladorSonido.Instance.EjecutarSonido(sonidoRecibirDanio);
+            sonidoDanioReproducido = true;
+        }
+
         if (currentLiife >= maxLiife * 0.75f && fire == true)
         {
-            if (attackElement == 0)
-            {
-                currentLiife -= damageAmount;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement == 1 && element == 4)
-            {
-                currentLiife -= damageAmount * 0.5f;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement == 4 && element == 1)
-            {
-                currentLiife -= damageAmount * elementMultiplier;
-                bossAnim.SetTrigger("BigHit");
-            }
-            else if (attackElement - 1 == element)
-            {
-                currentLiife -= damageAmount * 0.5f;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement + 1 == element)
-            {
-                currentLiife -= damageAmount * elementMultiplier;
-                bossAnim.SetTrigger("BigHit");
-            }
-            else
-            {
-                currentLiife -= damageAmount;
-                bossAnim.SetTrigger("Hit");
-            }
+            AplicarDanio(damageAmount, attackElement, elementMultiplier);
         }
         else if (currentLiife < maxLiife * 0.75f && currentLiife >= maxLiife * 0.5f && water == true)
         {
-            if (attackElement == 0)
-            {
-                currentLiife -= damageAmount;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement == 1 && element == 4)
-            {
-                currentLiife -= damageAmount * 0.5f;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement == 4 && element == 1)
-            {
-                currentLiife -= damageAmount * elementMultiplier;
-                bossAnim.SetTrigger("BigHit");
-            }
-            else if (attackElement - 1 == element)
-            {
-                currentLiife -= damageAmount * 0.5f;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement + 1 == element)
-            {
-                currentLiife -= damageAmount * elementMultiplier;
-                bossAnim.SetTrigger("BigHit");
-            }
-            else
-            {
-                currentLiife -= damageAmount;
-                bossAnim.SetTrigger("Hit");
-            }
+            AplicarDanio(damageAmount, attackElement, elementMultiplier);
         }
         else if (currentLiife < maxLiife * 0.5f && currentLiife >= maxLiife * 0.25f && electricity == true)
         {
-            if (attackElement == 0)
-            {
-                currentLiife -= damageAmount;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement == 1 && element == 4)
-            {
-                currentLiife -= damageAmount * 0.5f;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement == 4 && element == 1)
-            {
-                currentLiife -= damageAmount * elementMultiplier;
-                bossAnim.SetTrigger("BigHit");
-            }
-            else if (attackElement - 1 == element)
-            {
-                currentLiife -= damageAmount * 0.5f;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement + 1 == element)
-            {
-                currentLiife -= damageAmount * elementMultiplier;
-                bossAnim.SetTrigger("BigHit");
-            }
-            else
-            {
-                currentLiife -= damageAmount;
-                bossAnim.SetTrigger("Hit");
-            }
+            AplicarDanio(damageAmount, attackElement, elementMultiplier);
         }
         else if (currentLiife < maxLiife * 0.25f && rock == true)
         {
-            if (attackElement == 0)
-            {
-                currentLiife -= damageAmount;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement == 1 && element == 4)
-            {
-                currentLiife -= damageAmount * 0.5f;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement == 4 && element == 1)
-            {
-                currentLiife -= damageAmount * elementMultiplier;
-                bossAnim.SetTrigger("BigHit");
-            }
-            else if (attackElement - 1 == element)
-            {
-                currentLiife -= damageAmount * 0.5f;
-                bossAnim.SetTrigger("Hit");
-            }
-            else if (attackElement + 1 == element)
-            {
-                currentLiife -= damageAmount * elementMultiplier;
-                bossAnim.SetTrigger("BigHit");
-            }
-            else
-            {
-                currentLiife -= damageAmount;
-                bossAnim.SetTrigger("Hit");
-            }
+            AplicarDanio(damageAmount, attackElement, elementMultiplier);
         }
     }
-#endregion
+
+    private void AplicarDanio(float damageAmount, int attackElement, float elementMultiplier)
+    {
+        if (attackElement == 0)
+        {
+            currentLiife -= damageAmount;
+            bossAnim.SetTrigger("Hit");
+        }
+        else if (attackElement == 1 && element == 4)
+        {
+            currentLiife -= damageAmount * 0.5f;
+            bossAnim.SetTrigger("Hit");
+        }
+        else if (attackElement == 4 && element == 1)
+        {
+            currentLiife -= damageAmount * elementMultiplier;
+            bossAnim.SetTrigger("BigHit");
+        }
+        else if (attackElement - 1 == element)
+        {
+            currentLiife -= damageAmount * 0.5f;
+            bossAnim.SetTrigger("Hit");
+        }
+        else if (attackElement + 1 == element)
+        {
+            currentLiife -= damageAmount * elementMultiplier;
+            bossAnim.SetTrigger("BigHit");
+        }
+        else
+        {
+            currentLiife -= damageAmount;
+            bossAnim.SetTrigger("Hit");
+        }
+    }
+    #endregion
 
     public void BossDeath()
     {
         bossAnim.SetBool("death", true);
-
         deathBoss = true;
-
+        if (!sonidoMuerteReproducido)
+        {
+            ControladorSonido.Instance.EjecutarSonido(sonidoMuerte);
+            sonidoMuerteReproducido = true;
+        }
         Debug.Log("Muerto");
     }
 
@@ -439,17 +341,11 @@ public partial class BossBehaviour : MonoBehaviour
     {
         lifesCount = 0;
         currentLiife = maxLiife;
-
         element = 1;
-
         rayo.SetActive(false);
         preRayo.SetActive(false);
-
         Vida.color = rojoPersonalizado;
         Vida2.color = rojoPersonalizado;
-
-        element = 1;
-
         foreach (var effect in vfx)
         {
             effect.GetComponent<Renderer>().material = materials[element];
@@ -459,5 +355,14 @@ public partial class BossBehaviour : MonoBehaviour
     public void OnEnable()
     {
         StartBattle();
+    }
+
+    void LateUpdate()
+    {
+        if (!inAttack)
+            ResetSonidosAtaque();
+
+        if (!bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Hit") && !bossAnim.GetCurrentAnimatorStateInfo(0).IsName("BigHit"))
+            ResetSonidoDanio();
     }
 }
