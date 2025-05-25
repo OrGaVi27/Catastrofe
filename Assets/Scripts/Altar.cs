@@ -19,6 +19,7 @@ public class Altar : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            altar.GetComponent<Renderer>().material = materials[1];
             player.GetComponent<BasePlayerStats>().currentHealth = player.GetComponent<BasePlayerStats>().maxHealth;
 
             player.GetComponent<BasePlayerStats>().currentMana = player.GetComponent<BasePlayerStats>().maxMana;
@@ -29,5 +30,10 @@ public class Altar : MonoBehaviour
             player.GetComponent<SpawnPointsPlayer>().spawn.transform.position = gameObject.transform.position;
             Debug.Log(player.GetComponent<SpawnPointsPlayer>().spawn.transform.position);
         }
+    }
+
+    void OnTriggerExit()
+    {
+        altar.GetComponent<Renderer>().material = materials[0];
     }
 }
