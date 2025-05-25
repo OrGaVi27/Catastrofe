@@ -76,27 +76,36 @@ public class FlechaPlayer : MonoBehaviour
                 {
                     other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(damage, playerElement, elementMult); // Llama a la función de daño del enemigo
 
-                    
+
                     if (player.GetComponent<BasePlayerStats>().currentMana < player.GetComponent<BasePlayerStats>().maxMana && player.GetComponent<PlayerStateManager>().element == 0)
                     {
                         player.GetComponent<BasePlayerStats>().currentMana++;
                     }
                 }
-                
+
 
             }
 
-            if (other.GetComponent<PuzleActivator>() != null)
+
+
+
+            Destroy(gameObject);
+        }
+
+        if (other.gameObject.GetComponent<PuzleActivator>() != null)
+        {
+            if (hits == 0)
             {
-                if (hits == 0)
+                hits++;
+                PuzleActivator pa = other.GetComponent<PuzleActivator>();
+                pa.wasActivated = true;
+                pa.SetAttackElement(playerElement);
+                
+                if (player.GetComponent<BasePlayerStats>().currentMana < player.GetComponent<BasePlayerStats>().maxMana && player.GetComponent<PlayerStateManager>().element == 0)
                 {
-                    hits++;
-                    PuzleActivator pa = other.GetComponent<PuzleActivator>();
-                    pa.wasActivated = true;
-                    pa.SetAttackElement(playerElement);
+                    player.GetComponent<BasePlayerStats>().currentMana++;
                 }
             }
-
 
             Destroy(gameObject);
         }
@@ -106,31 +115,31 @@ public class FlechaPlayer : MonoBehaviour
     void ElementChange()
     {
         switch (playerElement)
-            {
-                case 0:
-                    Flechas[0].GetComponent<MeshRenderer>().material = materials[0];
-                    Flechas[1].GetComponent<MeshRenderer>().material = materials[0];
-                    break;
+        {
+            case 0:
+                Flechas[0].GetComponent<MeshRenderer>().material = materials[0];
+                Flechas[1].GetComponent<MeshRenderer>().material = materials[0];
+                break;
 
-                case 1:
-                    Flechas[0].GetComponent<MeshRenderer>().material = materials[1];
-                    Flechas[1].GetComponent<MeshRenderer>().material = materials[1];
-                    break;
+            case 1:
+                Flechas[0].GetComponent<MeshRenderer>().material = materials[1];
+                Flechas[1].GetComponent<MeshRenderer>().material = materials[1];
+                break;
 
-                case 2:
-                    Flechas[0].GetComponent<MeshRenderer>().material = materials[2];
-                    Flechas[1].GetComponent<MeshRenderer>().material = materials[2];
-                    break;
+            case 2:
+                Flechas[0].GetComponent<MeshRenderer>().material = materials[2];
+                Flechas[1].GetComponent<MeshRenderer>().material = materials[2];
+                break;
 
-                case 3:
-                    Flechas[0].GetComponent<MeshRenderer>().material = materials[3];
-                    Flechas[1].GetComponent<MeshRenderer>().material = materials[3];
-                    break;
+            case 3:
+                Flechas[0].GetComponent<MeshRenderer>().material = materials[3];
+                Flechas[1].GetComponent<MeshRenderer>().material = materials[3];
+                break;
 
-                case 4:
-                    Flechas[0].GetComponent<MeshRenderer>().material = materials[4];
-                    Flechas[1].GetComponent<MeshRenderer>().material = materials[4];
-                    break;
-            }
+            case 4:
+                Flechas[0].GetComponent<MeshRenderer>().material = materials[4];
+                Flechas[1].GetComponent<MeshRenderer>().material = materials[4];
+                break;
+        }
     }
 }

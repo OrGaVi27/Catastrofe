@@ -69,9 +69,14 @@ public class DamageTrigger : MonoBehaviour
                 PuzleActivator pa = other.GetComponent<PuzleActivator>();
                 pa.wasActivated = true;
                 pa.SetAttackElement(element);
+                
+                if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0)
+                {
+                    attaker.GetComponent<BasePlayerStats>().currentMana++;
+                }
             }
         }
-    
+
     }
 
     public void SetDamage(float damageAmount, int element, float elementMultiplier)

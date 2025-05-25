@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class PuzleElectrico : PuzleActivator
@@ -11,6 +12,7 @@ public class PuzleElectrico : PuzleActivator
             wasActivated = false;
             if (GetAttackElement() == 3)
             {
+                Debug.Log("Activando plataforma con id: " + id);
                 //Activar plataformas con el mismo id
                 GameEvents.current.SwitchTrigger(id);
             }
