@@ -925,7 +925,6 @@ GameObject:
   - component: {fileID: 6438564066407143639}
   - component: {fileID: 4250577407615837148}
   - component: {fileID: 4492683013168503865}
-  - component: {fileID: 2029384011694705156}
   m_Layer: 0
   m_Name: Coil
   m_TagString: Untagged
@@ -980,41 +979,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.3
-  m_Height: 0.65
+  m_Height: 1.29
   m_Direction: 1
-  m_Center: {x: 0, y: 0.21, z: 0}
---- !u!54 &2029384011694705156
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5913665339400028781}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Center: {x: 0, y: 0.42, z: 0}
 --- !u!1 &6005022850310053606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,7 +1062,6 @@ GameObject:
   - component: {fileID: 6888659515137724862}
   - component: {fileID: -3751408513875015982}
   - component: {fileID: 2372931097902412460}
-  - component: {fileID: 4357547842730341641}
   - component: {fileID: 2671638045842103753}
   m_Layer: 0
   m_Name: Coil
@@ -1148,29 +1119,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &4357547842730341641
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6285252903273341307}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Height: 4.07
-  m_Direction: 1
-  m_Center: {x: 0, y: 2, z: 0}
 --- !u!135 &2671638045842103753
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1190,7 +1138,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3
+  m_Radius: 4.84
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6384254407742587844
 GameObject:
