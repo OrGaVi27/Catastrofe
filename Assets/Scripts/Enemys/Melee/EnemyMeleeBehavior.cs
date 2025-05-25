@@ -88,9 +88,9 @@ public class EnemyMeleeBehavior : BaseEnemyStats
         else
         {
             nmAgent.stoppingDistance = engagementRange;
-            if (HayMagoDisponibleCercano())
+            if (HayMagoDisponibleCercano(15f))
             {
-                AsignarseAMagoConMenosAliados();
+                AsignarseAMagoConMenosAliados(15f);
             }
             else
             {
@@ -143,11 +143,15 @@ public class EnemyMeleeBehavior : BaseEnemyStats
         return distancia < areaDefensa;
     }
 
-    bool HayMagoDisponibleCercano()
+    bool HayMagoDisponibleCercano(float rango = 15f)
     {
         GameObject[] magos = GameObject.FindGameObjectsWithTag("Mago");
+
         foreach (GameObject magoObj in magos)
         {
+            float distancia = Vector3.Distance(transform.position, magoObj.transform.position);
+            if (distancia > rango) continue;
+
             MageBehaviour mago = magoObj.GetComponent<MageBehaviour>();
             if (mago == null) continue;
 
@@ -157,10 +161,11 @@ public class EnemyMeleeBehavior : BaseEnemyStats
                     return true;
             }
         }
+
         return false;
     }
 
-    void AsignarseAMagoConMenosAliados()
+    void AsignarseAMagoConMenosAliados(float rango = 10f)
     {
         int menorCantidad = int.MaxValue;
         MageBehaviour mejorMago = null;
@@ -169,6 +174,9 @@ public class EnemyMeleeBehavior : BaseEnemyStats
 
         foreach (GameObject magoObj in magos)
         {
+            float distancia = Vector3.Distance(transform.position, magoObj.transform.position);
+            if (distancia > rango) continue;
+
             MageBehaviour mago = magoObj.GetComponent<MageBehaviour>();
             if (mago == null) continue;
 

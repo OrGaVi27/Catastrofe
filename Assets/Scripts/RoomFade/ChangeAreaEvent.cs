@@ -6,8 +6,8 @@ public class ChangeAreaEvent : MonoBehaviour
     [Tooltip("Index del area a la que vas a apasar.")]
     public int areaIndex;
 
-    public void OnDisable()
+    void OnTriggerEnter(Collider other)
     {
-        AreaManager.instance.LoadArea(areaIndex);
+        if (other.CompareTag("Player")) AreaManager.instance.LoadArea(areaIndex);
     }
 }

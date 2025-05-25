@@ -279,7 +279,7 @@ public class ComportamientoArquero : BaseEnemyStats
     }
 
 
-    bool HayMagoDisponibleCercano(float rango = 10f)
+    bool HayMagoDisponibleCercano(float rango = 15f)
     {
         GameObject[] magos = GameObject.FindGameObjectsWithTag("Mago");
 
