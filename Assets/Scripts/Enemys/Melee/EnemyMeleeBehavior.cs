@@ -19,6 +19,9 @@ public class EnemyMeleeBehavior : BaseEnemyStats
     private bool alreadyAttacked;
     private float engagementRange = 1f;
     private float followRange = 2f;
+    [SerializeField] public AudioClip atackSound;
+
+
 
     void Start()
     {
@@ -213,6 +216,7 @@ public class EnemyMeleeBehavior : BaseEnemyStats
         {
             alreadyAttacked = true;
             Debug.Log("¡Atacando al jugador!");
+            ControladorSonido.Instance.EjecutarSonido(atackSound);
             animator.SetTrigger("Attacking");
             Invoke(nameof(ResetAttack), 2f);
         }

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public partial class PlayerStateManager : MonoBehaviour
 {
+    
 
     void Awake()
     {
@@ -115,9 +116,9 @@ public partial class PlayerStateManager : MonoBehaviour
             if (!dashSoundPlayed)
             {
                 dashSoundPlayed = true;
-                //.instance.PlaySound(DashSound, transform.position);
+                ControladorSonido.Instance.EjecutarSonido(DashSound);
             }
-            
+
         }
         else
         {
@@ -134,25 +135,54 @@ public partial class PlayerStateManager : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, playerRotateSpeed * Time.deltaTime);
     }
 
-    private float lastAttackSoundTime = 0f;
-    public float attackSoundCooldown = 0.3f; // Tiempo mínimo entre sonidos (ajustable)
-
     public void Attack()
     {
-        if (anim.GetCurrentAnimatorStateInfo(1).IsName("-"))
+        // Detecta si el ataque ha terminado
+        if (anim.GetCurrentAnimatorStateInfo(1).IsName("-")) // Cambia "-" por el nombre correcto del estado de espera si es necesario
         {
             isAttacking = false;
+            hasPlayedAttackSound = false;
+            return;
         }
 
-        if (anim.GetBool("StrongAttack"))
+        // Solo reproducir sonido si aún no se ha hecho en este ataque
+        if (!hasPlayedAttackSound)
         {
-            //Sonido ataque fuerte
-        }
-        else
-        {
-            //Sonido ataque normal
+            if (anim.GetBool("StrongAttack"))
+            {
+                AudioClip selectedChargeSound = ChargeAttackSound; // fallback
+
+                switch (element)
+                {
+                    case 0:
+                        selectedChargeSound = ChargeAttackSound;
+                        break;
+                    case 1:
+                        selectedChargeSound = fireSound;
+                        break;
+                    case 2:
+                        selectedChargeSound = stoneSound;
+                        break;
+                    case 3:
+                        selectedChargeSound = electricSound;
+                        break;
+                    case 4:
+                        selectedChargeSound = waterSound;
+                        break;
+                }
+
+                ControladorSonido.Instance.EjecutarSonido(selectedChargeSound);
+            }
+            else
+            {
+                ControladorSonido.Instance.EjecutarSonido(attackSound);
+            }
+
+            hasPlayedAttackSound = true; // Marcar como reproducido
         }
     }
+
+
     public void ElementControll()
     {
         int weapon = 0;

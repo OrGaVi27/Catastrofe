@@ -30,6 +30,7 @@ public class MageBehaviour : BaseEnemyStats
     private bool healReady = false;
     private float lastTimeHealed = 0f;
     public float fleeSpeedMult;
+    public AudioClip healingSound;
 
     [Space]
     [Header("Animation")]
@@ -143,6 +144,7 @@ public class MageBehaviour : BaseEnemyStats
         {
             anim.SetInteger("State", 4);
             nmAgent.SetDestination(transform.position);
+            ControladorSonido.Instance.EjecutarSonido(healingSound);
             lastTimeHealed = Time.time;
             healReady = false;
         }

@@ -75,7 +75,7 @@ public class BaseEnemyStats : MonoBehaviour
         }
         else
         {
-            //ControladorSonido.Instance.EjecutarSonido(Hit);
+            ControladorSonido.Instance.EjecutarSonido(Hit);
         }
 
 
@@ -97,7 +97,7 @@ public class BaseEnemyStats : MonoBehaviour
         //Debug.Log("Muerto");
 
         animator.SetBool("Death", true);
-        //ControladorSonido.Instance.EjecutarSonido(Dead);
+        ControladorSonido.Instance.EjecutarSonido(Dead);
 
         dead = true;
 
