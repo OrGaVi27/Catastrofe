@@ -26,7 +26,10 @@ public class Corridor : MonoBehaviour
             player.GetComponent<SpawnPointsPlayer>().habitacionActual = adjacentRoom;
 
             // Esperar al siguiente frame antes de desactivar la habitación actual
-            await Task.Yield();
+            if (originRoom.name == "Jardin" || adjacentRoom.name == "Jardin")
+            {
+                await Task.Yield();
+            }
 
             // Desactivar la habitación actual de forma segura
             originRoom.SetActive(false);

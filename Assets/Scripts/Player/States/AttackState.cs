@@ -58,6 +58,12 @@ public class AttackState : PlayerBaseState
                 player.virtualCamera.Priority = 10;
             }
 
+            if (player.dashIsOn)
+            {
+                player.isAttacking = false;
+                player.SwitchState(player.dashState);
+            }
+
             player.Attack();
         }
 

@@ -79,7 +79,10 @@ public partial class PlayerStateManager : MonoBehaviour
     {
         referenceMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         isometricImput = referenceMatrix.MultiplyPoint3x4(moveVector);
-        anim.SetInteger("State", 1);
+        if (inputVector.magnitude != 0)
+        {
+            anim.SetInteger("State", 1);
+        }
         anim.SetFloat("RunMultiplier", moveVector.magnitude);
 
         controller.Move(isometricImput * playerSpeed * Time.deltaTime);
@@ -91,7 +94,14 @@ public partial class PlayerStateManager : MonoBehaviour
     {
         referenceMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         isometricImput = referenceMatrix.MultiplyPoint3x4(moveVector);
-        anim.SetInteger("State", 1);
+        if (inputVector.magnitude != 0)
+        {
+            anim.SetInteger("State", 1);
+        }
+        else
+        {
+            anim.SetInteger("State", 0);
+        }
 
         if (rangeCharacter)
         {
