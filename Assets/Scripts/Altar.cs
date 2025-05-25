@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Altar : MonoBehaviour
@@ -5,6 +6,9 @@ public class Altar : MonoBehaviour
     public GameObject player;
 
     public GameObject habitacion;
+
+    public GameObject altar;
+    public Material[] materials;
 
     void Start()
     {
@@ -23,7 +27,6 @@ public class Altar : MonoBehaviour
             Debug.Log("potis max");
 
             player.GetComponent<SpawnPointsPlayer>().spawn.transform.position = gameObject.transform.position;
-
             Debug.Log(player.GetComponent<SpawnPointsPlayer>().spawn.transform.position);
         }
     }
