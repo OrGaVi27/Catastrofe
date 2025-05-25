@@ -790,6 +790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mage: {fileID: 6268628808784324404}
+  healingSound: {fileID: 0}
 --- !u!1 &3833526441816502252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,8 +1355,8 @@ MonoBehaviour:
   movementSpeed: 2.16
   element: 0
   dead: 0
-  Hit: {fileID: 0}
-  Dead: {fileID: 0}
+  Hit: {fileID: 8300000, guid: 7eb9a9fd9f9d93442b82ce9952794f62, type: 3}
+  Dead: {fileID: 8300000, guid: def7ba94fb64de841875ba2f50940194, type: 3}
   animator: {fileID: 968199782150386258}
   nmAgent: {fileID: 5800397522494698082}
   canvas: {fileID: 5610893272578664176}
@@ -1379,6 +1380,7 @@ MonoBehaviour:
   healCooldown: 5
   healAmount: 50
   fleeSpeedMult: 2
+  healingSound: {fileID: 8300000, guid: 5154b1175a5056f499a82c8eabceeeaa, type: 3}
   anim: {fileID: 968199782150386258}
   staff: {fileID: 3495854700584118180}
   elemento: {fileID: 6562675985379657288}

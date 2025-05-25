@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class AttackState : PlayerBaseState
@@ -7,10 +6,12 @@ public class AttackState : PlayerBaseState
     {
 
     }
+
     public override void ExitState(PlayerStateManager player)
     {
-        
+
     }
+
     public override void UpdateState(PlayerStateManager player)
     {
         if (!player.isAttacking && player.inputVector.magnitude != 0)
@@ -22,9 +23,15 @@ public class AttackState : PlayerBaseState
             player.SwitchState(player.idleState);
         }
 
-
         if (player.attackIsCharging)
         {
+            float timeCharging = Time.time - player.attackStartTime;
+            
+            if (timeCharging >= 0.5f && !player.chargingSoundPlayed)
+            {
+                ControladorSonido.Instance.EjecutarSonido(player.ChargingAttack);
+                player.chargingSoundPlayed = true;
+            }
 
             if (player.rangeCharacter)
             {
@@ -32,24 +39,25 @@ public class AttackState : PlayerBaseState
                 player.virtualCamera.Priority = 8;
             }
 
-            if (player.attackChargeTime + player.attackStartTime > Time.time)
+            if (timeCharging < player.attackChargeTime)
             {
-                //Debug.Log("normal attack");
                 player.anim.SetBool("StrongAttack", false);
             }
             else
             {
-                //Debug.Log("STRONG ATTACK!");
                 player.anim.SetBool("StrongAttack", true);
             }
         }
         else
         {
+            player.chargingSoundPlayed = false;
+
             if (player.rangeCharacter)
             {
                 player.aimAid.SetActive(false);
                 player.virtualCamera.Priority = 10;
             }
+
             player.Attack();
         }
 

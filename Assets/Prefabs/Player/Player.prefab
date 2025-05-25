@@ -714,6 +714,7 @@ GameObject:
   - component: {fileID: 6143138056906678529}
   - component: {fileID: 1908672958716258452}
   - component: {fileID: 2412358064744661668}
+  - component: {fileID: 4467002110596220607}
   - component: {fileID: 2073279768287989773}
   m_Layer: 0
   m_Name: Player
@@ -955,6 +956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  Hit: {fileID: 8300000, guid: f39b680f2d99d42479765ed279c8c06c, type: 3}
   maxMana: 5
   currentMana: 0
   damage: 50
@@ -973,7 +975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb672ecc6673cf347b5237790347bfd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeCharacter: 1
+  rangeCharacter: 0
   controller: {fileID: 0}
   input: {fileID: 0}
   moveVector: {x: 0, y: 0, z: 0}
@@ -1013,6 +1015,17 @@ MonoBehaviour:
   maxComboDelay: 1
   virtualCamera: {fileID: 0}
   anim: {fileID: 6083586929133468098}
+  attackSound: {fileID: 8300000, guid: a81d3084ddd5b304b90c11b0ba942152, type: 3}
+  ChargeAttackSound: {fileID: 8300000, guid: 274101edd5fa1d040a27f8d82ed78e92, type: 3}
+  ChargingAttack: {fileID: 8300000, guid: c531859cc6b5a1b4b8303ab8ca72d4a7, type: 3}
+  DashSound: {fileID: 8300000, guid: e999ed1a69fc0f54e97963ae78d57c8f, type: 3}
+  fireSound: {fileID: 8300000, guid: 5703af1d1f5ce534cab0533801c013ef, type: 3}
+  waterSound: {fileID: 8300000, guid: 37a4c76ba9d12f844bba1cc0eef4f031, type: 3}
+  electricSound: {fileID: 8300000, guid: 6a6ef43d94bda3049b0b77c906d30cd7, type: 3}
+  stoneSound: {fileID: 8300000, guid: 5caf3414a794d8845887240ca54c6466, type: 3}
+  dashSoundPlayed: 0
+  hasPlayedAttackSound: 0
+  chargingSoundPlayed: 0
   baseStats: {fileID: 0}
   element: 0
 --- !u!54 &2412358064744661668
@@ -1042,6 +1055,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &4467002110596220607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695957459192586695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc53088a7652f8949b4995a121ea45b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1695957459192586695}
+  spawn: {fileID: 0}
+  habitacionSpawn: {fileID: 0}
+  habitacionActual: {fileID: 0}
 --- !u!114 &2073279768287989773
 MonoBehaviour:
   m_ObjectHideFlags: 0

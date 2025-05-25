@@ -6,6 +6,14 @@ public class Corridor : MonoBehaviour
 {
     public GameObject originRoom;
     public GameObject adjacentRoom;
+
+    public GameObject player;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
     private async void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -15,6 +23,7 @@ public class Corridor : MonoBehaviour
 
             // Activar la habitación adyacente
             adjacentRoom.SetActive(true);
+            player.GetComponent<SpawnPointsPlayer>().habitacionActual = adjacentRoom;
 
             // Esperar al siguiente frame antes de desactivar la habitación actual
             await Task.Yield();
