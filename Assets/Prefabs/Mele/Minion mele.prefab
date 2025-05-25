@@ -495,6 +495,8 @@ MonoBehaviour:
   movementSpeed: 4.5
   element: 0
   dead: 0
+  Hit: {fileID: 8300000, guid: 7eb9a9fd9f9d93442b82ce9952794f62, type: 3}
+  Dead: {fileID: 8300000, guid: 96c798a8364ae5447a3e7f11c337e8cb, type: 3}
   animator: {fileID: 1186439172691614758}
   nmAgent: {fileID: 2564644265722101906}
   canvas: {fileID: 2803353885570838155}
@@ -511,6 +513,7 @@ MonoBehaviour:
   rangoDeAtaque: {fileID: 2654811447830436176}
   estaEnEquipo: 0
   estoyEnUnEquipo: 0
+  atackSound: {fileID: 8300000, guid: 6c13afe39551a1e4ca26bac8ef01bbc4, type: 3}
 --- !u!114 &8262925647938840756
 MonoBehaviour:
   m_ObjectHideFlags: 0

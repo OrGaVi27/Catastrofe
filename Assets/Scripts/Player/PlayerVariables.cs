@@ -59,11 +59,18 @@ public partial class PlayerStateManager
 
     [Space]
     [Header("Sound")]
-    [SerializeField] private AudioClip attackSound;
-    [SerializeField] private AudioClip ChargeAttackSound;
-    [SerializeField] private AudioClip ChargingAttack;
-    [SerializeField] private AudioClip DashSound;
-    private bool dashSoundPlayed = false;
+    [SerializeField] public AudioClip attackSound;
+    [SerializeField] public AudioClip ChargeAttackSound;
+    [SerializeField] public AudioClip ChargingAttack;
+    [SerializeField] public AudioClip DashSound;
+    [SerializeField] public AudioClip fireSound;
+    [SerializeField] public AudioClip waterSound;
+    [SerializeField] public AudioClip electricSound;
+    [SerializeField] public AudioClip stoneSound;
+    public bool dashSoundPlayed = false;
+    public bool hasPlayedAttackSound = false;
+    public bool chargingSoundPlayed = false;
+    
 
 
     private Vector3 gravityVector;
