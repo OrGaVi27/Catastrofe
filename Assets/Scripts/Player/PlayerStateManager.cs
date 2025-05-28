@@ -122,7 +122,7 @@ public partial class PlayerStateManager : MonoBehaviour
     {
         if (Time.time <= dashStartTime + dashTime)
         {
-            controller.Move(isometricImput * dashSpeed * Time.deltaTime);
+            controller.Move(transform.forward * dashSpeed * Time.deltaTime);
             if (!dashSoundPlayed)
             {
                 dashSoundPlayed = true;
