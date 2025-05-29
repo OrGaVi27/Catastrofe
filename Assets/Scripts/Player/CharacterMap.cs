@@ -22,6 +22,7 @@ public partial class PlayerStateManager
     {
         if (value.isPressed && controller.isGrounded && !isAttacking)
         {
+            if (element != 0 && baseStats.currentMana > 0 && !isAttacking) baseStats.currentMana--;
             isAttacking = true;
             attackIsCharging = true;
             attackStartTime = Time.time;
@@ -31,7 +32,6 @@ public partial class PlayerStateManager
 
         if (!value.isPressed)
         {
-            if (element != 0 && baseStats.currentMana > 0) baseStats.currentMana--;
             attackIsCharging = false;
             anim.SetBool("IsCharging", false);
         }

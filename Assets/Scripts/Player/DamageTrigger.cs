@@ -22,7 +22,7 @@ public class DamageTrigger : MonoBehaviour
     }
 
 
-    void Update()
+    void OnEnable()
     {
         if (!attaker.GetComponent<PlayerStateManager>().rangeCharacter)
         {
@@ -30,10 +30,7 @@ public class DamageTrigger : MonoBehaviour
             elementMultiplier = attaker.GetComponent<BasePlayerStats>().elementMultiplier;
             damageAmount = attaker.GetComponent<PlayerStateManager>().DamageOutput();
         }
-    }
 
-    void OnEnable()
-    {
         hits = 0;
     }
 
