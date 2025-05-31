@@ -4,6 +4,8 @@ public class BasePlayerStats : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
+    public int maxHeals = 3;
+    public int currentHeals;
     [SerializeField] private AudioClip Hit;
 
     public int maxMana = 5;

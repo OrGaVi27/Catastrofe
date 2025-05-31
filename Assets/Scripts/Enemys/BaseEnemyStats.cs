@@ -118,12 +118,12 @@ public class BaseEnemyStats : MonoBehaviour
 
         canvas.gameObject.SetActive(false); // Desactiva el canvas del enemigo
 
-        Invoke("DestroyObject", 10f); // Llama a Desaparecer después de 15 segundos
+        Invoke("DisableObject", 10f); // Llama a Desaparecer después de 15 segundos
     }
 
-    public void DestroyObject()
+    public void DisableObject()
     {
         //Debug.Log("Desaparecer");
-        Destroy(gameObject);
+        if(dead) gameObject.SetActive(false);
     }
 }

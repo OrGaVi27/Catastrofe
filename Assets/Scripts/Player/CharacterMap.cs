@@ -26,7 +26,7 @@ public partial class PlayerStateManager
             attackIsCharging = true;
             attackStartTime = Time.time;
             anim.SetBool("IsCharging", true);
-            
+
         }
 
         if (!value.isPressed)
@@ -92,6 +92,23 @@ public partial class PlayerStateManager
                     element = 4;
                 }
                 break;
+        }
+    }
+
+    void OnHeal(InputValue value)
+    {
+        if (value.isPressed && baseStats.currentHealth < baseStats.maxHealth && baseStats.currentHeals > 0)
+        {
+            baseStats.Heal(30f);
+            baseStats.currentHeals--;
+        }
+    }
+
+    void OnInteract()
+    {
+        if (GameEvents.current != null)
+        {
+            GameEvents.current.Interact();
         }
     }
 }
