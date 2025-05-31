@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public partial class PlayerStateManager
 {
-    public bool rangeCharacter = false;
+    //public bool rangeCharacter = false;
 
 
     #region States

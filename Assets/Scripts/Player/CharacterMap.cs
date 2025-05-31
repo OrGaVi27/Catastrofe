@@ -22,7 +22,6 @@ public partial class PlayerStateManager
     {
         if (value.isPressed && controller.isGrounded && !isAttacking)
         {
-            if (element != 0 && baseStats.currentMana > 0 && !isAttacking) baseStats.currentMana--;
             isAttacking = true;
             attackIsCharging = true;
             attackStartTime = Time.time;
