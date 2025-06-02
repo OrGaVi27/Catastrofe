@@ -19,7 +19,7 @@ public class AbrirPuertaAbajo : MonoBehaviour
             anim.SetBool("isOpen", false);
         }
     }
-
+    
     public void OnEnable()
     {
         isOpen = false;

@@ -37,18 +37,7 @@ public class Altar : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            altar.GetComponent<Renderer>().material = materials[1];
-
-            player.GetComponent<BasePlayerStats>().currentHealth = player.GetComponent<BasePlayerStats>().maxHealth;
-
-            player.GetComponent<BasePlayerStats>().currentMana = player.GetComponent<BasePlayerStats>().maxMana;
-
-            //Pociones al maxisimo
-            Debug.Log("potis max");
-
-            player.GetComponent<SpawnPointsPlayer>().habitacionSpawn = habitacion;
-
-            player.GetComponent<SpawnPointsPlayer>().spawn.transform.position = gameObject.transform.position;
+            AltarInteract();
         }
     }
 
