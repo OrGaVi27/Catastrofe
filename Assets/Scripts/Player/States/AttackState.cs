@@ -33,11 +33,11 @@ public class AttackState : PlayerBaseState
                 player.chargingSoundPlayed = true;
             }
 
-            if (player.rangeCharacter)
+            /* if (player.rangeCharacter)
             {
                 player.aimAid.SetActive(true);
                 player.virtualCamera.Priority = 8;
-            }
+            } */
 
             if (timeCharging < player.attackChargeTime)
             {
@@ -52,11 +52,11 @@ public class AttackState : PlayerBaseState
         {
             player.chargingSoundPlayed = false;
 
-            if (player.rangeCharacter)
+            /* if (player.rangeCharacter)
             {
                 player.aimAid.SetActive(false);
                 player.virtualCamera.Priority = 10;
-            }
+            } */
 
             if (player.dashIsOn)
             {

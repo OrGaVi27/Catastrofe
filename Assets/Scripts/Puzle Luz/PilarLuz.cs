@@ -62,16 +62,12 @@ public class PilarLuz : MonoBehaviour
 
         if (Physics.Raycast(emisor.transform.position, direction, out hit, rayDistance, layerMask) && encendido == true)
         {
-            Debug.Log("Colisión con: " + hit.transform.name);
-
             PilarLuz pilar = hit.transform.GetComponentInParent<PilarLuz>();
-            PuertaPuzleOrbe puerta = hit.transform.GetComponentInParent<PuertaPuzleOrbe>();
+            PuertaPuzleOrbe puerta = hit.transform.gameObject.GetComponentInParent<PuertaPuzleOrbe>();
 
             if (pilar != null)
             {
                 pilar.encendido = true;
-                Debug.Log(hit.transform.name + " ahora está ENCENDIDO.");
-
                 // Guardar el último Pilar detectado
                 ultimoPilarDetectado = pilar;
             }
@@ -85,7 +81,7 @@ public class PilarLuz : MonoBehaviour
                 if (ultimoPilarDetectado != null)
                 {
                     ultimoPilarDetectado.encendido = false;
-                    Debug.Log(ultimoPilarDetectado.name + " ahora está APAGADO.");
+                    
                     ultimoPilarDetectado = null;
                 }
             }
@@ -96,7 +92,7 @@ public class PilarLuz : MonoBehaviour
             if (ultimoPilarDetectado != null)
             {
                 ultimoPilarDetectado.encendido = false;
-                Debug.Log(ultimoPilarDetectado.name + " ahora está APAGADO.");
+                
                 ultimoPilarDetectado = null;
             }
         }

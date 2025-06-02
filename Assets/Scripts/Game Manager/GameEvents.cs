@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 public class GameEvents : MonoBehaviour
-{  
+{
     public static GameEvents current;
 
     private void Awake()
@@ -30,6 +30,16 @@ public class GameEvents : MonoBehaviour
         if (onRoomFadeTrigger != null)
         {
             onRoomFadeTrigger();
+        }
+    }
+
+    public event Action onInteract;
+    
+    public void Interact()
+    {
+        if (onInteract != null)
+        {
+            onInteract();
         }
     }
     #endregion

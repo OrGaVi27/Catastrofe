@@ -20,19 +20,9 @@ public partial class PlayerStateManager : MonoBehaviour
         currentState.EnterState(this);
         baseStats = GetComponent<BasePlayerStats>();
 
-        if (rangeCharacter)
-        {
-            Weapons[0].SetActive(false);
-            Weapons[1].SetActive(true);
-            anim.SetBool("IsRanged", true);
-            attackMovSpeed = 0f;
-        }
-        else
-        {
-            Weapons[0].SetActive(true);
-            Weapons[1].SetActive(false);
-            anim.SetBool("IsRanged", false);
-        }
+        Weapons[0].SetActive(true);
+        Weapons[1].SetActive(false);
+        anim.SetBool("IsRanged", false);
     }
 
     // Update is called once per frame
@@ -103,15 +93,6 @@ public partial class PlayerStateManager : MonoBehaviour
             anim.SetInteger("State", 0);
         }
 
-        if (rangeCharacter)
-        {
-            anim.SetFloat("RunMultiplier", moveVector.magnitude * 0f);
-        }
-        else
-        {
-            anim.SetFloat("RunMultiplier", moveVector.magnitude);
-        }
-
 
         controller.Move(isometricImput * speed * Time.deltaTime);
 
@@ -122,7 +103,7 @@ public partial class PlayerStateManager : MonoBehaviour
     {
         if (Time.time <= dashStartTime + dashTime)
         {
-            controller.Move(isometricImput * dashSpeed * Time.deltaTime);
+            controller.Move(transform.forward * dashSpeed * Time.deltaTime);
             if (!dashSoundPlayed)
             {
                 dashSoundPlayed = true;
@@ -148,7 +129,7 @@ public partial class PlayerStateManager : MonoBehaviour
     public void Attack()
     {
         // Detecta si el ataque ha terminado
-        if (anim.GetCurrentAnimatorStateInfo(1).IsName("-")) // Cambia "-" por el nombre correcto del estado de espera si es necesario
+        if (anim.GetCurrentAnimatorStateInfo(1).IsName("-"))
         {
             isAttacking = false;
             hasPlayedAttackSound = false;
@@ -188,6 +169,9 @@ public partial class PlayerStateManager : MonoBehaviour
                 ControladorSonido.Instance.EjecutarSonido(attackSound);
             }
 
+            if (baseStats.currentMana > 0 && anim.GetBool("StrongAttack")) baseStats.currentMana--;
+            if (baseStats.currentMana > 0 && !anim.GetBool("StrongAttack") && element != 0) baseStats.currentMana--;
+
             hasPlayedAttackSound = true; // Marcar como reproducido
         }
     }
@@ -196,7 +180,7 @@ public partial class PlayerStateManager : MonoBehaviour
     public void ElementControll()
     {
         int weapon = 0;
-        if (rangeCharacter) weapon = 1;
+        //if (rangeCharacter) weapon = 1;
 
         switch (element)
         {

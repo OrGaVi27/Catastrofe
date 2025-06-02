@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DamageTrigger : MonoBehaviour
@@ -13,27 +12,15 @@ public class DamageTrigger : MonoBehaviour
     void Start()
     {
         attaker = GameObject.FindGameObjectWithTag("Player");
-        if (attaker.GetComponent<PlayerStateManager>().rangeCharacter)
-        {
-            element = attaker.GetComponent<PlayerStateManager>().element;
-            elementMultiplier = attaker.GetComponent<BasePlayerStats>().elementMultiplier;
-            damageAmount = attaker.GetComponent<PlayerStateManager>().DamageOutput();
-        }
     }
 
-
-    void Update()
-    {
-        if (!attaker.GetComponent<PlayerStateManager>().rangeCharacter)
-        {
-            element = attaker.GetComponent<PlayerStateManager>().element;
-            elementMultiplier = attaker.GetComponent<BasePlayerStats>().elementMultiplier;
-            damageAmount = attaker.GetComponent<PlayerStateManager>().DamageOutput();
-        }
-    }
 
     void OnEnable()
     {
+        element = attaker.GetComponent<PlayerStateManager>().element;
+        elementMultiplier = attaker.GetComponent<BasePlayerStats>().elementMultiplier;
+        damageAmount = attaker.GetComponent<PlayerStateManager>().DamageOutput();
+
         hits = 0;
     }
 
@@ -69,7 +56,7 @@ public class DamageTrigger : MonoBehaviour
                 PuzleActivator pa = other.GetComponent<PuzleActivator>();
                 pa.wasActivated = true;
                 pa.SetAttackElement(element);
-                
+
                 if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0)
                 {
                     attaker.GetComponent<BasePlayerStats>().currentMana++;
