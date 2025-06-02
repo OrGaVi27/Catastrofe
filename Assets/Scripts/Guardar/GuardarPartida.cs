@@ -54,6 +54,8 @@ public class GuardarPartida : MonoBehaviour
 }
 [System.Serializable]
 public class DatosGuardado{
+    public bool tutorial = true;
+    [Space]
     public Transform spawn;
     [Space]
     public float musicVolume = 0.5f;
