@@ -507,9 +507,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4282036270130832401}
   - component: {fileID: 3364257967122821316}
+  - component: {fileID: 3127910118568495572}
   - component: {fileID: 4240477517079401651}
   - component: {fileID: 2046149838520177975}
-  - component: {fileID: 3127910118568495572}
   m_Layer: 0
   m_Name: PilarDeLuz
   m_TagString: Untagged
@@ -551,12 +551,27 @@ MonoBehaviour:
   emisor: {fileID: 7835021864862578231}
   permEncendido: 1
   encendido: 1
-  rayDistance: 10
+  rayDistance: 100
   lineRenderer: {fileID: 7484521182227886641, guid: 97c684e60e9cf404983c56758b85f463, type: 3}
   layerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 512
   maxTime: 0.5
+--- !u!114 &3127910118568495572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4701874405421029513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a9d69fddca8a584e9a129a8015ad313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wasActivated: 0
+  rotatingSpeed: 50
+  rotateDirection: -1
 --- !u!65 &4240477517079401651
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -691,21 +706,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &3127910118568495572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4701874405421029513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a9d69fddca8a584e9a129a8015ad313, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wasActivated: 0
-  rotatingSpeed: 50
-  rotateDirection: -1
 --- !u!1 &7835021864862578231
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,7 +718,7 @@ GameObject:
   - component: {fileID: 5616841417074863301}
   - component: {fileID: 8036537746985820369}
   - component: {fileID: 3783433151245886198}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: EsferaEnergia
   m_TagString: Untagged
   m_Icon: {fileID: 0}

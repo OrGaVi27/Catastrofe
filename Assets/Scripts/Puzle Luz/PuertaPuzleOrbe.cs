@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PuertaPuzleOrbe : MonoBehaviour
 {
+    public AbrirPuertaAbajo puerta;
+    
     public void AbrirPuerta()
     {
-        Debug.Log("Puerta abierta");
+        puerta.isOpen = true;
     }
 }
