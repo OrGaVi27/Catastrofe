@@ -77,11 +77,11 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
-    // void OnPausa()
-    // {
-    //     Debug.Log("Pausa activada");
-    //     pausaPanel.SetActive(!pausaPanel.activeSelf);
-    //     SelecionMando(volverAlJuego);
-    //     Time.timeScale = pausaPanel.activeSelf ? 0 : 1;
-    // }
+    void OnPausa()
+    {
+        Debug.Log("Pausa activada");
+        pausaPanel.SetActive(!pausaPanel.activeSelf);
+        SelecionMando(volverAlJuego);
+        Time.timeScale = pausaPanel.activeSelf ? 0 : 1;
+    }
 }
