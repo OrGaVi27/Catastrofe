@@ -62,5 +62,7 @@ public class Altar : MonoBehaviour
         guardado.GetComponent<GuardarPartida>().datosGuardado.habitacion = habitacion;
 
         guardado.GetComponent<GuardarPartida>().datosGuardado.spawnPosition = gameObject.transform.position;
+
+        guardado.GetComponent<GuardarPartida>().GuardarJSON();
     }
 }

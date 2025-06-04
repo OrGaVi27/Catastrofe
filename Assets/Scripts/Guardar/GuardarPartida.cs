@@ -59,6 +59,7 @@ public class DatosGuardado
     [Space]
     public Vector3 spawnPosition;
     public GameObject habitacion;
+    public GameObject habitacionActual;
     [Space]
     public float musicVolume = 0.5f;
     public float SFXVolume = 0.5f;
