@@ -17,12 +17,12 @@ public class GuardarPartida : MonoBehaviour
             Debug.Log("Carpeta creada en: " + carpeta);
         }
         // Ruta completa del archivo
-        dataPath = carpeta + "PuntosGuardados.json"; 
+        dataPath = carpeta + "DatosGuardados.json"; 
         // Intentar cargar al inicio 
         CargarJSON();
     }
     
-    /* public void Update()
+    public void Update()
     {
         //improvisado para debug
         if (Input.GetKeyDown("p"))
@@ -33,7 +33,7 @@ public class GuardarPartida : MonoBehaviour
         {
             CargarJSON();
         }
-    } */
+    }
 
     public void GuardarJSON()
     {
@@ -53,16 +53,24 @@ public class GuardarPartida : MonoBehaviour
 
 }
 [System.Serializable]
-public class DatosGuardado{
+public class DatosGuardado
+{
     public bool tutorial = true;
     [Space]
-    public Transform spawn;
+    public Vector3 spawnPosition;
+    public GameObject habitacion;
+    public GameObject habitacionActual;
     [Space]
     public float musicVolume = 0.5f;
     public float SFXVolume = 0.5f;
+    [Space]
+    public bool espada01 = false;
+    public bool espada02 = false;
+    public bool espada03 = false;
     [Space]
     public bool fire = false;
     public bool water = false;
     public bool electricity = false;
     public bool rock = false;
+    //paginas del diario, no se como lo tiene adri
 }

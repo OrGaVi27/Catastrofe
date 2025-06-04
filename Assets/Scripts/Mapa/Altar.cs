@@ -4,45 +4,65 @@ using UnityEngine;
 public class Altar : MonoBehaviour
 {
     public GameObject player;
-
+    [Space]
     public GameObject habitacion;
-
+    [Space]
     public GameObject altar;
-    public Material[] materials;
+    public GameObject altarActive;
+    public GameObject altarDesactive;
+    [Space]
+    public AudioClip healingSound;
+    [Space]
+    public GameObject guardado;
+    [Space]
+    public InteractableItem interact;
+
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    public void AltarInteract()
+    void Update()
     {
-        altar.GetComponent<Renderer>().material = materials[1];
+        if (player.GetComponent<SpawnPointsPlayer>().spawn.transform.position == gameObject.transform.position)
+        {
+            altarActive.SetActive(true);
+            altarDesactive.SetActive(false);
+        }
+        else
+        {
+            altarActive.SetActive(false);
+            altarDesactive.SetActive(true);
+        }
 
-        player.GetComponent<BasePlayerStats>().currentHealth = player.GetComponent<BasePlayerStats>().maxHealth;
-
-        player.GetComponent<BasePlayerStats>().currentMana = player.GetComponent<BasePlayerStats>().maxMana;
-
-        //Pociones al maxisimo
-        Debug.Log("potis max");
-
-        player.GetComponent<SpawnPointsPlayer>().habitacionSpawn = habitacion;
-
-        player.GetComponent<SpawnPointsPlayer>().spawn.transform.position = gameObject.transform.position;
-
-        //Sonido de curar
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
+        if (interact.playerInteracted == true)
         {
             AltarInteract();
         }
     }
 
-    void OnTriggerExit()
+    public void AltarInteract()
     {
-        altar.GetComponent<Renderer>().material = materials[0];
+        interact.playerInteracted = false;
+
+        player.GetComponent<BasePlayerStats>().currentHealth = player.GetComponent<BasePlayerStats>().maxHealth;
+
+        player.GetComponent<BasePlayerStats>().currentMana = player.GetComponent<BasePlayerStats>().maxMana;
+
+        player.GetComponent<BasePlayerStats>().currentHeals = player.GetComponent<BasePlayerStats>().maxHeals;
+
+        player.GetComponent<SpawnPointsPlayer>().habitacionSpawn = habitacion;
+
+        player.GetComponent<SpawnPointsPlayer>().spawn.transform.position = gameObject.transform.position;
+
+        ControladorSonido.Instance.EjecutarSonido(healingSound);
+
+        //Guardado
+        guardado.GetComponent<GuardarPartida>().datosGuardado.habitacion = habitacion;
+
+        guardado.GetComponent<GuardarPartida>().datosGuardado.spawnPosition = gameObject.transform.position;
+
+        guardado.GetComponent<GuardarPartida>().GuardarJSON();
     }
 }

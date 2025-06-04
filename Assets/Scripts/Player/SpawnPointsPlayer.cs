@@ -7,14 +7,19 @@ public class SpawnPointsPlayer : MonoBehaviour
     public Transform spawn;
     public GameObject habitacionSpawn;
     public GameObject habitacionActual;
-
+    [Space]
+    public GameObject guardado;
 
     void Start()
     {
-        //spawn.position = spawnGuardado.transform.position;
-        transform.position = spawn.position;
-        
-        Debug.Log(spawn.position);
+        transform.position = guardado.GetComponent<GuardarPartida>().datosGuardado.spawnPosition;
+
+        habitacionSpawn = guardado.GetComponent<GuardarPartida>().datosGuardado.habitacion;
+
+        habitacionActual = guardado.GetComponent<GuardarPartida>().datosGuardado.habitacionActual;
+
+        habitacionActual.SetActive(false);
+        habitacionSpawn.SetActive(true);
     }
 
     void Update()
@@ -35,5 +40,9 @@ public class SpawnPointsPlayer : MonoBehaviour
             transform.position = spawn.position;
             Physics.SyncTransforms();
         }
+
+        guardado.GetComponent<GuardarPartida>().datosGuardado.habitacion = habitacionSpawn;
+
+        guardado.GetComponent<GuardarPartida>().datosGuardado.habitacionActual = habitacionActual;
     }
 }
