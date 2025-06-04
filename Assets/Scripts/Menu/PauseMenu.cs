@@ -39,8 +39,11 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Pausa activada");
         pausaPanel.SetActive(!pausaPanel.activeSelf);
-        tutorialPanel.SetActive(!tutorialPanel.activeSelf);
-
+        if (tutorialPanel != null)
+        {
+            tutorialPanel.SetActive(!tutorialPanel.activeSelf);
+        }
+        
         if (pausaPanel == true)
         {
             SelecionMando(volverAlJuego);
