@@ -13,6 +13,13 @@ public class SpawnPointsPlayer : MonoBehaviour
     void Start()
     {
         transform.position = guardado.GetComponent<GuardarPartida>().datosGuardado.spawnPosition;
+
+        habitacionSpawn = guardado.GetComponent<GuardarPartida>().datosGuardado.habitacion;
+
+        habitacionActual = guardado.GetComponent<GuardarPartida>().datosGuardado.habitacionActual;
+
+        habitacionActual.SetActive(false);
+        habitacionSpawn.SetActive(true);
     }
 
     void Update()
@@ -33,5 +40,9 @@ public class SpawnPointsPlayer : MonoBehaviour
             transform.position = spawn.position;
             Physics.SyncTransforms();
         }
+
+        guardado.GetComponent<GuardarPartida>().datosGuardado.habitacion = habitacionSpawn;
+
+        guardado.GetComponent<GuardarPartida>().datosGuardado.habitacionActual = habitacionActual;
     }
 }
