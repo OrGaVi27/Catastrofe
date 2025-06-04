@@ -53,7 +53,8 @@ public class GuardarPartida : MonoBehaviour
 
 }
 [System.Serializable]
-public class DatosGuardado{
+public class DatosGuardado
+{
     public bool tutorial = true;
     [Space]
     public Vector3 spawnPosition;
@@ -61,8 +62,13 @@ public class DatosGuardado{
     public float musicVolume = 0.5f;
     public float SFXVolume = 0.5f;
     [Space]
+    public bool espada01 = false;
+    public bool espada02 = false;
+    public bool espada03 = false;
+    [Space]
     public bool fire = false;
     public bool water = false;
     public bool electricity = false;
     public bool rock = false;
+    //paginas del diario, no se como lo tiene adri
 }
