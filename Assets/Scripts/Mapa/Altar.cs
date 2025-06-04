@@ -14,6 +14,8 @@ public class Altar : MonoBehaviour
     public AudioClip healingSound;
     [Space]
     public GameObject guardado;
+    [Space]
+    public InteractableItem interact;
 
 
     void Start()
@@ -33,10 +35,17 @@ public class Altar : MonoBehaviour
             altarActive.SetActive(false);
             altarDesactive.SetActive(true);
         }
+
+        if (interact.playerInteracted == true)
+        {
+            AltarInteract();
+        }
     }
 
     public void AltarInteract()
     {
+        interact.playerInteracted = false;
+
         player.GetComponent<BasePlayerStats>().currentHealth = player.GetComponent<BasePlayerStats>().maxHealth;
 
         player.GetComponent<BasePlayerStats>().currentMana = player.GetComponent<BasePlayerStats>().maxMana;
@@ -48,16 +57,10 @@ public class Altar : MonoBehaviour
         player.GetComponent<SpawnPointsPlayer>().spawn.transform.position = gameObject.transform.position;
 
         ControladorSonido.Instance.EjecutarSonido(healingSound);
-        
-        //Guardado
-        guardado.GetComponent<GuardarPartida>().datosGuardado.spawnPosition = gameObject.transform.position;
-    }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            AltarInteract();
-        }
+        //Guardado
+        guardado.GetComponent<GuardarPartida>().datosGuardado.habitacion = habitacion;
+
+        guardado.GetComponent<GuardarPartida>().datosGuardado.spawnPosition = gameObject.transform.position;
     }
 }

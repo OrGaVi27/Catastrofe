@@ -25,14 +25,14 @@ public class GuardarPartida : MonoBehaviour
     public void Update()
     {
         //improvisado para debug
-        /* if (Input.GetKeyDown("p"))
+        if (Input.GetKeyDown("p"))
         {
             GuardarJSON();
         }
         if (Input.GetKeyDown("l"))
         {
             CargarJSON();
-        } */
+        }
     }
 
     public void GuardarJSON()
@@ -58,6 +58,7 @@ public class DatosGuardado
     public bool tutorial = true;
     [Space]
     public Vector3 spawnPosition;
+    public GameObject habitacion;
     [Space]
     public float musicVolume = 0.5f;
     public float SFXVolume = 0.5f;

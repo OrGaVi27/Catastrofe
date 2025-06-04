@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5373523745677191997}
   - component: {fileID: 5714223528240783480}
   - component: {fileID: 4995759552930670823}
+  - component: {fileID: 4478343173117354311}
+  - component: {fileID: 7761960662143902890}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -72,6 +74,35 @@ MonoBehaviour:
   altarActive: {fileID: 5351722832348279723}
   altarDesactive: {fileID: 558806805427583829}
   healingSound: {fileID: 8300000, guid: 5154b1175a5056f499a82c8eabceeeaa, type: 3}
+  guardado: {fileID: 0}
+  interact: {fileID: 7761960662143902890}
+--- !u!114 &4478343173117354311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326074527359152418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 470ceb1d05f8c7140a8b7d5bd661a6ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInRange: 0
+  magesInRange: 0
+--- !u!114 &7761960662143902890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326074527359152418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b461eab81f6ee048b13a589185e5f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInteracted: 0
 --- !u!1 &3859271403082699954
 GameObject:
   m_ObjectHideFlags: 0
