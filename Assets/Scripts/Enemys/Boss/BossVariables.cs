@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public partial class BossBehaviour
 {
     [Header("Boss")]
+    public GameObject guardado;
     public Animator bossAnim;
     [Space]
 

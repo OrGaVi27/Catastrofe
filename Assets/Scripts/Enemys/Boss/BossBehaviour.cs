@@ -9,10 +9,6 @@ public partial class BossBehaviour : MonoBehaviour
     [SerializeField] public AudioClip sonidoRecibirDanio;
     [SerializeField] public AudioClip sonidoMuerte;
 
-    private bool sonidoAtaqueVerticalReproducido = false;
-    private bool sonidoAtaqueHorizontalReproducido = false;
-    private bool sonidoBolaFuegoReproducido = false;
-    private bool sonidoRayoLaserReproducido = false;
     private bool sonidoDanioReproducido = false;
     private bool sonidoMuerteReproducido = false;
 
@@ -134,9 +130,30 @@ public partial class BossBehaviour : MonoBehaviour
         TimeAttack();
 
         if (melee.meleeAtack && !deathBoss)
+        {
             Melee();
+        }
         else if (distance.distanceAttack && !deathBoss)
+        {
             Distance();
+        }
+    }
+
+    public void sMeleeAttack1()
+    {
+        ControladorSonido.Instance.EjecutarSonido(ataqueVertical);
+    }
+    public void sMeleeAttack2()
+    {
+        ControladorSonido.Instance.EjecutarSonido(ataqueHorizontal);
+    }
+    public void sDistanceAttack1()
+    {
+        ControladorSonido.Instance.EjecutarSonido(bolaFuego);
+    }
+    public void sDistanceAttack2()
+    {
+        ControladorSonido.Instance.EjecutarSonido(rayoLaser);
     }
 
     public void Melee()
@@ -144,21 +161,11 @@ public partial class BossBehaviour : MonoBehaviour
         if (MA <= 50 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("meleeAttack", 1);
-            if (!sonidoAtaqueVerticalReproducido)
-            {
-                ControladorSonido.Instance.EjecutarSonido(ataqueVertical);
-                sonidoAtaqueVerticalReproducido = true;
-            }
             inAttack = true;
         }
         else if (MA >= 51 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("meleeAttack", 2);
-            if (!sonidoAtaqueHorizontalReproducido)
-            {
-                ControladorSonido.Instance.EjecutarSonido(ataqueHorizontal);
-                sonidoAtaqueHorizontalReproducido = true;
-            }
             inAttack = true;
         }
     }
@@ -184,21 +191,21 @@ public partial class BossBehaviour : MonoBehaviour
         if (DA <= 50 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("distanceAttack", 1);
-            if (!sonidoBolaFuegoReproducido)
+            /* if (!sonidoBolaFuegoReproducido)
             {
                 ControladorSonido.Instance.EjecutarSonido(bolaFuego);
                 sonidoBolaFuegoReproducido = true;
-            }
+            } */
             inAttack = true;
         }
         else if (DA >= 51 && currentTimeAttack >= timeAttack)
         {
             bossAnim.SetInteger("distanceAttack", 2);
-            if (!sonidoRayoLaserReproducido)
+            /* if (!sonidoRayoLaserReproducido)
             {
                 ControladorSonido.Instance.EjecutarSonido(rayoLaser);
                 sonidoRayoLaserReproducido = true;
-            }
+            } */
             inAttack = true;
         }
     }
@@ -242,14 +249,6 @@ public partial class BossBehaviour : MonoBehaviour
         currentTimeAttack = 0;
         MA = Random.Range(0, 101);
         DA = Random.Range(0, 101);
-    }
-
-    public void ResetSonidosAtaque()
-    {
-        sonidoAtaqueVerticalReproducido = false;
-        sonidoAtaqueHorizontalReproducido = false;
-        sonidoBolaFuegoReproducido = false;
-        sonidoRayoLaserReproducido = false;
     }
 
     public void ResetSonidoDanio()
@@ -339,13 +338,21 @@ public partial class BossBehaviour : MonoBehaviour
 
     public void StartBattle()
     {
+        fire = guardado.GetComponent<GuardarPartida>().datosGuardado.fire;
+        water = guardado.GetComponent<GuardarPartida>().datosGuardado.water;
+        electricity = guardado.GetComponent<GuardarPartida>().datosGuardado.electricity;
+        rock = guardado.GetComponent<GuardarPartida>().datosGuardado.rock;
+
         lifesCount = 0;
         currentLiife = maxLiife;
         element = 1;
+
         rayo.SetActive(false);
         preRayo.SetActive(false);
+
         Vida.color = rojoPersonalizado;
         Vida2.color = rojoPersonalizado;
+
         foreach (var effect in vfx)
         {
             effect.GetComponent<Renderer>().material = materials[element];
@@ -359,8 +366,6 @@ public partial class BossBehaviour : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!inAttack)
-            ResetSonidosAtaque();
 
         if (!bossAnim.GetCurrentAnimatorStateInfo(0).IsName("Hit") && !bossAnim.GetCurrentAnimatorStateInfo(0).IsName("BigHit"))
             ResetSonidoDanio();
