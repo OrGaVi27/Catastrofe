@@ -50,4 +50,21 @@ public class BossAnim : MonoBehaviour
     {
         boss.MeleeSwordDamage2();
     }
+
+    public void sMeleeAttack1()
+    {
+        boss.sMeleeAttack1();
+    }
+    public void sMeleeAttack2()
+    {
+        boss.sMeleeAttack2();
+    }
+    public void sDistanceAttack1()
+    {
+        boss.sDistanceAttack1();
+    }
+    public void sDistanceAttack2()
+    {
+        boss.sDistanceAttack2();
+    }
 }

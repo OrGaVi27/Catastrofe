@@ -12,6 +12,8 @@ public class Altar : MonoBehaviour
     public GameObject altarDesactive;
     [Space]
     public AudioClip healingSound;
+    [Space]
+    public GameObject guardado;
 
 
     void Start()
@@ -46,6 +48,9 @@ public class Altar : MonoBehaviour
         player.GetComponent<SpawnPointsPlayer>().spawn.transform.position = gameObject.transform.position;
 
         ControladorSonido.Instance.EjecutarSonido(healingSound);
+        
+        //Guardado
+        guardado.GetComponent<GuardarPartida>().datosGuardado.spawnPosition = gameObject.transform.position;
     }
 
     void OnTriggerEnter(Collider other)

@@ -17,23 +17,23 @@ public class GuardarPartida : MonoBehaviour
             Debug.Log("Carpeta creada en: " + carpeta);
         }
         // Ruta completa del archivo
-        dataPath = carpeta + "PuntosGuardados.json"; 
+        dataPath = carpeta + "DatosGuardados.json"; 
         // Intentar cargar al inicio 
         CargarJSON();
     }
     
-    /* public void Update()
+    public void Update()
     {
         //improvisado para debug
-        if (Input.GetKeyDown("p"))
+        /* if (Input.GetKeyDown("p"))
         {
             GuardarJSON();
         }
         if (Input.GetKeyDown("l"))
         {
             CargarJSON();
-        }
-    } */
+        } */
+    }
 
     public void GuardarJSON()
     {
@@ -56,7 +56,7 @@ public class GuardarPartida : MonoBehaviour
 public class DatosGuardado{
     public bool tutorial = true;
     [Space]
-    public Transform spawn;
+    public Vector3 spawnPosition;
     [Space]
     public float musicVolume = 0.5f;
     public float SFXVolume = 0.5f;
