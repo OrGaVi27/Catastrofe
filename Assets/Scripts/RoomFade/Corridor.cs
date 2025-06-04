@@ -14,6 +14,7 @@ public class Corridor : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        guardado = GameObject.Find("GameManager");
     }
 
     private async void OnTriggerEnter(Collider other)

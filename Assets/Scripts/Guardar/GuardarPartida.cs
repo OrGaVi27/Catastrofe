@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GuardarPartida : MonoBehaviour
 {
-    public DatosGuardado datosGuardado = new DatosGuardado(); 
+    public DatosGuardado datosGuardado = new DatosGuardado();
     string dataPath;
 
     public void Awake()
@@ -12,16 +12,18 @@ public class GuardarPartida : MonoBehaviour
         if (!Directory.Exists(carpeta))
         {
             // Crear la carpeta si no existe
-            Directory.CreateDirectory(carpeta); 
-            
+            Directory.CreateDirectory(carpeta + "/DatosGuardados.json");
+
             Debug.Log("Carpeta creada en: " + carpeta);
         }
+
+
         // Ruta completa del archivo
-        dataPath = carpeta + "DatosGuardados.json"; 
+        dataPath = carpeta + "DatosGuardados.json";
         // Intentar cargar al inicio 
         CargarJSON();
     }
-    
+
     public void Update()
     {
         //improvisado para debug
@@ -45,7 +47,7 @@ public class GuardarPartida : MonoBehaviour
 
     public void CargarJSON()
     {
-        string datos =  System.IO.File.ReadAllText(dataPath);
+        string datos = System.IO.File.ReadAllText(dataPath);
         datosGuardado = JsonUtility.FromJson<DatosGuardado>(datos);
 
         Debug.Log("Cargado");
