@@ -10,6 +10,8 @@ public class Alma : MonoBehaviour
     public bool water;
     public bool electricity;
     public bool rock;
+    [SerializeField] public AudioClip PickUpSound;
+
 
     void Start()
     {
@@ -59,6 +61,7 @@ public class Alma : MonoBehaviour
             }
 
             guardado.GetComponent<GuardarPartida>().GuardarJSON();
+            ControladorSonido.Instance.EjecutarSonido(PickUpSound);  
 
             Destroy(gameObject);
         }
