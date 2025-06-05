@@ -5,8 +5,21 @@ using UnityEngine;
 
 public class EnemyVisionArea : MonoBehaviour
 {
+    public PlayerStateManager player;
     public bool playerInRange = false;
     public bool magesInRange = false;
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateManager>();
+    }
+
+    void Update()
+    {
+        if(player.baseStats.currentHealth <= 0f)
+        {
+            playerInRange = false;
+        }
+    }
 
 
     void OnTriggerEnter(Collider other)
@@ -32,4 +45,6 @@ public class EnemyVisionArea : MonoBehaviour
             magesInRange = false;
         }
     }
+
+
 }

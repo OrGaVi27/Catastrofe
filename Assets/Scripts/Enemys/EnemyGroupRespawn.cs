@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -69,7 +67,7 @@ public class EnemyGroupRespawn : MonoBehaviour
             baseStats.canvas.gameObject.SetActive(true);
         }
     }
-
+    
     void OnEnable()
     {
         foreach (GameObject enemy in enemies)
