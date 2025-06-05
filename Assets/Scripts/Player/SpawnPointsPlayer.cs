@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SpawnPointsPlayer : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class SpawnPointsPlayer : MonoBehaviour
     public GameObject habitacionSpawn;
     public GameObject habitacionActual;
     public GameObject guardado;
+
+    public GameObject canvasMuerte;
 
     void Start()
     {
@@ -22,7 +25,7 @@ public class SpawnPointsPlayer : MonoBehaviour
         else
         {
             HabitacionesController.instance.Cargado(gp.datosGuardado.habitacionNombre);
-            
+
             habitacionSpawn = GameObject.Find(gp.datosGuardado.habitacionNombre);
 
             spawn = gp.datosGuardado.spawnPosition;
@@ -31,27 +34,31 @@ public class SpawnPointsPlayer : MonoBehaviour
 
     void Update()
     {
-        Spawn();
+        if (player.GetComponent<BasePlayerStats>().currentHealth <= 0f)
+        {
+            canvasMuerte.SetActive(true);
+            player.GetComponent<PlayerStateManager>().anim.SetBool("Death", true);
+
+        }
     }
 
     public void Spawn()
     {
-        if (player.GetComponent<BasePlayerStats>().currentHealth <= 0f)
+
+        if (habitacionActual != habitacionSpawn)
         {
-            if (habitacionActual != habitacionSpawn)
-            {
-                habitacionActual.SetActive(false);
-                habitacionSpawn.SetActive(true);
-            }
-
-            transform.position = spawn;
-            Physics.SyncTransforms();
-
-            var stats = player.GetComponent<BasePlayerStats>();
-            stats.currentHealth = stats.maxHealth;
-            stats.currentMana = stats.maxMana;
-            stats.currentHeals = stats.maxHeals;
+            habitacionActual.SetActive(false);
+            habitacionSpawn.SetActive(true);
         }
+
+        transform.position = spawn;
+        Physics.SyncTransforms();
+
+        var stats = player.GetComponent<BasePlayerStats>();
+        stats.currentHealth = stats.maxHealth;
+        stats.currentMana = stats.maxMana;
+        stats.currentHeals = stats.maxHeals;
+
 
         var gp = guardado.GetComponent<GuardarPartida>();
         if (habitacionSpawn != null)
@@ -62,5 +69,7 @@ public class SpawnPointsPlayer : MonoBehaviour
         {
             gp.datosGuardado.habitacionActualNombre = habitacionActual.name;
         }
+        canvasMuerte.SetActive(false);
+
     }
 }
