@@ -39,7 +39,7 @@ public class GuardarPartida : MonoBehaviour
         File.WriteAllText(dataPath, datos);
         Debug.Log("Guardado correctamente.");
     }
-
+    /*
     public void CargarJSON()
     {
         if (File.Exists(dataPath))
@@ -50,6 +50,28 @@ public class GuardarPartida : MonoBehaviour
         }
         else Debug.LogWarning("Archivo de guardado no encontrado.");
     }
+    */
+    public void CargarJSON()
+{
+    if (File.Exists(dataPath))
+    {
+        string datos = File.ReadAllText(dataPath);
+        datosGuardado = JsonUtility.FromJson<DatosGuardado>(datos);
+
+        if (datosGuardado.paginasDiario == null || datosGuardado.paginasDiario.Length != 5)
+        {
+            datosGuardado.paginasDiario = new bool[5];
+            Debug.LogWarning("Se inicializó 'paginasDiario' porque estaba nulo o con tamaño incorrecto.");
+        }
+
+        Debug.Log("Datos cargados correctamente.");
+    }
+    else
+    {
+        Debug.LogWarning("Archivo de guardado no encontrado.");
+    }
+}
+
 }
 [System.Serializable]
 public class DatosGuardado
@@ -72,4 +94,6 @@ public class DatosGuardado
     public bool electricity = false;
     public bool rock = false;
     //paginas del diario, no se como lo tiene adri
+    [Space]
+    public bool[] paginasDiario = new bool [5];
 }

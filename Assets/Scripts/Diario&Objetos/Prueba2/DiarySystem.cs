@@ -6,7 +6,7 @@ public class DiarySystem : MonoBehaviour
     public static DiarySystem instance;
 
     private Dictionary<int, DiaryPageSO> collectedPages = new();
-    public int totalPages = 9;
+    public int totalPages = 5;
 
     void Awake()
     {

@@ -17,7 +17,7 @@ public class DiaryPickup : MonoBehaviour
             BookDiaryUI diaryUI = FindObjectOfType<BookDiaryUI>();
             if (diaryUI != null)
                 diaryUI.OpenDiary();
-                
+
             ControladorSonido.Instance.EjecutarSonido(PickUpSound);
             Destroy(gameObject);
         }
