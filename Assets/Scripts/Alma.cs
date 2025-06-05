@@ -11,6 +11,29 @@ public class Alma : MonoBehaviour
     public bool electricity;
     public bool rock;
 
+    void Start()
+    {
+        if (fire == true && guardado.GetComponent<GuardarPartida>().datosGuardado.fire == true)
+        {
+            gameObject.SetActive(false);
+        }
+
+        if (water == true && guardado.GetComponent<GuardarPartida>().datosGuardado.water == true)
+        {
+            gameObject.SetActive(false);
+        }
+
+        if (electricity == true && guardado.GetComponent<GuardarPartida>().datosGuardado.electricity == true)
+        {
+            gameObject.SetActive(false);
+        }
+
+        if (rock == true && guardado.GetComponent<GuardarPartida>().datosGuardado.rock == true)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
