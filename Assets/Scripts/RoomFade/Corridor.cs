@@ -37,7 +37,7 @@ public class Corridor : MonoBehaviour
             // Desactivar la habitación actual de forma segura
             originRoom.SetActive(false);
             
-            guardado.GetComponent<GuardarPartida>().datosGuardado.habitacionActual = adjacentRoom;
+            guardado.GetComponent<GuardarPartida>().datosGuardado.habitacionActualNombre = adjacentRoom.name;
         }
     }
 }

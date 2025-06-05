@@ -962,7 +962,7 @@ MonoBehaviour:
   currentMana: 0
   damage: 50
   DamageMultiplier: 1.5
-  elementMultiplier: 1.5
+  elementMultiplier: 2
   isInvencible: 0
 --- !u!114 &1908672958716258452
 MonoBehaviour:
@@ -1068,9 +1068,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1695957459192586695}
-  spawn: {fileID: 0}
+  spawn: {x: 0, y: 0, z: 0}
   habitacionSpawn: {fileID: 0}
   habitacionActual: {fileID: 0}
+  guardado: {fileID: 0}
 --- !u!114 &2073279768287989773
 MonoBehaviour:
   m_ObjectHideFlags: 0

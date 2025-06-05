@@ -192,8 +192,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -509,9 +509,11 @@ GameObject:
   - component: {fileID: 7901033543151363288}
   - component: {fileID: 6706833434522326324}
   - component: {fileID: 3274372190028518458}
+  - component: {fileID: 1068156457716080820}
   - component: {fileID: 6300329017824821040}
   - component: {fileID: 3414002068082290141}
   - component: {fileID: 8490880131050126481}
+  - component: {fileID: 5331837832103690599}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -562,6 +564,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a9ce5ae9f49b164d82a08141965940e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1068156457716080820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8743933940192919376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0c6ea396ea66264fb46e8e73332dd7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  habitaciones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!95 &6300329017824821040
 Animator:
   serializedVersion: 5
@@ -619,6 +638,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31fbbb2d74034f41839391329f17d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5331837832103690599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8743933940192919376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c369dbd0a5a9284eaba4702e4a77985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  datosGuardado:
+    tutorial: 1
+    spawnPosition: {x: -254.49, y: 1.61, z: 0}
+    habitacionNombre: 
+    habitacionActualNombre: 
+    musicVolume: 0.5
+    SFXVolume: 0.5
+    espada01: 0
+    espada02: 0
+    espada03: 0
+    fire: 0
+    water: 0
+    electricity: 0
+    rock: 0
+  dataPath: 
+  habitacion: 
+  habitacionActual: 
 --- !u!1001 &4647061148555343019
 PrefabInstance:
   m_ObjectHideFlags: 0

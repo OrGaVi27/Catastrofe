@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PilarLuz : MonoBehaviour
 {
+    public AbrirPuertaAbajo puertaActiv;
+
     [Header("Emisor")]
     public GameObject emisor;
     public bool permEncendido;
@@ -73,7 +75,7 @@ public class PilarLuz : MonoBehaviour
             }
             else if(puerta != null)
             {
-                puerta.AbrirPuerta();
+                puertaActiv.isOpen = true;
             }
             else
             {

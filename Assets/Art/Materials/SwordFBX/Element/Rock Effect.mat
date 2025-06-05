@@ -22,7 +22,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Rock Effect
   m_Shader: {fileID: -6465566751694194690, guid: c8f12ec1ef3c1d74388bf27455c59922, type: 3}
-  m_Parent: {fileID: 0}
+  m_Parent: {fileID: 2100000, guid: 51f4c59772f21044e9c8891d92fa36f8, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -35,28 +35,10 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Flow_Speed: 0.4
-    - _Foam_Density: 4.79
-    - _Foam_Speed: 2
-    - _Foam_Thikness: 0.6
-    - _QueueControl: 0
-    - _QueueOffset: 0
+    - _Foam_Thikness: 0.75
     m_Colors:
-    - _Flow_Direction: {r: 0, g: -1, b: 0, a: 0}
-    - _Foam_Color: {r: 0.8381912, g: 0.27172762, b: 0.047776885, a: 0}
+    - _Foam_Color: {r: 1.2120558, g: 0.55843407, b: 0.2157586, a: 0}
   m_BuildTextureStacks: []

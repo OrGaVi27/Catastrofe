@@ -3,23 +3,30 @@ using UnityEngine;
 public class SpawnPointsPlayer : MonoBehaviour
 {
     public GameObject player;
-
-    public Transform spawn;
+    public Vector3 spawn;
     public GameObject habitacionSpawn;
     public GameObject habitacionActual;
-    [Space]
     public GameObject guardado;
 
     void Start()
     {
-        transform.position = guardado.GetComponent<GuardarPartida>().datosGuardado.spawnPosition;
+        GuardarPartida gp = guardado.GetComponent<GuardarPartida>();
+        transform.position = gp.datosGuardado.spawnPosition;
 
-        habitacionSpawn = guardado.GetComponent<GuardarPartida>().datosGuardado.habitacion;
+        if (gp.datosGuardado.habitacionNombre == "")
+        {
+            gp.datosGuardado.habitacionNombre = habitacionSpawn.name;
 
-        habitacionActual = guardado.GetComponent<GuardarPartida>().datosGuardado.habitacionActual;
+            HabitacionesController.instance.Cargado(habitacionSpawn.name);
+        }
+        else
+        {
+            HabitacionesController.instance.Cargado(gp.datosGuardado.habitacionNombre);
+            
+            habitacionSpawn = GameObject.Find(gp.datosGuardado.habitacionNombre);
 
-        habitacionActual.SetActive(false);
-        habitacionSpawn.SetActive(true);
+            spawn = gp.datosGuardado.spawnPosition;
+        }
     }
 
     void Update()
@@ -37,12 +44,23 @@ public class SpawnPointsPlayer : MonoBehaviour
                 habitacionSpawn.SetActive(true);
             }
 
-            transform.position = spawn.position;
+            transform.position = spawn;
             Physics.SyncTransforms();
+
+            var stats = player.GetComponent<BasePlayerStats>();
+            stats.currentHealth = stats.maxHealth;
+            stats.currentMana = stats.maxMana;
+            stats.currentHeals = stats.maxHeals;
         }
 
-        guardado.GetComponent<GuardarPartida>().datosGuardado.habitacion = habitacionSpawn;
-
-        guardado.GetComponent<GuardarPartida>().datosGuardado.habitacionActual = habitacionActual;
+        var gp = guardado.GetComponent<GuardarPartida>();
+        if (habitacionSpawn != null)
+        {
+            gp.datosGuardado.habitacionNombre = habitacionSpawn.name;
+        }
+        if (habitacionActual != null)
+        {
+            gp.datosGuardado.habitacionActualNombre = habitacionActual.name;
+        }
     }
 }

@@ -7,16 +7,14 @@ public class Altar : MonoBehaviour
     [Space]
     public GameObject habitacion;
     [Space]
-    public GameObject altar;
     public GameObject altarActive;
     public GameObject altarDesactive;
     [Space]
     public AudioClip healingSound;
     [Space]
-    public GameObject guardado;
-    [Space]
-    public InteractableItem interact;
+    public GuardarPartida guardado;
 
+    public InteractableItem interact;
 
     void Start()
     {
@@ -25,7 +23,7 @@ public class Altar : MonoBehaviour
 
     void Update()
     {
-        if (player.GetComponent<SpawnPointsPlayer>().spawn.transform.position == gameObject.transform.position)
+        if (player.GetComponent<SpawnPointsPlayer>().spawn == transform.position)
         {
             altarActive.SetActive(true);
             altarDesactive.SetActive(false);
@@ -36,7 +34,7 @@ public class Altar : MonoBehaviour
             altarDesactive.SetActive(true);
         }
 
-        if (interact.playerInteracted == true)
+        if (interact.playerInteracted)
         {
             AltarInteract();
         }
@@ -46,23 +44,17 @@ public class Altar : MonoBehaviour
     {
         interact.playerInteracted = false;
 
-        player.GetComponent<BasePlayerStats>().currentHealth = player.GetComponent<BasePlayerStats>().maxHealth;
-
-        player.GetComponent<BasePlayerStats>().currentMana = player.GetComponent<BasePlayerStats>().maxMana;
-
-        player.GetComponent<BasePlayerStats>().currentHeals = player.GetComponent<BasePlayerStats>().maxHeals;
+        var stats = player.GetComponent<BasePlayerStats>();
+        stats.currentHealth = stats.maxHealth;
+        stats.currentMana = stats.maxMana;
+        stats.currentHeals = stats.maxHeals;
 
         player.GetComponent<SpawnPointsPlayer>().habitacionSpawn = habitacion;
-
-        player.GetComponent<SpawnPointsPlayer>().spawn.transform.position = gameObject.transform.position;
-
+        player.GetComponent<SpawnPointsPlayer>().spawn = transform.position;
         ControladorSonido.Instance.EjecutarSonido(healingSound);
 
-        //Guardado
-        guardado.GetComponent<GuardarPartida>().datosGuardado.habitacion = habitacion;
-
-        guardado.GetComponent<GuardarPartida>().datosGuardado.spawnPosition = gameObject.transform.position;
-
-        guardado.GetComponent<GuardarPartida>().GuardarJSON();
+        guardado.datosGuardado.habitacionNombre = player.GetComponent<SpawnPointsPlayer>().habitacionSpawn.name;
+        guardado.datosGuardado.spawnPosition = transform.position;
+        guardado.GuardarJSON();
     }
 }

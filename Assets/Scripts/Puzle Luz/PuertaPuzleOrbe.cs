@@ -9,7 +9,6 @@ public class PuertaPuzleOrbe : MonoBehaviour
 
     void Start()
     {
-        // Inicialización si es necesario
          puerta = GetComponent<AbrirPuertaAbajo>(); ;
     }
 

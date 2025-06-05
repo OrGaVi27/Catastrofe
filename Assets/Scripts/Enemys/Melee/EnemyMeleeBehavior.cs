@@ -226,7 +226,7 @@ public class EnemyMeleeBehavior : BaseEnemyStats
             Debug.Log("¡Atacando al jugador!");
             ControladorSonido.Instance.EjecutarSonido(atackSound);
             animator.SetTrigger("Attacking");
-            Invoke(nameof(ResetAttack), 2f);
+            Invoke(nameof(ResetAttack), 5f);
         }
     }
 
