@@ -97,11 +97,11 @@ public partial class PlayerStateManager
 
     void OnHeal(InputValue value)
     {
-        if (value.isPressed && baseStats.currentHealth < baseStats.maxHealth && baseStats.currentHeals > 0)
+        /* if (value.isPressed && baseStats.currentHealth < baseStats.maxHealth && baseStats.currentHeals > 0)
         {
             baseStats.Heal(30f);
             baseStats.currentHeals--;
-        }
+        } */
     }
 
     void OnInteract()

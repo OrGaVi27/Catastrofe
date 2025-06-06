@@ -100,7 +100,7 @@ public class FlechaPlayer : MonoBehaviour
                 PuzleActivator pa = other.GetComponent<PuzleActivator>();
                 pa.wasActivated = true;
                 pa.SetAttackElement(playerElement);
-                
+
                 if (player.GetComponent<BasePlayerStats>().currentMana < player.GetComponent<BasePlayerStats>().maxMana && player.GetComponent<PlayerStateManager>().element == 0)
                 {
                     player.GetComponent<BasePlayerStats>().currentMana++;
@@ -108,6 +108,38 @@ public class FlechaPlayer : MonoBehaviour
             }
 
             Destroy(gameObject);
+        }
+
+        if (other.gameObject.GetComponent<BossBehaviour>() != null)
+        {
+            if (other.gameObject.GetComponent<BossBehaviour>() != null && hits == 0)
+            {
+                hits++;
+                if (flechaEspecial)
+                {
+                    GameObject explosion = Instantiate(ExplosionPrefab, transform.position, Quaternion.identity); // Instancia la explosion Elemental
+
+                    DamageTrigger dt = explosion.GetComponent<DamageTrigger>();
+                    if (dt != null) dt.SetDamage(damage, playerElement, elementMult);
+
+
+                    Explosion boom = explosion.GetComponent<Explosion>();
+                    if (boom != null) boom.SetElement(playerElement);
+                }
+                else
+                {
+                    other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(damage, playerElement, elementMult); // Llama a la función de daño del enemigo
+
+
+                    if (player.GetComponent<BasePlayerStats>().currentMana < player.GetComponent<BasePlayerStats>().maxMana && player.GetComponent<PlayerStateManager>().element == 0)
+                    {
+                        player.GetComponent<BasePlayerStats>().currentMana++;
+                    }
+                }
+
+
+            }
+             Destroy(gameObject);
         }
 
     }

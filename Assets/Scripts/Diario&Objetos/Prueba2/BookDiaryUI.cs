@@ -46,15 +46,21 @@ public class BookDiaryUI : MonoBehaviour
     public void NextPage()
     {
         if (currentPage < DiarySystem.instance.GetTotalPages() - 1)
-        ControladorSonido.Instance.EjecutarSonido(NextPrev);
-        ShowPage(currentPage + 1);
+        {
+            ControladorSonido.Instance.EjecutarSonido(NextPrev);
+            ShowPage(currentPage + 1);
+        }
+        
     }
 
     public void PreviousPage()
     {
         if (currentPage > 0)
-        ControladorSonido.Instance.EjecutarSonido(NextPrev);
-        ShowPage(currentPage - 1);
+        {
+            ControladorSonido.Instance.EjecutarSonido(NextPrev);
+            ShowPage(currentPage - 1);
+        }
+        
     }
 
     public void OpenDiary()
