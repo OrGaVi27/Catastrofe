@@ -34,6 +34,7 @@ public class PinchosCripta : MonoBehaviour
         if (todosMuertos)
         {
             GetComponent<Animator>().SetBool("AllDeath", true);
+            //sonido pinchos bajando
             bloqueo.enabled = false;
             eventoEjecutado = true;
         }

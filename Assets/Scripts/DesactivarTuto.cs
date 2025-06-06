@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DesactivarTuto : MonoBehaviour
@@ -13,21 +11,24 @@ public class DesactivarTuto : MonoBehaviour
     {
         if (guardado.GetComponent<GuardarPartida>().datosGuardado.tutorial == false)
             {
-                gameObject.SetActive(false);
+                DesactivarTutorial();
             }
     }
     public void DesactivarTutorial()
     {
         tutorial.SetActive(false);
         enemigos.SetActive(true);
-        guardado.GetComponent<GuardarPartida>().datosGuardado.tutorial = false;
+
+        if (guardado.GetComponent<GuardarPartida>().datosGuardado.tutorial == true)
+        {
+            guardado.GetComponent<GuardarPartida>().datosGuardado.tutorial = false;
+        }
     }
     
 
     void Awake()
     {
         if (instance == null) instance = this;
-        else Destroy(gameObject);
     }
 
 }

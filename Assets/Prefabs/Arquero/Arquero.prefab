@@ -118,6 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470ceb1d05f8c7140a8b7d5bd661a6ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   playerInRange: 0
   magesInRange: 0
 --- !u!1 &2452995770541564508
@@ -238,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470ceb1d05f8c7140a8b7d5bd661a6ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   playerInRange: 0
   magesInRange: 0
 --- !u!1 &3039837542028001642
@@ -358,6 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470ceb1d05f8c7140a8b7d5bd661a6ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   playerInRange: 0
   magesInRange: 0
 --- !u!1 &4880263369946412194
@@ -456,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75a08aac45ebb4489b712860e850fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 150
+  maxHealth: 200
   currentHealth: 0
   damage: 0
   movementSpeed: 4

@@ -21,6 +21,7 @@ public class SpawnPointsPlayer : MonoBehaviour
             gp.datosGuardado.habitacionNombre = habitacionSpawn.name;
 
             HabitacionesController.instance.Cargado(habitacionSpawn.name);
+            spawn = gp.datosGuardado.spawnPosition;
         }
         else
         {

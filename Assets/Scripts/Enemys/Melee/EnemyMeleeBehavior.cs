@@ -46,6 +46,10 @@ public class EnemyMeleeBehavior : BaseEnemyStats
                         break;
                     }
                 }
+                targetToFollow = null;
+                estoyEnUnEquipo = false;
+                estaEnEquipo = false;
+                GetComponent<ElementoMinion>().elemento = 0;
             }
             return;
         }
@@ -54,7 +58,6 @@ public class EnemyMeleeBehavior : BaseEnemyStats
         {
             if (targetToFollow.GetComponent<BaseEnemyStats>().dead)
             {
-                GetComponent<ElementoMinion>().elemento = 0;
                 estoyEnUnEquipo = false;
             }
         }
@@ -226,7 +229,7 @@ public class EnemyMeleeBehavior : BaseEnemyStats
             Debug.Log("¡Atacando al jugador!");
             ControladorSonido.Instance.EjecutarSonido(atackSound);
             animator.SetTrigger("Attacking");
-            Invoke(nameof(ResetAttack), 5f);
+            Invoke(nameof(ResetAttack), 3f);
         }
     }
 

@@ -192,8 +192,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 16
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -514,6 +514,8 @@ GameObject:
   - component: {fileID: 3414002068082290141}
   - component: {fileID: 8490880131050126481}
   - component: {fileID: 5331837832103690599}
+  - component: {fileID: 2961325414764131852}
+  - component: {fileID: 6755198244836516933}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -664,9 +666,38 @@ MonoBehaviour:
     water: 0
     electricity: 0
     rock: 0
+    paginasDiario: 0000000000
   dataPath: 
   habitacion: 
   habitacionActual: 
+--- !u!114 &2961325414764131852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8743933940192919376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c540eee7d4ca31a48888dd1ad8010746, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalPages: 5
+--- !u!114 &6755198244836516933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8743933940192919376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 956ddd55d4c73be4e95f9c8977092da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorial: {fileID: 0}
+  enemigos: {fileID: 0}
+  guardado: {fileID: 8743933940192919376}
 --- !u!1001 &4647061148555343019
 PrefabInstance:
   m_ObjectHideFlags: 0

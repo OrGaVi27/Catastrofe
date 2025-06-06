@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3342716972321527542}
   - component: {fileID: 3036084075937875908}
   - component: {fileID: 2671825196382817262}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 8346507872940912404}
   - component: {fileID: 4370430580851876348}
   - component: {fileID: 8839077231201364455}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 4135962355570340524}
   - component: {fileID: 7259414645643245064}
   - component: {fileID: 1591018414867694322}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Flecha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,6 +335,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1232896713526230226}
     m_Modifications:
+    - target: {fileID: -8928426344732115481, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8848328214981394324, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.314155
@@ -387,13 +395,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: -7609145667655734672, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -7235015103121818086, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -3316209038747775882, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1eb17b17794ea774ba51902cbeea248d, type: 2}
+    - target: {fileID: -344004081357383697, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
       propertyPath: m_Name
       value: Fletcha2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -413,6 +437,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1232896713526230226}
     m_Modifications:
+    - target: {fileID: -8928426344732115481, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8848328214981394324, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.314155
@@ -465,13 +497,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: -7609145667655734672, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -7235015103121818086, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -3316209038747775882, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1eb17b17794ea774ba51902cbeea248d, type: 2}
+    - target: {fileID: -344004081357383697, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
       propertyPath: m_Name
       value: Flecha
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 98a86576a7dccdb4094151ba0bbbf174, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

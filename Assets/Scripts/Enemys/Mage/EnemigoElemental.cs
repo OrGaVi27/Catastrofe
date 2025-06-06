@@ -60,6 +60,12 @@ public class EnemigoElemental : MonoBehaviour
         numeroElemento = elementoAleatorio;
     }
 
+    void OnEnable()
+    {
+        elementoAleatorio = Random.Range(0, 4);
+        numeroElemento = elementoAleatorio;
+    }
+
     // Update is called once per frame
     void Update()
     {

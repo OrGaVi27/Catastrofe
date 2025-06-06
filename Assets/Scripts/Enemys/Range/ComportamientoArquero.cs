@@ -69,6 +69,10 @@ public class ComportamientoArquero : BaseEnemyStats
                         break;
                     }
                 }
+                targetToFollow = null;
+                estoyEnUnEquipo = false;
+                estaEnEquipo = false;
+                elementoMinion.elemento = 0;
             }
             return;
         }

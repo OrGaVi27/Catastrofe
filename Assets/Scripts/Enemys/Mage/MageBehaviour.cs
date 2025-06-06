@@ -70,14 +70,16 @@ public class MageBehaviour : BaseEnemyStats
         {
             elemento.particulas.SetActive(false);
             elemento.particulasExterior.SetActive(false);
-            //elemento.elementoAleatorio = 0;
-            //defenseRange.gameObject.SetActive(false);
+            elemento.elementoAleatorio = 4;
+            element = 0;
+            defenseRange.gameObject.SetActive(false);
             return;
         }
         else if (elemento.particulas.activeSelf == false || elemento.particulasExterior.activeSelf == false)
         {
             elemento.particulas.SetActive(true);
             elemento.particulasExterior.SetActive(true);
+            defenseRange.gameObject.SetActive(true);
         }
 
         //Se usa para calcular el daño de los ataques

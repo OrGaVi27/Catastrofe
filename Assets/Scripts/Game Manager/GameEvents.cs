@@ -8,6 +8,8 @@ public class GameEvents : MonoBehaviour
     private void Awake()
     {
         current = this;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     #region Events

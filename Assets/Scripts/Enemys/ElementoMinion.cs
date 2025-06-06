@@ -39,6 +39,15 @@ public class ElementoMinion : MonoBehaviour
 
     }
 
+    void OnEnable()
+    {
+        if (gameObject.GetComponent<Collider>() != null)
+        {
+            gameObject.GetComponent<Collider>().enabled = true;
+            elemento = 0;
+            }
+    }
+
     // Update is called once per frame
     void Update()
     {

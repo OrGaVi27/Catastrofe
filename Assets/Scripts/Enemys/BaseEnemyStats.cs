@@ -41,7 +41,7 @@ public class BaseEnemyStats : MonoBehaviour
         }
         else if (element == 0)
         {
-            currentHealth -= damageAmount;
+            currentHealth -= damageAmount * 1.5f;
             animator.SetTrigger("Hit");
         }
         else if (attackElement == 1 && element == 4)

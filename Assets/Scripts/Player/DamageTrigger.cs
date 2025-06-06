@@ -32,7 +32,7 @@ public class DamageTrigger : MonoBehaviour
         {
             other.gameObject.GetComponent<BaseEnemyStats>().TakeDamage(damageAmount, element, elementMultiplier);
 
-            if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0)
+            if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0 && !attaker.GetComponent<PlayerStateManager>().anim.GetBool("StrongAttack"))
             {
                 attaker.GetComponent<BasePlayerStats>().currentMana++;
             }
@@ -42,7 +42,7 @@ public class DamageTrigger : MonoBehaviour
         {
             other.gameObject.GetComponent<BossBehaviour>().TakeDamage(damageAmount, element, elementMultiplier);
 
-            if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0)
+            if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0 && !attaker.GetComponent<PlayerStateManager>().anim.GetBool("StrongAttack"))
             {
                 attaker.GetComponent<BasePlayerStats>().currentMana++;
             }
@@ -57,7 +57,7 @@ public class DamageTrigger : MonoBehaviour
                 pa.wasActivated = true;
                 pa.SetAttackElement(element);
 
-                if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0)
+                if (attaker.GetComponent<BasePlayerStats>().currentMana < attaker.GetComponent<BasePlayerStats>().maxMana && element == 0 && !attaker.GetComponent<PlayerStateManager>().anim.GetBool("StrongAttack"))
                 {
                     attaker.GetComponent<BasePlayerStats>().currentMana++;
                 }
