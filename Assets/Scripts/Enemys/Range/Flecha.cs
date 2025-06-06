@@ -10,9 +10,13 @@ public class Flecha : MonoBehaviour
     private Vector3 direccion;
     private Rigidbody rb;
     protected int hits = 0;
+    [SerializeField] private AudioClip disparar;
+
 
     void Start()
     {
+            ControladorSonido.Instance.EjecutarSonido(disparar);
+
         player = GameObject.FindGameObjectWithTag("Player");
         currentDelateTime = 0;
 

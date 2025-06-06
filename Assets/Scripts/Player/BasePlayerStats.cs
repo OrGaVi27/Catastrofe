@@ -7,6 +7,7 @@ public class BasePlayerStats : MonoBehaviour
     public int maxHeals = 3;
     public int currentHeals;
     [SerializeField] private AudioClip Hit;
+    [SerializeField] private AudioClip Dead;
 
     public int maxMana = 5;
     public int currentMana;
@@ -43,6 +44,6 @@ public class BasePlayerStats : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("Player has died.");
+        ControladorSonido.Instance.EjecutarSonido(Dead);
     }
 }

@@ -8,6 +8,8 @@ public class PinchosCripta : MonoBehaviour
     public Collider bloqueo;
     int enemigosVivos;
     private bool eventoEjecutado = false;
+    [SerializeField] private AudioClip Pinxos;
+
 
 
     // Start is called before the first frame update
@@ -34,7 +36,7 @@ public class PinchosCripta : MonoBehaviour
         if (todosMuertos)
         {
             GetComponent<Animator>().SetBool("AllDeath", true);
-            //sonido pinchos bajando
+            ControladorSonido.Instance.EjecutarSonido(Pinxos);
             bloqueo.enabled = false;
             eventoEjecutado = true;
         }

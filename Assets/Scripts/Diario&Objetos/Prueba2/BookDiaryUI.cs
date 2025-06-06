@@ -10,6 +10,8 @@ public class BookDiaryUI : MonoBehaviour
     public TextMeshProUGUI contentText;
     public Image brokenPageImage;
     public GameObject textContentGroup;
+    [SerializeField] private AudioClip NextPrev;
+
 
     private int currentPage = 0;
 
@@ -30,27 +32,29 @@ public class BookDiaryUI : MonoBehaviour
             titleText.text = page.title;
             contentText.text = page.content;
             textContentGroup.SetActive(true);
-            brokenPageImage.gameObject.SetActive(false);
+            brokenPageImage.gameObject.SetActive(true);
         }
         else
         {
             titleText.text = "";
             contentText.text = "";
             textContentGroup.SetActive(false);
-            brokenPageImage.gameObject.SetActive(true);
+            brokenPageImage.gameObject.SetActive(false);
         }
     }
 
     public void NextPage()
     {
         if (currentPage < DiarySystem.instance.GetTotalPages() - 1)
-            ShowPage(currentPage + 1);
+        ControladorSonido.Instance.EjecutarSonido(NextPrev);
+        ShowPage(currentPage + 1);
     }
 
     public void PreviousPage()
     {
         if (currentPage > 0)
-            ShowPage(currentPage - 1);
+        ControladorSonido.Instance.EjecutarSonido(NextPrev);
+        ShowPage(currentPage - 1);
     }
 
     public void OpenDiary()

@@ -6,8 +6,21 @@ public class DiarySystem : MonoBehaviour
     public static DiarySystem instance;
 
     private Dictionary<int, DiaryPageSO> collectedPages = new();
+    public DiaryPageSO[] AllPages;
+    public GameObject guardado;
     public int totalPages = 5;
 
+    void Start()
+    {
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (guardado.GetComponent<GuardarPartida>().datosGuardado.paginasDiario[i])
+            {
+                collectedPages[i] = AllPages[i];
+            }
+        }
+    }
     void Awake()
     {
         if (instance == null) instance = this;

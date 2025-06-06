@@ -44,6 +44,7 @@ public class ComportamientoArquero : BaseEnemyStats
     public float distanciaMago = 10f;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -146,7 +147,6 @@ public class ComportamientoArquero : BaseEnemyStats
         else if (tiempoUltimoDisparo > tiempoEntreDisparos)
         {
             puedeDisparar = true;
-
         }
 
 
